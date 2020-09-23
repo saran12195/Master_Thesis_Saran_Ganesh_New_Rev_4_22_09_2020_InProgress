@@ -1,0 +1,172 @@
+\documentclass[oneside]{tudelft-report}
+\usepackage[justification=centering]{caption}
+\usepackage{xcolor}
+\usepackage{multirow}
+\usepackage{natbib}
+\usepackage{epstopdf}
+\usepackage{titlesec}
+\usepackage{float}
+\usepackage{todonotes}
+\usepackage{comment}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+%%Abbreviation and                                      
+%\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{PTSansNarrow}
+\usepackage[T1]{fontenc}
+
+%\chapterfont{\color{blue}}
+%\sectionfont{\color{blue}}
+%\subsectionfont{\color{blue}}
+
+
+\usepackage[colorlinks=true, allcolors=cyan]{hyperref}
+
+\usetikzlibrary{matrix}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{notoccite}
+
+%nomenclature
+\usepackage{changes}  
+\usepackage{caption}            %%To adjust captions
+\usepackage{anyfontsize}        %%To change font sizes
+\usepackage{soul}               %%To highlight text
+\usepackage{hyperref}       %% To link external websites to the word
+\usepackage{lettrine}       %To make the first letter big
+\usepackage[export]{adjustbox}  %%To move images left/right
+\usepackage{graphicx}       %% To add images
+\usepackage{wrapfig}        %%To add wrapped figures
+\usepackage[utf8]{inputenc} %% For quotation mark
+% \usepackage{dirtytalk}      %% For quotation mark
+% \usepackage{subcaption}     %%For adding multiple subimages in an image
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{doi}
+\usepackage{geometry}
+\usepackage[labelformat=simple]{subcaption}
+\renewcommand\thesubfigure{(\alph{subfigure})}
+\usepackage{amssymb}
+\usepackage{amsmath}        %%To add equations
+\usepackage{bm}             %%To use bold symbols in math mode
+\usepackage{siunitx}        %% For proper display of numbers with SI units
+\sisetup{obeyall}
+\sisetup{detect-weight=true, detect-family=true}    %% To have bold in text
+\usepackage{eurosym}        %% TO use euro symbol
+\numberwithin{equation}{chapter}
+% \usepackage{siunitx} % Required for numbers alignment in tables
+% \sisetup{
+%   round-mode          = places, % Rounds numbers
+%   round-precision       = 2, % to 2 places
+% }
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy} 
+
+\usepackage{enumitem}
+%\cfoot{\thepage\ of \pageref{LastPage}}
+
+%usepackage[acronym]{glossaries}
+%\makeglossaries
+\usepackage[nonumberlist,acronym]{glossaries}
+\makeglossaries
+\usepackage[toc,page]{appendix}
+\newglossaryentry{RES}{name={RES},description={Renewable Energy Sources}}
+\newglossaryentry{VSC}{name={VSC},description={Voltage Source Converter}}
+\newglossaryentry{MSC}{name={MSC}, description={Machine Side Converter}}
+\newglossaryentry{GSC}{name={GSC}, description={Grid Side Converter}}
+\newglossaryentry{LSC}{name={LSC}, description={Line Side Converter}}
+\newglossaryentry{MMC}{name={MMC}, description={Modular Multi-level Converter}}
+\newglossaryentry{AC}{name={AC}, description={Alternating Current}}
+\newglossaryentry{DC}{name={DC}, description={Direct Current}}
+\newglossaryentry{EMF}{name={EMF}, description={Electromotive Force}}
+\newglossaryentry{PMSG}{name={PMSG}, description={Permanent Magnet Synchronous Generator}}
+\newglossaryentry{OWF}{name={OWF}, description={Offshore Wind Farm}}
+\newglossaryentry{WG}{name={WG}, description={Wind Generator}}
+\newglossaryentry{WT}{name={WT}, description={Wind Turbine}}
+\newglossaryentry{HVAC}{name={HVAC}, description={High Voltage Alternating Current}}
+\newglossaryentry{HVDC}{name={HVDC}, description={High Voltage Direct Current}}
+\newglossaryentry{CB}{name={CB}, description={Circuit Breaker}}
+\newglossaryentry{PE}{name={PE}, description={Power Electronic}}
+\newglossaryentry{VCO}{name={VCO}, description={Voltage Controlled Oscillator}}
+\newglossaryentry{DVC}{name={DVC}, description={Direct Voltage Control}}
+\newglossaryentry{FOC}{name={FOC}, description={Field Oriented Control}}
+\newglossaryentry{DTC}{name={DTC}, description={Direct Torque Control}}
+\newglossaryentry{Hcosnti}{name={H}, description={Inertia Constant}}
+\newglossaryentry{FAPR}{name={FAPR}, description={Fast Active Power Regulation}}
+\newglossaryentry{EU}{name={EU}, description={European Union}}
+\newglossaryentry{PCC}{name={PCC}, description={Point of Common Coupling}}
+\newglossaryentry{HPF}{name={HPF}, description={High Pass Filter}}
+\newglossaryentry{PLL}{name={PLL}, description={Phase Locked Loop}}
+\newglossaryentry{LVRT}{name={LVRT}, description={Low Voltage Right Through}}
+\newglossaryentry{PEIG}{name={PEIG}, description={Power Electronic Interfaced Generation}}
+\newglossaryentry{EMT}{name={EMT}, description={Electromagnetic Transient}}
+\newglossaryentry{NPC}{name={NPC}, description={Neutral Point Clamped}}
+\newglossaryentry{MPPT}{name={MPPT}, description={Maximum Power Point Tracking}}
+\newglossaryentry{WECS}{name={WECS}, description={Wind Energy Conversion Systems}}
+\newglossaryentry{THD}{name={THD}, description={Total Harmonic Distortion}}
+\newglossaryentry{PI}{name={PI}, description={Proportional Integral}}
+\newglossaryentry{IGBT}{name={IGBT}, description={Insulated Gate Bipolar Transistors}}
+\newglossaryentry{PWM}{name={PWM}, description={Pulse Width Modulation}}
+ 
+
+\glstoctrue
+
+
+\begin{document}
+
+
+
+%% Use Roman numerals for the page numbers of the title pages and table of
+%% contents
+
+\frontmatter
+
+\title{Development of a Generic Model for Real Time Simulation and Assessment of the Dynamic Performance of a Large Scale Offshore Transmission Network}
+
+
+\author{Saran Ganesh}
+\affiliation{Technische Universiteit Delft}
+\coverimage{cover.jpg}
+%\makecover
+
+%% Include an optional title page.
+%\input{title}
+
+%\input{preface}
+
+\tableofcontents
+
+
+\listoffigures
+
+\listoftables
+
+\printglossary[title=List of Abbreviations]
+
+
+%% Use Arabic numerals for the page numbers of the chapters.
+
+\mainmatter
+
+\input{1. Introduction}
+\input{2. Scientific Background}
+\input{3.Implementation of Direct Voltage Control for 66 kV network}
+\input{4.Large scale}
+\input{5.Operation of the large scale OWF network}
+\input{6. Conclusions and Future Scope}
+
+\begin{appendices}
+\input{Appendix-a}
+\input{appendix-b}
+\input{appendix-c}
+%\input{appendix-d}
+\end{appendices}
+%\bibliographystyle{ieeetran}
+%% Use letters for the chapter numbers of the appendices.
+
+
+\bibliography{references_3,report}
+%\AtEveryBibitem{\clearlist{language}}
+
+\end{document}
