@@ -1,49 +1,58 @@
 \chapter{Modelling of 2 GW, 66 kV HVAC Offshore Network with MMC-HVDC Transmission}\label{4}
-This chapter details the development of a multi-gigawatt (focus of 2 GW), 66 kV \gls{HVAC} network connected to a Modular Multi-level Converter (\gls{MMC}) offshore converter station. Like in Chapter \ref{3}, an average \gls{EMT} modelling depth is used (i.e. focus on the study of three-phase faults occurring in a balanced system), and the model and simulations are conducted in RSCAD. The model depicts the connection of several \gls{OWF}s through a 66 kV \gls{HVAC} offshore network contributing a total of 2 GW installed capacity. The power is transferred to the onshore system through \gls{MMC} based \gls{HVDC} links. The focus is to investigate the dynamic performance of such a system when subjected to severe disturbances (e.g. three-phase line to ground fault) in the \gls{AC} part of the network. The action of both the Direct Voltage Control (\gls{DVC}) in \gls{WG}s and the voltage control in \gls{MMC} is examined in detail to understand the voltage performance and the power flow distribution based on simulations performed in RSCAD. %Firstly, the topology selected for the network is explained, and then the large scale network layout with all the components is detailed. The control structures utilized in the network is described in the final part of this chapter.
+This chapter details the development of a multi-gigawatt (focus of 2 GW), 66 kV \gls{HVAC} network connected to two Modular Multi-level Converter (\gls{MMC}) offshore stations. Like in Chapter \ref{3}, an average \gls{EMT} modelling depth is used (i.e. focus on the study of three-phase faults occurring in a balanced system), the model is developed and simulations are conducted in RSCAD. The model depicts the connection of several \gls{OWF}s through a 66 kV \gls{HVAC} offshore network contributing a total of 2 GW installed capacity. The power is transferred to the onshore system through \gls{MMC} based \gls{HVDC} links. The focus is to investigate the dynamic performance of such a system when subjected to severe disturbances (e.g. three-phase line to ground fault) in the \gls{AC} part of the network. The role of both the Direct Voltage Control (\gls{DVC}) in \gls{WG}s and the voltage control in \gls{MMC} is examined in detail to understand the voltage performance and the power flow distribution based on simulations performed in RSCAD. %Firstly, the topology selected for the network is explained, and then the large scale network layout with all the components is detailed. The control structures utilized in the network is described in the final part of this chapter.
 
 \section{Assumptions and definition of the topology for the 2 GW Offshore Network}
-The initial aspect that needs to be considered for a 2 GW system is the topology of the network. The popularity of \gls{MMC} due to its improved controllability and superior system performances has lead way for the increasing demand for \gls{MMC}-\gls{HVDC} transmission for integration of long distance \gls{OWF}s. For the connection of new \gls{OWF}s in the vicinity of the already existing ones, parallel operation of \gls{MMC}-\gls{HVDC} transmission systems can be expected in the near future with multiple connections to the onshore system. Such type of schemes increase the interest in hybrid systems with the "hub-and-spoke" principle proposed by ABB \cite{abb_hvdc_2018} and represented in Figure \ref{fig:ABB_Hub_Spoke_3}. Figure \ref{fig:ABB_Hub_Spoke_3}a) represents the connection of multiple \gls{OWF}s to the offshore converter station, and power is transferred to the onshore system through multiple \gls{HVDC} links. Such a layout provides redundancy in the network by supplying offshore wind power to at least one onshore system if one of the \gls{HVDC} links gets disconnected. The system operability is also improved at the time of disturbances in one of the onshore \gls{AC} networks \cite{lescale2012parallelling}. A stage-wise construction of such a \gls{HVDC} network is easier to be achieved by the developers \cite{irnawan2019planning}. Another layout involves the \gls{OWF}s to transfer power to the onshore system through a single \gls{MMC} unit with multi-terminal \gls{HVDC} connections as shown in Figure \ref{fig:ABB_Hub_Spoke_3}b). However, in such a layout, the idea of scaling of offshore wind power is limited to the installed capacity of the \gls{MMC} unit. Lastly, the \gls{OWF}s can be connected through \gls{AC} links to a back-to-back \gls{HVDC} converter station as shown in Figure \ref{fig:ABB_Hub_Spoke_3}c). Long distance \gls{HVAC} transmission is required in this case, for the transfer of power from \gls{OWF}s to the onshore network and contribute to high losses in the network when compared to \gls{HVDC} transmission for larger distances.
+The initial aspect that needs to be considered for a 2 GW system is the topology of the network. The popularity of \gls{MMC} due to its improved controllability and superior system performances has led way for the increasing demand for \gls{MMC}-\gls{HVDC} transmission for integration of long distance \gls{OWF}s. For the connection of new \gls{OWF}s in the vicinity of the already existing ones, parallel operation of \gls{MMC}-\gls{HVDC} transmission systems can be expected in the near future with multiple connections to the onshore system. Such type of schemes increase the interest in hybrid systems with the "hub-and-spoke" principle proposed by ABB \cite{abb_hvdc_2018} and represented in Figure \ref{fig:ABB_Hub_Spoke_3}. The layout in Figure \ref{fig:ABB_Hub_Spoke_3}a) depicts the connection of \gls{OWF}s to a offshore \gls{MMC} station which in turn transfers power to the onshore system through multi-terminal \gls{HVDC} connections. However, in such a layout, the idea of scaling of offshore wind power is limited to the installed capacity of the \gls{MMC} unit. Another layout involves the \gls{OWF}s connected through \gls{AC} links to a back-to-back \gls{HVDC} converter station as shown in Figure \ref{fig:ABB_Hub_Spoke_3}b). Long distance \gls{HVAC} transmission is required in this case, for the transfer of power from \gls{OWF}s to the onshore network and hence contribute to high losses in the network when compared to \gls{HVDC} transmission for larger distances. Figure \ref{fig:ABB_Hub_Spoke_3}c) represents the connection of multiple \gls{OWF}s to the offshore converter station, and power is transferred to the onshore system through multiple \gls{HVDC} links. Such a layout provides contingency in the network by supplying offshore wind power to at least one onshore system if one of the \gls{HVDC} links gets disconnected \cite{lescale2012parallelling}. A stage-wise construction of such a \gls{HVDC} project is easier to be achieved by the developers as well \cite{irnawan2019planning}.
 
-The idea in this section is to expand the single \gls{OWF} model network in Figure \ref{fig:WT1_Model_RSCAD} for a 2 GW offshore wind power. This could be made possible by connecting four such \gls{OWF} models in parallel with each generating 500 MW of power. On the other hand, a offshore converter station of 2 GW is required to transfer this generated amount of power to the onshore system. However, the currently deployed (state-of-the-art) \gls{MMC}-\gls{HVDC} transmission, has a maximum rated capacity of 1200 MW \cite{cigre2005b4}. Hence, with the available technology, two \gls{MMC} units will be required for 2 GW of power transmission. Taking the aforementioned factors into account, a layout similar to the Figure \ref{fig:ABB_Hub_Spoke_3}a) is developed for this work and is depicted in Figure \ref{fig:WT4_MMC2}. 
+The idea in this chapter is to expand the single \gls{OWF} model network in Figure \ref{fig:WT1_Model_RSCAD} for a 2 GW offshore wind power. This could be made possible by connecting four such \gls{OWF} models in parallel with each generating 500 MW of power. Correspondingly, a 2 GW offshore converter station capacity is required to transfer this generated amount of power to the onshore system. However, currently deployed (state-of-the-art) \gls{MMC}-\gls{HVDC} transmission, has a maximum rated capacity of 1.2 GW \cite{cigre2005b4}. Hence, with the available technology, two \gls{MMC} offshore stations of 1 GW each will be required for 2 GW power transmission. Taking the aforementioned factors into account, a layout similar to the Figure \ref{fig:ABB_Hub_Spoke_3}c) is developed for this work and is depicted in Figure \ref{fig:WT4_MMC2}. 
 
 \begin{figure}[H]
 \centering
 %\hspace*{-1.2cm}
     \includegraphics[height = 10cm,width = 15cm]{Diagrams/Chapter_4/ABB_Hub_Spoke_3.png}
-    \caption{a) Hub-and-spoke with multiple HVDC links b) Hub-and-spoke with multi-terminal HVDC system, c) Hub-and-spke with AC links and HVDC back-to-back station \cite{abb_hvdc_2018}}
+    \caption{a) Hub-and-spoke with multi-terminal HVDC system, b) Hub-and-spoke with AC links and HVDC back-to-back station and c) Hub-and-spoke with multiple HVDC links \cite{abb_hvdc_2018}}
     \label{fig:ABB_Hub_Spoke_3}
 \end{figure}
 
 % Therefore by using the average \gls{EMT} model of an \gls{MMC} described in utilizing the available models for \gls{MMC}s, to enhance and understand the operation of Type-4 \gls{WG}s in parallel operation and their coordination with \gls{MMC}s, an \gls{AC} collector grid topology with parallel connection of two point-to-point \gls{HVDC} transmission system is implemented for this thesis work in RSCAD. 
 
-\subsection{Processors in RSCAD}\label{split_system}
-The simulations in RSCAD can be run in either NovaCor or PB5 processor cards. NovaCor processor is used for this work as they have 2-3 times the simulation capacity of a completely loaded PB5 processor \cite{noauthor_novacor_nodate}. For an extensive power system network, NovaCor processor requires a part of the system to be placed in a separate subsystem. RSCAD allows provision for splitting of the network into subsystems if the network is large. The splitting is done by right-clicking on the main subsystem tag and choosing "Add Subsystem" as shown in Figure \ref{fig:subsystem_RSCAD} and this feature is utilized in this section. Tline modules are used to connect between subsystems. The process is explained in Section \ref{Tline_cable_RSCAD} in detail.
 
-There are two NovaCor processors available in TU Delft and they are equipped with four cores each. These cores are utilized to solve the overall network solution, auxiliary components (such as transformers, cables, generators etc.) and the controls present in the simulation. Assignment of cores for solving various components of the network is an important step that needs to be considered while modelling, as they depict the total load that is distributed over the available cores. The process is detailed in Section \ref{Aggregated_OWF_large_scale}. 
+
+%The development of the layout involves major three steps:
+
+%The layout of the model is developed by connecting four \gls{OWF} 
+\subsection{Scaling of single \gls{OWF} model for 2 GW offshore network}
 
 \begin{figure}[H]
 \centering
 %\hspace*{-1.2cm}
-    \includegraphics[height = 2cm,width = 3.5cm]{Diagrams/Chapter_3/Subsystem.PNG}
-    \caption{Adding subsystems in RSCAD}
-    \label{fig:subsystem_RSCAD}
+    \includegraphics[height = 7cm,width = 13cm]{Diagrams/Chapter_4/WT2_scaling.pdf}
+    \caption{a) Hub-and-spoke with multi-terminal HVDC system, b) Hub-and-spoke with AC links and HVDC back-to-back station and c) Hub-and-spoke with multiple HVDC links \cite{abb_hvdc_2018}}
+    \label{fig:ABB_Hub_Spoke_3}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-%\hspace*{-1.5cm}
-    \includegraphics[height = 12.5cm,width = 17cm]{Diagrams/Chapter_4/WT4_MMC2_new.pdf}
-    \caption{Single line diagram of 2 GW, 66 kV HVAC offshore network connected to 2 x 1 GW HVDC links with offshore MMC stations in RSCAD}
-    \label{fig:WT4_MMC2}
+%\hspace*{-1.2cm}
+    \includegraphics[height = 7cm,width = 10cm]{Diagrams/Chapter_4/MMC2_scaling.pdf}
+    \caption{a) Hub-and-spoke with multi-terminal HVDC system, b) Hub-and-spoke with AC links and HVDC back-to-back station and c) Hub-and-spoke with multiple HVDC links \cite{abb_hvdc_2018}}
+    \label{fig:ABB_Hub_Spoke_3}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 7.5cm,width = 16cm]{Diagrams/Chapter_4/WT4_Scaling.pdf}
+    \caption{a) Hub-and-spoke with multi-terminal HVDC system, b) Hub-and-spoke with AC links and HVDC back-to-back station and c) Hub-and-spoke with multiple HVDC links \cite{abb_hvdc_2018}}
+    \label{fig:ABB_Hub_Spoke_3}
 \end{figure}
 
 
 
 \section{Layout of 66 kV HVAC 2 GW Offshore Network in RSCAD}
-The development of the layout involved three steps:
 
 
-of the model is developed by connecting four \gls{OWF} A modular approach is considered to implement the connection of four \gls{OWF}s. The aggregated representation of a \gls{OWF} implemented in Section \ref{WT1_ACsource_RSCAD_Test_Layout} is modularized to form the large scale offshore network. The single line diagram of the network is depicted in Figure \ref{fig:WT4_MMC2} and the major components of the 66 kV \gls{HVAC} 2 GW network include :
+A modular approach is considered to implement the connection of four \gls{OWF}s. The aggregated representation of a \gls{OWF} implemented in Section \ref{WT1_ACsource_RSCAD_Test_Layout} is modularized to form the large scale offshore network. The single line diagram of the network is depicted in Figure \ref{fig:WT4_MMC2} and the major components of the 66 kV \gls{HVAC} 2 GW network include :
 \begin{itemize}
     \item Four aggregated \gls{OWF}s, each with 500 MW installed capacity represented by the following components:
     \begin{itemize}
@@ -63,15 +72,38 @@ of the model is developed by connecting four \gls{OWF} A modular approach is con
     \item Two \gls{HVDC} cables
 \end{itemize}
 
+\begin{figure}[H]
+\centering
+%\hspace*{-1.5cm}
+    \includegraphics[height = 12cm,width = 17cm]{Diagrams/Chapter_4/WT4_MMC2_new.pdf}
+    \caption{Single line diagram of 2 GW, 66 kV HVAC offshore network connected to 2 x 1 GW HVDC links with offshore MMC stations in RSCAD}
+    \label{fig:WT4_MMC2}
+\end{figure}
 
+\subsection{Processors in RSCAD}\label{split_system}
+The simulations in RSCAD can be run in either NovaCor or PB5 processor cards. NovaCor processor is used for this work as they have 2-3 times the simulation capacity of a completely loaded PB5 processor \cite{noauthor_novacor_nodate}. For an extensive power system network, NovaCor processor requires a part of the system to be placed in a separate subsystem. RSCAD allows provision for splitting of the network into subsystems if the network is large. The splitting is done by right-clicking on the main subsystem tag and choosing "Add Subsystem" as shown in Figure \ref{fig:subsystem_RSCAD} and this feature is utilized in this section. Tline modules are used to connect between subsystems. The process is explained in Section \ref{Tline_cable_RSCAD} in detail.
+
+There are two NovaCor processors available at TU Delft and they are equipped with four cores each. These cores are utilized to solve the overall network solution, auxiliary components (such as transformers, cables, generators etc.) and the controls present in the simulation. Assignment of cores for solving various components of the network is an important step that needs to be considered while modelling, as they depict the total load that is distributed over the available cores. The process is detailed in Section \ref{Aggregated_OWF_large_scale}. 
+
+\begin{figure}[H]
+\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 2cm,width = 3.5cm]{Diagrams/Chapter_3/Subsystem.PNG}
+    \caption{Adding subsystems in RSCAD}
+    \label{fig:subsystem_RSCAD}
+\end{figure}
 
 \subsection{Aggregated OWF}\label{Aggregated_OWF_large_scale}
-The \gls{OWF} model described in Section \ref{OWF} is used here for all the four \gls{OWF}s. As the network is extensive, it is split into two subsystems in RSCAD as shown in Figure \ref{fig:WT4_MMC2} by employing the technique explained in Section \ref{split_system}. The four \gls{OWF}s are modelled in subsystem 2 and the rest of the system is modelled in subsystem 1. Each subsystem requires one rack for operation and hence two NovaCor racks are used for the network simulation. It is also possible to simulate the network with PB5 processor. However, this requires a total of three subsystems since PB5 racks allow only small network solutions to be solved in one rack \cite{noauthor_pb5_nodate}. Therefore, two \gls{OWF}s are to be modelled in subsystem 3, other two \gls{OWF}s in subsystem 2 and the rest of the network in subsystem 1. Hence this would require a total of three PB5 racks. However, the simulations are considered only in NovaCor processed for this study.  
+The 2 GW offshore wind power is split into four \gls{OWF}s with 500 MW rated capacity each. Currently, the largest offshore \gls{WG} developed by GE Renewable Energy has a rating of 12 MW \cite{noauthor_worlds_nodate}. However, the standard model available for a Type-4 \gls{WG} in RSCAD is rated 6 MW. Hence, to represent a 500 MW \gls{OWF}, 84 \gls{WG}s are required. All the \gls{OWF}s are at a distance of 30 km from the offshore \gls{MMC} station. 
 
 
-Since there need to be four different small-time step blocks representing four \gls{OWF}s, each block needs to be set with different step sizes so as to avoid conflict during initialization. These step sizes are only used for initialization and the actual step sizes can be viewed in the "Map File" as mentioned in Section \ref{OWF}. Moreover, if the time-steps are not initialized properly, it could lead to the occurrence of a time-step overflow error during run time. Another important parameter to be considered here is the assignment of the cores for the small-time step boxes. 
+The average model of Type-4 \gls{WG} available in RSCAD is used for this work as well. The aggregated \gls{OWF} model represented in small-time step environment described in Section \ref{OWF} is used here for all the four \gls{OWF}s. As the entire network is extensive, it is split into two subsystems in RSCAD as shown in Figure \ref{fig:WT4_MMC2} by employing the technique explained in Section \ref{split_system}. The four \gls{OWF}s are modelled in subsystem 2 and the rest of the system is modelled in subsystem 1. Each subsystem requires one rack for operation and hence two NovaCor racks are used for the network simulation. It is also possible to simulate the network with PB5 processor. However, this requires a total of three subsystems since PB5 racks allow only small network solutions to be solved in one rack \cite{noauthor_pb5_nodate}. Therefore, two \gls{OWF}s are to be modelled in subsystem 3, other two \gls{OWF}s in subsystem 2 and the rest of the network in subsystem 1. Therefore, the simulations are considered only in NovaCor processor for this study.  
 
-As mentioned in Section \ref{split_system}, cores are responsible for solving the entire network solution. NovaCor processor has four cores and each component used in the network can be assigned to specific cores (1 to 4 in number). The cores can be assigned manually or can be done automatically (why u did manually). The core allocation of the small-time step boxes representing \gls{OWF}s in this network is as shown in Table \ref{tab:Core_assignment_sub2}.  
+
+Since there need to be four different small-time step blocks representing four \gls{OWF}s, each block needs to be set with different step sizes so as to avoid conflict during initialization. These step sizes are only used for initialization and the actual step sizes can be viewed in the "Map File" as mentioned in Section \ref{OWF}. Moreover, if the time-steps are not initialized properly, it could lead to the occurrence of a time-step overflow error during run time. 
+
+
+Another important parameter to be considered here is the assignment of the cores for the small-time step boxes. As mentioned in Section \ref{split_system}, cores are responsible for solving the entire network solution. NovaCor processor has four cores and each component used in the network can be assigned to specific cores (1 to 4 in number). The cores can be assigned manually or can be done automatically (why u did manually). The core allocation of the small-time step boxes representing \gls{OWF}s in this network is as shown in Table \ref{tab:Core_assignment_sub2}.  
 
    
 
@@ -90,7 +122,9 @@ OWF-4                          & 1                        \\ \hline
 \end{table}
 
 \subsection{HVAC Cables}\label{Tline_cable_RSCAD}
- The \gls{HVAC} cables transfer power from the \gls{OWF}s in subsystem 2 to the \gls{MMC} bus in subsystem 1 as can be seen in Figure \ref{fig:WT4_MMC2}. The cables are rated at 66 kV and are of length 30 kms. In RSCAD, subsystems can be connected using the Tline module available in the RSCAD modules section as denoted by a red box in Figure \ref{fig:TlineModule_mark}. This module is similar to the Cable module explained in Section \ref{HVAC_cable_RSCAD}, however Cable module does not provide the provision for splitting the network into subsystems. The Tline module can be modelled as overhead transmission line or cable. Since an offshore network modelling is considered in this work, it represents a subsea cable model. The cables here are modelled as Bergeron models with RLC data parameters (Why Bergeron). 
+The \gls{HVAC} cables transfer power from the \gls{OWF}s to the offshore \gls{MMC} station. Hence four sets of \gls{HVAC} cables are required. The cables are rated at 66 kV and are 30 kms of length. In the network layout represented in RSCAD, as shown in Figure \ref{fig:WT4_MMC2}, the \gls{HVAC} cables connect the \gls{OWF}s in subsystem 1 with the \gls{MMC} bus in subsystem 2. To provide such a connection between components placed in different subsystems in RSCAD, a feature called Tline module is available in the RSCAD modules section (denoted by a red box in Figure \ref{fig:TlineModule_mark}). This module is similar to the Cable module explained in Section \ref{HVAC_cable_RSCAD}, however Cable module only allows connection between components in the same subsystem. The Tline module can be modelled as overhead transmission line or cable. Since an offshore network model is considered in this work, the Tline model represents a subsea cable model. 
+
+The cables are modelled as Bergeron models with RLC data parameters (Why Bergeron). The same cable parameters used in Section \ref{HVAC_cable_RSCAD} are used in the Tline module for all the four sets of cables here. 
  
  \begin{figure}[H]
 \centering
@@ -118,7 +152,7 @@ The detailed representation of the cable parameters in Tline module, and the rep
   \label{fig:Tline_calculationbox_RSCAD}
 \end{figure}
 
-As the significant goal is to estimate the dynamic performance of the network under severe disturbances, a short circuit event in the middle of any \gls{HVAC} cable is tested upon. For this work, the short circuit event is modelled in the middle of HVAC cable-1. To perform a short circuit event in the middle of a 30 km long \gls{HVAC} cable in RSCAD, two cable models of 15 kms length are modelled and connected in series as shown in Figure \ref{fig:Subsystem_Trial}. The three-phase fault logic available in RSCAD library is modelled in the middle of the two cables as shown in Figure \ref{fig:Subsystem_Trial}. Both the cable models contain one set of sending and receiving end terminals. In order to connect two subsystems, the sending end terminal from the \gls{OWF} is placed in subsystem 2, and its receiving end is placed in subsystem 1. %The representation of one \gls{OWF} and one set of \gls{HVAC} cable in two subsystems in RSCAD is shown in Figure  \ref{fig:Subsystem_Trial}. All \gls{OWF}s placed in subsystem 2 are connected to the rest of the system in system 1 using \gls{HVAC} cables in a similar fashion.
+As the significant goal is to estimate the dynamic performance of the network under severe disturbances, a short circuit event in the middle of any \gls{HVAC} cable-1 is tested upon. To perform a short circuit event in the middle of a 30 km long \gls{HVAC} cable in RSCAD, two cable models of 15 kms length are modelled and connected in series, and the three-phase fault logic available in RSCAD library is modelled in the middle of the two cables as shown in Figure \ref{fig:Subsystem_Trial}. It must be noted that each cable model contain one set of sending and receiving end terminals. In order to connect two subsystems, the sending end terminal from the \gls{OWF} is placed in subsystem 2, and its receiving end is placed in subsystem 1. %The representation of one \gls{OWF} and one set of \gls{HVAC} cable in two subsystems in RSCAD is shown in Figure  \ref{fig:Subsystem_Trial}. All \gls{OWF}s placed in subsystem 2 are connected to the rest of the system in system 1 using \gls{HVAC} cables in a similar fashion.
 
 \begin{figure}[H]
 \centering
