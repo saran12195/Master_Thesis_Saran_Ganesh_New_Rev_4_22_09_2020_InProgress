@@ -1,8 +1,8 @@
-\chapter{Analysis of DVC in 66 kV HVAC Offshore Network}\label{3}
+\chapter{Modelling and Analysis of DVC in 66 kV HVAC Offshore Network}\label{3}
 
 In this chapter, the basics of Electro-Magnetic Transient (\gls{EMT}) hardware utilized is explained briefly. Then the network model consisting of a Type-4 \gls{WG} with Direct Voltage Control (\gls{DVC}) \cite{korai_dynamic_2019}, \cite{sethi_real-time_nodate-new} in a 66 kV \gls{HVAC} offshore network in RSCAD is detailed. The performance of the control strategy is tested for severe dynamic conditions. Lastly, the performance of the \gls{DVC} modelled in RSCAD is then validated with the benchmark \gls{DVC} model in DIgSILENT PowerFactory software \cite{korai_98_nodate} (based on a qualitative comparison because of the unavoidable differences between the software packages) for a similar 66 kV \gls{HVAC} offshore network.
 
-\section{Real Time Digital Simulator (RTDS) Hardware}
+\section{Real Time Digital Simulator (RTDS) Hardware}\label{RTDS_Theory}
 Real Time Digital Simulator (RTDS) Hardware is equipped to perform \gls{EMT} simulation. The overall network solution in RTDS is based on the nodal analysis. The simulator can work in the range from DC to 3 kHz of frequency. It can simulate a time step of 25 - 50 $\mu$s for even complex power systems. This is termed as a large time step. RTDS gives the option for a small-time step environment to incorporate power electronic components simulation. These blocks have time steps in the range of 1400  - 3750 ns. The hardware consists of two generations of processor cards, namely, PB5 and NovaCor \cite{rtds_tech}.  
 
 RTDS provides a user-friendly Guided User Interface (GUI) called RSCAD wherein the network is modelled, run and analyzed. There are modules available in RSCAD for the actions mentioned above (Figure \ref{fig:RSCAD_modules}). These are explained in \cite{rtds_tech} in detail. The majorly used modules for this thesis are the Draft, Runtime, Cable and Tline modules. The modelling of the system is performed in the Draft module, which contains a drawing canvas whose size can be adjusted. The working of the Cable and Tline modules are illustrated in Sections \ref{HVAC_cable_RSCAD} and \ref{Tline_cable_RSCAD}, respectively. Once the model is developed, the simulation is run in the Runtime module. RTDS also allows for Hardware In Loop (HIL) and Software In Loop (SIL) simulations to test the working of controllers in real-world scenario \cite{rtds_tech_hardware}.
@@ -36,7 +36,7 @@ There are a variety of libraries available in the Draft module to select the com
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[height=8cm,width=8cm]{Diagrams/Chapter_3/Power_system_lib.PNG}
+  \includegraphics[height=8cm,width=7cm]{Diagrams/Chapter_3/Power_system_lib.PNG}
   \caption{Power system library in Draft module}
   \label{fig:Power_system_lib}
 \end{subfigure}%
@@ -50,7 +50,7 @@ There are a variety of libraries available in the Draft module to select the com
 %\label{fig:test}
 \end{figure}
 
-After the model has been developed in the Draft module as shown in Figure \ref{fig:Dft_RSCAD}, the user has to compile the file by clicking on "Compile" (\includegraphics[width=0.6cm, height=0.6cm]{Diagrams/Chapter_3/Compile_pic.PNG}). The processor calculates the actual time step and along with the initial conditions are stored in the MAP file which is available by right-clicking on the white space in the draft module. The user is notified of errors or warnings during simulation in a pop-up box at the end of file compilation. The processor assignment and the controls assignment can be viewed by clicking the "Processor Assignment" (\includegraphics[width=0.6cm, height=0.6cm]{Diagrams/Chapter_3/Processor_assignment_pic.PNG}) tab. There are some important data in the RSCAD configuration files that hold information about the configuration of hardware in RTDS. IP addresses of all rack ports and the processor cards are the data available in the configuration file. It can be accessed using the "Tool" menu in the main tab of RSCAD. Improper configuration of these files will result in no simulation of the test case \cite{rtds_tech}. 
+After the model has been developed in the Draft module as shown in Figure \ref{fig:Dft_RSCAD}, the user has to compile the file by clicking on "Compile" \footnote{Compile icon in RSCAD: \includegraphics[width=0.6cm, height=0.6cm]{Diagrams/Chapter_3/Compile_pic.PNG}}. The processor calculates the actual time step and along with the initial conditions are stored in the MAP file which is available by right-clicking on the white space in the draft module. The user is notified of errors or warnings during simulation in a pop-up box at the end of file compilation. The processor assignment and the controls assignment can be viewed by clicking the "Processor Assignment" \footnote{Processor Assignment icon in RSCAD \includegraphics[width=0.6cm, height=0.6cm]{Diagrams/Chapter_3/Processor_assignment_pic.PNG}} tab. There are some important data in the RSCAD configuration files that hold information about the configuration of hardware in RTDS. IP addresses of all rack ports and the processor cards are the data available in the configuration file. It can be accessed using the "Tool" menu in the main tab of RSCAD. Improper configuration of these files will result in no simulation of the test case \cite{rtds_tech}. 
 
 The real-time interaction of the user with the system is done through the Runtime module available in RSCAD. The user can accomplish tasks like measuring signals, plotting graphs, adjusting sliders and creating faults in this interface. An example of the Runtime module with the scenarios mentioned above is shown in Figure \ref{fig:Runtime_RSCAD}.
 
@@ -96,14 +96,15 @@ After understanding the basics of RSCAD software, a 66 kV offshore network, as s
 \begin{figure}[H]
 \centering
 %\hspace*{-1cm}
-    \includegraphics[height = 5.5cm,width = 17.5cm]{Diagrams/Chapter_3/WT1_AC_RSCAD.pdf}
+    \includegraphics[height = 5.5cm,width = 17cm]{Diagrams/Chapter_3/WT1_AC_RSCAD_OWF.pdf}
     \caption{Single line diagram of the 66 kV HVAC offshore test network in RSCAD}
     \label{fig:WT1_Model_RSCAD}
 \end{figure}
 
 \subsection{ Aggregated Offshore Wind farm (OWF)}\label{OWF}
 
-The 700 MW offshore wind power is represented by a single \gls{OWF} consisting of 117 \gls{WG}s, each rated 6 MW connected in parallel. Type-4 \gls{WG}s are used for all units. The RSCAD representation of aggregated \gls{OWF} is used utilized in this work. The aggregated model consists of \gls{PE} components which require higher switching frequency (19*50 = 950 Hz in this case) and hence is modelled in a small-time step environment by selecting the "VSC Bridge Box" (Figure \ref{fig:SmallTimeStepBlock}) available in the small time step library in the Draft module. The box contains the \gls{PMSG}, \gls{MSC}, \gls{DC} capacitors, chopper circuit, \gls{GSC}, high pass filter and offshore transformer as illustrated in Figure \ref{fig:OveriewSmallTimeStepOWF}. As mentioned earlier in this section, the block can be assigned to have a time step value between 1400 to 3750 ns. 
+The 700 MW offshore wind power is represented by a single \gls{OWF} consisting of 116 \gls{WG}s, each rated 6 MW connected in parallel. Type-4 \gls{WG}s are used for all units. The RSCAD representation of aggregated \gls{OWF} is used utilized in this work. The aggregated model consists of \gls{PE} components which require higher switching frequency %(19*50 = 950 Hz in this case) 
+and hence is modelled in a small time step environment by selecting the "VSC Bridge Box" (Figure \ref{fig:SmallTimeStepBlock}) available in the small time step library in the Draft module. The box contains the \gls{PMSG}, \gls{MSC}, \gls{DC} capacitors, chopper circuit, \gls{GSC}, high pass filter and offshore transformer as illustrated in Figure \ref{fig:OveriewSmallTimeStepOWF}. As mentioned in Section \ref{RTDS_Theory}, the block can be assigned to have a time step value between 1400 to 3750 ns. 
 %It is necessary to set this time step to a nearly high value to avoid the time step overflow error in RSCAD.
 The value can be entered by right-clicking on the small time block and choosing "Edit" and then "Parameters" as shown in Figure \ref{fig:SmallTimeStepBlock}. Also, it must the noted that the above-specified step size is only for initialization and the actual used step size can be viewed in the Map file which is accessible by right-clicking on any white space in the Draft file and selecting "View" then, "Map File". It is also worth mentioning that the ratio of the large time step to the small-time step in a network in RSCAD must be higher than 12 when using NovaCor and must be higher than 17 when using PB5 racks \cite{rtds_tech}. 
 
@@ -116,7 +117,7 @@ The value can be entered by right-clicking on the small time block and choosing 
 \end{figure}
 
 \subsubsection{Wind Generation System}
-The wind generation system consists of \gls{PMSG}, \gls{MSC}, \gls{DC} circuit and \gls{GSC}. Three-level \gls{VSC}s are utilized for the \gls{MSC} and \gls{GSC}. The basic models for this project are considered from the MIGRATE project \cite{denis_migrate_2018}. The detailed description of the \gls{PMSG}, \gls{MSC} and \gls{DC} circuit models along with the control structures are explained in Appendix.{}. The control for \gls{GSC} developed in \cite{sethi_real-time_nodate-new} is modified and implemented in this thesis work. This is explained in detail in Section \ref{DVC_RSCAD}.
+The wind generation system consists of \gls{PMSG}, \gls{MSC}, \gls{DC} circuit and \gls{GSC}. Three-level \gls{VSC}s are utilized for the \gls{MSC} and \gls{GSC}. The basic models for this project are considered from the MIGRATE project \cite{denis_migrate_2018}. The detailed description of the \gls{PMSG}, \gls{MSC} and \gls{DC} circuit models along with the control structures are explained in Appendix \ref{Appendix_A}. The control for \gls{GSC} developed in \cite{sethi_real-time_nodate-new} is modified and implemented in this thesis work. This is explained in detail in Section \ref{DVC_RSCAD}.
 
 \begin{figure}[H]
 \text{\rotatebox{90}{\hspace{5mm}
@@ -146,37 +147,9 @@ The wind generation system consists of \gls{PMSG}, \gls{MSC}, \gls{DC} circuit a
     \label{fig:OveriewSmallTimeStepOWF}
 \end{figure}
 
-\subsubsection{Offshore Wind Farm Transformer}\label{scaling_OWF}
-The \gls{GSC} is connected in series to a three-phase offshore 66/2 kV, 6 MVA transformer through a series reactor and a shunt high pass filter as seen in Figure \ref{fig:OveriewSmallTimeStepOWF}. Single-phase \gls{VSC} interface transformer shown in Figure \ref{fig:VSC_interface_trafo_smalldt} available in the small time step library is used for this approach. Three transformers each rated 2 MVA are connected in delta-wye configuration as seen in Figure \ref{fig:OveriewSmallTimeStepOWF}. In RSCAD, the scaling up of power is done at this transformer. The option for scaling up the primary current of the transformer is available in the \gls{VSC} interface transformer block as shown in Figure \ref{fig:VSC_interface_trafo_scaling} \cite{rtds_tech}. The user can control the amount of scaling, i.e. the number of parallel units by a slider, as shown in Figure \ref{fig:scaling_factor_RSCAD}. The user can model the components in the secondary side of the transformer as required for a single \gls{WG} and then scale it to the required power (700 MW in this case).
-
-\begin{figure}[H]
-\centering
-%\hspace*{-4.2cm}
-    \includegraphics[height = 4cm,width = 4cm]{Diagrams/Chapter_3/VSC_interface_trafo_smalldt.PNG}
-    \caption{VSC Interface Transformer}
-    \label{fig:VSC_interface_trafo_smalldt}
-\end{figure}
-\vspace{0 mm}
-\begin{figure}[H]
-\centering
-\begin{subfigure}{.55\textwidth}
-  \centering
-  \includegraphics[height=5cm,width=10cm]{Diagrams/Chapter_3/VSC_interface_trafo_scaling.PNG}
-  \caption{Option for scaling in VSC transformer}
-  \label{fig:VSC_interface_trafo_scaling}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[height=2cm,width=4.5cm]{Diagrams/Chapter_3/scaling_factor_RSCAD.PNG}
-  \caption{Scaling factor}
-  \label{fig:scaling_factor_RSCAD}
-\end{subfigure}
-\caption{Scaling up of power in RSCAD}
-\label{fig:VSC_trafo_options}
-\end{figure}
 
 \subsubsection{High Pass Filter (HPF) with Series Reactor}\label{HPF_design}
-The switching operation of converters leads to the generation of harmonics. Thereby, to mitigate these harmonics, filters are provided at the output of the converter. There are various types of filters available for this application. The common ones are the LCL filter, L filter and high pass filter \cite{beres_review_2016}. In RSCAD, there is a high pass filter block readily available in the small time step library, as shown in Figure \ref{fig:HPF} \cite{rtds_tech}. It is chosen by selecting the \gls{VSC} branch model in this library and changing the branch type to "HIPASS". A three-phase inductance branch is chosen by selecting the branch type to "L" and connected as the series reactor, as shown in Figure \ref{fig:OveriewSmallTimeStepOWF}. After the \gls{HPF} parameters are calculated and set, then it would only be required to tune the inductance of the series reactor to limit the flow of current by adding impedance and hence stabilizing the voltage. Hence it was decided to go with \gls{HPF}.
+The switching operation of converters leads to the generation of harmonics. Thereby, to mitigate these harmonics, filters are provided at the output of the \gls{GSC}. There are various types of filters available for this application. The common ones are the LCL filter, L filter and high pass filter \cite{beres_review_2016}. In RSCAD, there is a high pass filter block readily available in the small time step library, as shown in Figure \ref{fig:HPF} \cite{rtds_tech}. It is chosen by selecting the \gls{VSC} branch model in this library and changing the branch type to "HIPASS". A three-phase inductance branch is chosen by selecting the branch type to "L" and connected as the series reactor, as shown in Figure \ref{fig:OveriewSmallTimeStepOWF}. After the \gls{HPF} parameters are calculated and set, then it would only be required to tune the inductance of the series reactor to limit the flow of current by adding impedance and hence stabilizing the voltage. Hence it was decided to go with \gls{HPF}.
 
 \begin{figure}[H]
 \centering
@@ -219,7 +192,36 @@ Upon deriving the inductance, the resistance is selected to match the impedance 
     R = \omega* L = (2\pi*950 Hz)*5.8783*10^{-5} H = 0.3508 \Omega
 \end{equation}
 
-The series reactor is used for limiting the current to the \gls{AC} network. The inductance value of the reactor was selected after precise tuning and is set to 0.9 mH to achieve voltage of 1 p.u. at the \gls{PCC}.  
+The series reactor is used for limiting the current to the \gls{AC} network. The inductance value of the reactor was selected after precise tuning and is set to 0.9 mH to achieve voltage of 1 p.u. at the \gls{PCC}.
+
+\subsubsection{Offshore Wind Farm Transformer}\label{scaling_OWF}
+The \gls{GSC} is connected in series to a three-phase offshore 66/2 kV, 6 MVA transformer through a series reactor and a shunt high pass filter as seen in Figure \ref{fig:OveriewSmallTimeStepOWF}. Single-phase \gls{VSC} interface transformer shown in Figure \ref{fig:VSC_interface_trafo_smalldt} available in the small time step library is used for this approach. Three transformers each rated 2 MVA are connected in delta-wye configuration as seen in Figure \ref{fig:OveriewSmallTimeStepOWF}. In RSCAD, the scaling up of power is done at this transformer. The option for scaling up the primary current of the transformer is available in the \gls{VSC} interface transformer block as shown in Figure \ref{fig:VSC_interface_trafo_scaling} \cite{rtds_tech}. The user can control the amount of scaling, i.e. the number of parallel units by a slider, as shown in Figure \ref{fig:scaling_factor_RSCAD}. The user can model the components in the secondary side of the transformer as required for a single \gls{WG} and then scale it to the required power (700 MW in this case).
+
+\begin{figure}[H]
+\centering
+%\hspace*{-4.2cm}
+    \includegraphics[height = 4cm,width = 4cm]{Diagrams/Chapter_3/VSC_interface_trafo_smalldt.PNG}
+    \caption{VSC Interface Transformer}
+    \label{fig:VSC_interface_trafo_smalldt}
+\end{figure}
+\vspace{0 mm}
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.55\textwidth}
+  \centering
+  \includegraphics[height=5cm,width=10cm]{Diagrams/Chapter_3/VSC_interface_trafo_scaling.PNG}
+  \caption{Option for scaling in VSC transformer}
+  \label{fig:VSC_interface_trafo_scaling}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[height=2cm,width=4.5cm]{Diagrams/Chapter_3/scaling_factor_RSCAD.PNG}
+  \caption{Scaling factor}
+  \label{fig:scaling_factor_RSCAD}
+\end{subfigure}
+\caption{Scaling up of power in RSCAD}
+\label{fig:VSC_trafo_options}
+\end{figure}
 
 \subsection{HVAC Cables}\label{HVAC_cable_RSCAD}
 The \gls{HVAC} cables transfer power from the \gls{OWF} transformer to the  equivalent 66 kV \gls{AC} source. The \gls{HVAC} cables are rated at 66 kV and modelled in the large time step environment. When compared to 33 kV \gls{HVAC} cable system, 66kV cables allow twice the amount of power to be transferred for the same area of cross-section and require lower array cabling \cite{dnv66kv}. 
@@ -278,7 +280,7 @@ The equivalent source shows the grid connection and is modelled as an \gls{AC} v
 \section{Control structures}
 The control strategies are implemented in the \gls{MSC} and \gls{GSC} of the \gls{WG}. The decoupled current control architecture utilized in \gls{MSC} is explained in Appendix.[]. The major area of interest for this thesis is the control strategy of \gls{GSC}. The \gls{DVC} illustrated in Section \ref{DVC_theory} is implemented in the \gls{GSC}.   
 
-\section{Implementation of DVC in GSC}\label{DVC_RSCAD}
+\section{Implementation of DVC in RSCAD}\label{DVC_RSCAD}
 The control strategy depicted in \cite{korai_dynamic_2019} is achieved in RSCAD software. The control was implemented in RSCAD in \cite{sethi_real-time_nodate-new} for a 33 kV transmission network, but the final goal of achieving reactive current injection during severe dynamic conditions was lacking. The primary reason was due to the current limiter block that is explained later in this section. The block is implemented successfully in this work, and the results are illustrated. 
 As RSCAD allows modelling of the secondary side of the transformer as required for one \gls{WG}, the control loop parameters of \gls{GSC} remain the same as 33 kV for a 66 kV offshore network and are based on the benchmark values provided in \cite{korai_98_nodate}. The control strategy described in Section \ref{DVC_theory} is incorporated in the reactive power and active power control loops defined in the following section. 
 
@@ -400,20 +402,22 @@ The Draft module is compiled, and after ensuring no errors, the system is run in
 The three-phase line to ground fault is applied at 0.5 s with a fault clearing time of 140 ms. The voltage and frequency responses are as shown in Figure \ref{fig:Vol_Freq_3phaseSC}. In the pre-fault condition, the voltage is stabilized and the active current of nearly 1 p.u. is provided by the \gls{GSC}. There is no reactive current or reactive power injection during this time. During the time of fault, the voltage drops at \gls{PCC} as expected for a three-phase line to ground fault (Figure \ref{fig:Vol_Freq_3phaseSC} a)). \gls{DVC} allows reactive current and hence reactive power to be injected by \gls{GSC} during the time of fault to support the voltage, as shown in Figure \ref{fig:ID_IQ_fullACSource}. The corresponding behaviour is a major requirement as per the grid codes during dynamic conditions, as mentioned in \cite{mohseni_review_2012}. At the same time, the active current and thus active power is limited, and hence there is no generation from the \gls{WG} (Figure \ref{fig:ID_IQ_fullACSource}). Simultaneously, the voltage across DC-link increases in order to maintain the power balance as per the Equation \ref{powbaleq}. The chopper gets activated when \gls{DC} voltage goes beyond a particular limit in order to protect the \gls{DC} link from overvoltage. After the fault is cleared, the \gls{DVC} allows for quick recovery and voltage and powers return to the pre-fault values. There is no major drop in frequency as well since there are no loads connected to the \gls{OWF} (Figure \ref{fig:Vol_Freq_3phaseSC} b)). Hence the frequency control does not get activated since deviation is less than 49.8 Hz and 50.2 Hz. Another important observation is the transients in the currents during the occurrence of the fault in Figure \ref{fig:ID_IQ_fullACSource}. These are due to the dynamic effects that arise due to the exclusion of an integrator \cite{korai_dynamic_2019}. It can be controlled by proper tuning of washout filters.
 
 \begin{figure}[H]
-%\centering
+\centering
 \hspace*{-2cm}
-    \includegraphics[height = 6cm,width = 18.5cm]{Diagrams/Chapter_3/VACP_Freq_Final_2.eps}
+    \includegraphics[height = 7cm,width = 18.5cm]{Diagrams/Chapter_3/VACP_Freq_Final_3.eps}
     \caption{a) Voltage at PCC and b) Frequency response synthesised by PLL following a three phase fault in the middle of the cable}
     \label{fig:Vol_Freq_3phaseSC}
 \end{figure}
 
+
 \begin{figure}[H]
 %\centering
 \hspace*{-0.1cm}
-    \includegraphics[height = 6.5cm,width = 15.5cm]{Diagrams/Chapter_3/ID_IQ_Final_2.eps}
+    \includegraphics[height = 6.5cm,width = 15.5cm]{Diagrams/Chapter_3/ID_IQ_Final_3.eps}
     \caption{Active and reactive currents flowing to the network for a three phase fault in the middle of the cable}
     \label{fig:ID_IQ_fullACSource}
 \end{figure}
+
 
 \subsubsection{Parameter selection for Washout Filters}\label{para_selection_washout}
 The damping during the transient process mentioned in Section \ref{DVC_theory} is ensured by the washout filters in the active power and reactive power control loops as seen in Figure \ref{fig:Active_Power_Control_Loop} and Figure \ref{fig:Reactive_Power_Control_Loop} respectively. The parameters for the washout filters need to be chosen wisely in order to ensure fast damping of transients. The output of the washout filter for various proportional gains for a step response is depicted in Figure \ref{fig:Washout_gain_output}. The proportional gain represents value to which the output of the washout filter changes when there is a change in the input. The time constant represents the rate of this change. It can be seen that the output of the washout filter changes proportionally to the gain value specified and comes back to the initial value after a specific time, depending on the time constant mentioned.
@@ -430,11 +434,21 @@ Effect of this property of the washout filter is observed in active and reactive
 \end{figure}
 
 \begin{figure}[H]
-%\centering
-\hspace*{-2cm}
-    \includegraphics[height = 7.5cm,width = 20.5cm]{Diagrams/Chapter_3/ID_IQ_Washout_comp_2.eps}
-    \caption{Active and reactive currents when active and reactive power loops washout filter proportional a) gain = 0.01, b) gain = 0.03 and c) gain = 0.05 }
-    \label{fig:ID_IQ_Washout_comp}
+\centering
+\begin{subfigure}{0.5\textwidth}
+  \centering
+  \includegraphics[height = 7cm,width = 9cm]{Diagrams/Chapter_3/ID_Washout_Comp.eps}
+  \caption{Sending end terminal}
+  \label{fig:CableParaBlock_sen_term}
+\end{subfigure}%
+\begin{subfigure}{0.5\textwidth}
+  \centering
+  \includegraphics[height = 7cm,width = 9cm]{Diagrams/Chapter_3/IQ_Washout_Comp.eps}
+  \caption{Receiving end terminal}
+  \label{fig:CableParaBlock_rec_term}
+\end{subfigure}
+\caption{Configuration of the terminal blocks}
+\label{fig:Terminal_options}
 \end{figure}
 
 \section{DIgSILENT PowerFactory Software}
@@ -478,11 +492,11 @@ The \gls{DC} voltage across the capacitor is set to 4 kV. The chopper activation
 \subsubsection{Line Side Converter (LSC)}
 Unlike the RSCAD model, a two-level \gls{LSC} is utilized in this model. The \gls{PWM} is not used in this model, and the \gls{LSC} is modelled as a controlled voltage source. This is one among the major difference with the RSCAD model. The \gls{DVC} control for \gls{LSC} developed in \cite{korai_dynamic_2019} is provided in this model as explained in Section \ref{DVC_RSCAD}. The representation in PowerFactory is depicted in Appendix. [] 
 
-\subsection{OWF Transformer}
-A two winding transformer available in the equipment library folder of DIgSILENT library is used. The transformer is rated 66/2 kV, 750 MVA with a delta-wye configuration. The leakage inductance and resistance of the transformer are set the same as the RSCAD model.
-
 \subsection{High Pass Filter (HPF) with Series Reactor}
 The shunt filter available in the PowerFactory drawing toolbar is chosen. The values for R, L and C are chosen the same as mentioned in Section \ref{HPF_design}. A common impedance element available in the drawing tool is chosen for the series reactor and is connected at the output of \gls{LSC}, as shown in Figure \ref{fig:WT1_Model_PFD_comp}. The inductance value chosen is the same as the RSCAD model to have an equal impedance for both the models.  
+
+\subsection{OWF Transformer}
+A two winding transformer available in the equipment library folder of DIgSILENT library is used. The transformer is rated 66/2 kV, 750 MVA with a delta-wye configuration. The leakage inductance and resistance of the transformer are set the same as the RSCAD model.
 
 \subsection{HVAC Cables}
 The cables are rated at 66 kV same as the RSCAD model. The cable is modelled from the "Cables" section available in the equipment library in DIgSILENT library. The type of model is chosen to be the Pi model. %as shown in Figure \ref{fig:CableModel_PFD}. 
@@ -553,10 +567,28 @@ The 66 kV offshore network model in RSCAD and PowerFactory are compared for a th
 
 The currents in both the models also have a similar profile, as summarized in Figure \ref{fig:ID_IQ_Comp}. The active and reactive currents generated by the \gls{WG} have the same set points in both the models during the steady state conditions confirming that the power flow in both the models is similar. The reactive power injection in RSCAD model during the time of fault is achieved similar to the PowerFactory model. The transients occurring during the time of fault can be damped by controlling the parameters of the washout filters, as seen in Section \ref{para_selection_washout}. The spike in the profiles is due to the dynamics of the \gls{PLL}. Therefore, it can be concluded that the RSCAD model with the implemented \gls{DVC} provides accurate results similar to the benchmark PowerFactory model and can be used as a base model for reference as it provides a better representation of the real-world operation.  
 
+\begin{comment}
 \begin{figure}[H]
 \centering
 %\hspace*{-1.2cm}
     \includegraphics[height = 6.5cm,width = 14.5cm]{Diagrams/Chapter_3/ID_IQ_Comp_New_3.eps}
     \caption{Active and reactive currents measured for a three phase fault in the middle of the cable in RSCAD and PowerFactory}
     \label{fig:ID_IQ_Comp}
+\end{figure}
+\end{comment}
+
+\begin{figure}[H]
+%\centering
+\hspace*{-0.1cm}
+    \includegraphics[height = 6.5cm,width = 15.5cm]{Diagrams/Chapter_3/ID_RSCAD_PFD_Comp.eps}
+    \caption{Active and reactive currents flowing to the network for a three phase fault in the middle of the cable}
+    \label{fig:ID_IQ_fullACSource}
+\end{figure}
+
+\begin{figure}[H]
+%\centering
+\hspace*{-0.1cm}
+    \includegraphics[height = 6.5cm,width = 15.5cm]{Diagrams/Chapter_3/IQ_RSCAD_PFD_Comp.eps}
+    \caption{Active and reactive currents flowing to the network for a three phase fault in the middle of the cable}
+    \label{fig:ID_IQ_fullACSource}
 \end{figure}

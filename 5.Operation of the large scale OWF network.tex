@@ -1,152 +1,245 @@
-\chapter{Operation of the Large Scale OWF network}\label{5}
-Connecting a large scale offshore wind farm network to the offshore converter stations has always been a challenge. In the chapter, the operation scheme of the 2 GW offshore network is detailed. Firstly, the initial conditions of the converters are depicted and then the stage-wise synchronization and operation of the network is explained. Later, dynamic analysis is performed for severe disturbances in the network such as sudden disconnection of one set of \gls{WG} and a three phase line to ground fault in the middle of the cable.
+\chapter{Analysis of the Dynamic Performance of 2 GW, 66 kV HVAC Offshore Network}\label{5}
 
-\section{Pre-set conditions of the converters}
-In order to analyse the dynamic and steady state operation of the network, the controllers and set points need to be initialised before charging. They are set as following:
+Connecting a large scale \gls{OWF} network to an offshore-onshore \gls{HVDC} link has always been a challenge. In this chapter, the operation scheme of the 2 GW offshore network presented in Chapter \ref{4} is simulated and analyzed. Firstly, the initial conditions of the converters are defined and then the stage-wise synchronization and operation of the network is explained. Later, the network is tested for short-term voltage stability and the power flow analysis for severe disturbances such as sudden disconnection of one set of \gls{WG} and a three phase line to ground fault in the middle of a \gls{HVAC} cable.
+
+\begin{figure}[H]
+\centering
+%\hspace*{-1.5cm}
+    \includegraphics[height = 12cm,width = 17cm]{Diagrams/Chapter_4/WT4_MMC2_new.pdf}
+    \caption{Single line diagram of 2 GW, 66 kV HVAC offshore network connected to 2 x 1 GW HVDC links with offshore MMC stations in RSCAD}
+    \label{fig:WT4_MMC2_Chap5}
+\end{figure}
+
+\section{General settings, Control modes and Pre-set conditions}
+The simulation time step for all the simulations are set to 50 $\mu$s. All plots are simulated for a span of 5 seconds. All the fault or switching events are timed to occur at 0.5 second of the simulation. The three-phase voltage and current graphs for all simulations are plotted for a shorter time span to have a clearer view of the signals during the occurrence of an event. However, the voltage in p.u., active and reactive power graphs are plotted for the whole time span (5 seconds) to analyze the voltage stability and power flow in the network during the simulation. In order to analyse the dynamic and steady state operation of the network, the controllers and set points need to be initialised before charging. They are set as following:
 
 \begin{itemize}
     \item \gls{MMC}-1:
     \begin{itemize}
-        \item \gls{AC} voltage control, V$_{ac,ref}$ = 1 p.u.
-        \item Islanded mode operation
+        \item Islanded mode operation (U/F control)
+        \item \gls{AC} voltage control, V$_{PCC\_{ref}}$ = 1 p.u. (Reference \gls{AC} voltage)
     \end{itemize}
 \end{itemize}
 
 \begin{itemize}
     \item \gls{MMC}-2:
     \begin{itemize}
-        \item Active power control, $I_{d\_ref}$ = 0
         \item Non-islanded mode operation
-        \item Id priority
+        \item Active power control, $I_{d\_ref\_2}$ = 0 (No power flow through \gls{MMC}-2 in the initial conditions)
+        %\item Id priority
     \end{itemize}
 \end{itemize}
 
-\section{Charging of MMCs and converter transformers}
-The \gls{AC} side of \gls{MMC}s are to be connected for charging scenario. Since the \gls{DC} side is connected to battery sources, the charging of \gls{HVDC} cables is not considered for this study. As mentioned in the previous chapter, \gls{MMC}-1 works as grid forming (U/F control) and \gls{MMC}-2 works as grid following (active power control). Once the simulation is started, the voltage reference for the \gls{MMC} bus is provided by \gls{MMC}-1 and both the \gls{MMC}s are synchronized with 66 kV voltage on the \gls{AC} side. The offshore converter transformers are also energized in this process. The synchronism between both the \gls{MMC}s can be viewed from the \gls{MMC} bus voltage in Figure \ref{fig:VACP_MMC_1_2_sync}. 1 p.u. is achieved when synchronized. There are no currents flowing through the \gls{MMC}s as the \gls{WG}s are not yet connected as shown in Figure \ref{fig:IABC_MMC_1_2_sync}.
+\begin{itemize}
+    \item Network:
+    \begin{itemize}
+        \item Circuit breakers (CB-1a, CB-1b, CB-2a, CB-2b, CB-3a, CB-3b, CB-4a, CB-4b, CB-5a and CB-6a) in open condition
+    \end{itemize}
+\end{itemize}
+
+\section{Synchronization of the offshore MMC stations}
+The \gls{AC} side of \gls{MMC}s are to be connected to simulate the synchronization scenario. Since the \gls{DC} side is connected to battery sources, the charging of \gls{HVDC} cables is not considered for this study. As mentioned in Section \ref{control_structures} in Chapter \ref{4}, \gls{MMC}-1 works as grid forming (U/F control) and \gls{MMC}-2 works as grid following (active power control). Once the simulation is started, the network is charged until the secondary side of interface transformer, IT-1. The point of measurement of voltages, currents and powers for the \gls{MMC} stations are at the \gls{LV} side of IT-1 for converter station-1 and \gls{LV} side of IT-2a for converter station-2. The voltage at both the buses are the same as the \gls{MMC} bus voltage, as they are connected to the same bus. Firstly, the circuit breaker, CB-5a is closed and the \gls{MMC} bus is charged. The \gls{MMC} bus voltage builds up to rated 66 kV \footnote{(Phase peak voltage = $66\times \frac{\sqrt{2}}{\sqrt{3}} = 53.88 kV)$} voltage on the \gls{AC} as shown in Figure \ref{fig:VABC_MMC_1_2_CB_5a} and in terms of per unit to nearly 0.98 p.u. as shown in Figure \ref{fig:VACP_MMC_1_2_CB_5a}. The currents at the measurement points for both the buses also increase and settles as shown in Figure \ref{fig:IABC_MMC_1_2_CB_5a}. The current takes nearly 0.35 seconds to settle after the closing of the breaker due to the charging of transformer IT-2a is also done in this process. 
+
+\begin{figure}[H]
+%\centering
+\hspace*{-1.2cm}
+    \includegraphics[height = 7cm,width = 18.5cm]{Diagrams/Chapter_5/VABC_MMC_1_2_CB_5a.eps}
+    \caption{MMC bus voltage in kV upon CB-5a closing operation}
+    \label{fig:VABC_MMC_1_2_CB_5a}
+\end{figure}
 
 \begin{figure}[H]
 \centering
 %\hspace*{-1.2cm}
-    \includegraphics[height = 5.5cm,width = 8cm]{Diagrams/Chapter_5/VACP_MMC_1_2_sync.eps}
-    \caption{Voltage at MMC common bus after synchronization}
-    \label{fig:VACP_MMC_1_2_sync}
+    \includegraphics[height = 7.5cm,width = 10cm]{Diagrams/Chapter_5/VACP_MMC_1_2_CB_5a.eps}
+    \caption{MMC bus voltage in p.u. upon CB-5a closing operation}
+    \label{fig:VACP_MMC_1_2_CB_5a}
 \end{figure}
 
 \begin{figure}[H]
 %\centering
 \hspace*{-1.2cm}
-    \includegraphics[height = 8.5cm,width = 18.5cm]{Diagrams/Chapter_5/IABC_MMC_1_2_sync.eps}
-    \caption{Currents in a) MMC-1 bus and b) MMC-2 bus after synchronization}
-    \label{fig:IABC_MMC_1_2_sync}
+\subfloat[Current in MMC-1 bus]{%
+  \includegraphics[height = 7cm,width = 18.5cm]{Diagrams/Chapter_5/IABC_MMC_1_CB_5a.eps}%
+\label{fig:IABC_MMC_1_CB_5a}}
+
+\hspace*{-1.2cm}
+\subfloat[Current in MMC-2 bus]{%
+  \includegraphics[height = 7cm,width = 18.5cm]{Diagrams/Chapter_5/IABC_MMC_2_CB_5a.eps}%
+\label{fig:IABC_MMC_2_CB_5a}}
+
+\caption{Currents in a) MMC-1 bus and b) MMC-2 bus upon CB-5a closing operation}
+\label{fig:IABC_MMC_1_2_CB_5a}
 \end{figure}
 
-\section{Energization of the HVAC cables and WGs}
-The energization procedure of the \gls{AC} network followed in this work involves charging each \gls{HVAC} cable and the following \gls{WG}. In real scenario, such a procedure allows for operation of the \gls{WG}s that are tested and ready for commissioning even if other sets of \gls{WG}s are under construction. Initially cable-1 is charged and then \gls{WG}-1 is connected. The same is followed for the other sets of \gls{WG}s as well. Each \gls{WG} is rated at 6 MW nominal power capacity and they have a maximum scaling rated capacity of 500 MW. For the energization process, the \gls{WG}s are connected initially with lower generation of nearly 50 MW power to avoid surge of voltage at \gls{PCC} and to maintain the voltage within limits. Once stability is attained after connecting all the \gls{WG}s, the generation is incremented. Since power only flows through \gls{MMC}-1 until then, the increment can be until the maximum capacity of \gls{MMC}-1 i.e. 1 GW. All events are timed to take place at 0.5 seconds of the simulation.   
+The next step is to close the circuit breaker, CB-6a to connect \gls{MMC}-2 to the network and hence synchronizing it with \gls{MMC}-1.   The voltage at the \gls{MMC} bus remains the same after connecting \gls{MMC}-2 as shown in Figures \ref{fig:VABC_MMC_1_2_CB_6a} and \ref{fig:VACP_MMC_1_2_CB_6a} since the voltage reference is provided and maintained by \gls{MMC}-1. The currents also remain the same in both the buses after \gls{MMC}-2 connection as seen in Figure \ref{fig:IABC_MMC_1_2_CB_6a}. Now both the converter stations are synchronized and running.
 
-The cable-1 gets energized when the CB-1a circuit breaker, as shown in Figure \ref{fig:WT4_MMC2}, is switched on. The current in the cable is shown in Figure \ref{IABC_MMC_1_Cab1_Cab1charg}(b). The active power reference for the \gls{MMC}-2 is not changed and hence there is no power flowing through \gls{MMC}-2 bus and power flows only through \gls{MMC}-1 as seen from the currents of \gls{MMC}-1 in Figure \ref{IABC_MMC_1_Cab1_Cab1charg}(a). The slight disturbances observed during the switching operation, before the currents stabilize to a particular value, is due to the interaction between the controllers of \gls{MMC}-1 and \gls{MMC}-2. Voltage at the \gls{MMC} common bus is also increased slightly and set to a value of nearly 1.05 p.u. as seen in Figure \ref{VACP_MMC_bus_Cab1charg}.
+
+\begin{figure}[H]
+%\centering
+\hspace*{-1.2cm}
+    \includegraphics[height = 7cm,width = 18.5cm]{Diagrams/Chapter_5/VABC_MMC_1_2_CB_6a.eps}
+    \caption{Voltage in kV in MMC bus upon CB-6a closing operation}
+    \label{fig:VABC_MMC_1_2_CB_6a}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 7.5cm,width = 10cm]{Diagrams/Chapter_5/VACP_MMC_1_2_CB_6a.eps}
+    \caption{Voltage in p.u. in MMC bus upon CB-6a closing operation}
+    \label{fig:VACP_MMC_1_2_CB_6a}
+\end{figure}
+
+\begin{figure}[H]
+%\centering
+\hspace*{-1.2cm}
+\subfloat[Current in MMC-1 bus]{%
+  \includegraphics[height = 7cm,width = 18.5cm]{Diagrams/Chapter_5/IABC_MMC_1_CB_6a.eps}%
+\label{fig:IABC_MMC_1_CB_5a}}
+
+\hspace*{-1.2cm}
+\subfloat[Current in MMC-2 bus]{%
+  \includegraphics[height = 7cm,width = 18.5cm]{Diagrams/Chapter_5/IABC_MMC_2_CB_6a.eps}%
+\label{fig:IABC_MMC_2_CB_5a}}
+
+\caption{Currents in a) MMC-1 bus and b) MMC-2 bus upon CB-6a closing operation}
+\label{fig:IABC_MMC_1_2_CB_6a}
+\end{figure}
+
+\section{Energization of the HVAC cables and WGs}\label{energization_HVAC_Cables}
+The energization procedure of the \gls{AC} network followed in this work involves charging of each \gls{HVAC} cable and the corresponding \gls{OWF}. Initially cable-1 is charged and then \gls{OWF}-1 is connected. The same is followed for the other sets of \gls{OWF}s as well. As mentioned in Section \ref{Aggregated_OWF_large_scale} in Chapter \ref{4}, each \gls{OWF} have a maximum capacity of 500 MW that is represented by scaling up (by using the scaling factor function in RSCAD) of a \gls{WG} model of 6 MW rated power. For the energization process, the \gls{OWF}s are connected initially with lesser number of \gls{WG} units (9 $\times$ 6 = 48 MW) of nearly 50 MW power to avoid surge of voltage at \gls{PCC} and to maintain the voltage within limits. Once stability is attained after connecting all the \gls{OWF}s, the scaling in all \gls{OWF}s is incremented. Since power only flows through \gls{MMC}-1 until then, the increment can be until the maximum capacity of \gls{MMC}-1 i.e. 1 GW.
+
+The cable-1 gets energized when the CB-1a circuit breaker, as shown in Figure \ref{fig:WT4_MMC2_Chap5}, is switched on. The voltage at \gls{MMC} common bus is increased and set to a value of nearly 1.05 p.u. as seen in Figure \ref{VACP_MMC_bus_Cab1charg}. The current for cable charging is provided by \gls{MMC}-1 and the active power reference for the \gls{MMC}-2 is not changed in this process. Hence, current flow in \gls{MMC}-1 bus increases for cable-1 charging as shown in Figure \ref{fig:IABC_MMC_1_Cab1charg} and the current flow in \gls{MMC}-2 bus remains unchanged as shown in Figure \ref{fig:IABC_MMC_2_Cab1charg}. The disturbances observed during the switching operation at 0.5 seconds, before the currents stabilize to a particular value at 0.75 seconds, is due to the \gls{PI} parameters chosen for the U/F control in \gls{MMC}-1. Optimizing these parameters through small-signal stability analysis could achieve smoother signals. The current in cable-1 upon CB-1a closing is depicted in Figure \ref{fig:IABC_Cab1_Cab1charg}. 
 
 \begin{figure}[H]
 \centering
 %\hspace*{-1.2cm}
     \includegraphics[height = 6.5cm,width = 9cm]{Diagrams/Chapter_5/VACP_MMC_bus_Cab1charg.eps}
-    \caption{Voltage at MMC common bus after charging of cable-1}
+    \caption{Voltage at MMC bus upon charging of cable-1}
     \label{VACP_MMC_bus_Cab1charg}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-%\hspace*{-1.2cm}
-    \includegraphics[height = 8.5cm,width = 16.5cm]{Diagrams/Chapter_5/IABC_MMC_1_Cab1_Cab1charg.eps}
-    \caption{Charging of cable 1: a) Currents in MMC-1 b) Currents in cable-1}
-    \label{IABC_MMC_1_Cab1_Cab1charg}
-\end{figure}
-
-After cable-1 has been charged, the breaker at the \gls{WG}-1 end (CB-1b) is switched on. \gls{WG}-1 gets connected to the network. As mentioned earlier, the \gls{WG}-1 is connected initially with less generation to keep the voltage at \gls{PCC}-1 within limits. The initial high voltage at the \gls{PCC}-1 before closing the breaker as seen in Figure \ref{VACP_WT1_WT1connect} is due to the capacitance in the DC link. Once the breaker is closed, the voltage is maintained at nearly 1 pu as shown in Figure \ref{VACP_WT1_WT1connect} and currents in the \gls{PCC}-1 also increase as shown in Figure \ref{IABC_WT1_WT1connect}. The \gls{WG} starts generating 50 MW and this flows through \gls{MMC}-1 as shown in Figure \ref{P_MMC_1_2_WT1234connect} a). In a similar way all the other \gls{WG}s are connected. All \gls{WG}s are connected with 50 MW generation and a total power of 200 MW through \gls{MMC}-1 after connection of \gls{WG}-1, \gls{WG}-2, \gls{WG}-3 and \gls{WG}-4 can be seen from the graphs in Figure \ref{P_MMC_1_2_WT1234connect} a), b), c) and d) respectively. There is no flow of active power in \gls{MMC}-2 since the rated capacity of \gls{MMC}-1 is yet to be reached.
-
-\begin{figure}[H]
-\centering
-%\hspace*{-1.2cm}
-    \includegraphics[height = 5.5cm,width = 8cm]{Diagrams/Chapter_5/VACP_WT1_WT1connect.eps}
-    \caption{Voltage at PCC-1 after connecting WG-1 to the network}
-    \label{VACP_WT1_WT1connect}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-%\hspace*{-1.2cm}
-    \includegraphics[height = 6cm,width = 16.5cm]{Diagrams/Chapter_5/IABC_WT1_WT1connect.eps}
-    \caption{Currents at PCC-1 upon connecting WG-1 to the network}
-    \label{IABC_WT1_WT1connect}
 \end{figure}
 
 \begin{figure}[H]
 %\centering
 \hspace*{-1.2cm}
-    \includegraphics[height = 8.5cm,width = 18.5cm]{Diagrams/Chapter_5/P_MMC_1_2_WT1234connect.eps}
-    \caption{Active power in \gls{MMC}-1 and \gls{MMC}-2 upon connecting a) WG-1, b) WG-2, c) WG-3 and d) WG-4}
-    \label{P_MMC_1_2_WT1234connect}
+\subfloat[Current in MMC-1 bus]{%
+  \includegraphics[height = 7cm,width = 18.5cm]{Diagrams/Chapter_5/IABC_MMC_1_Cab1charg.eps}%
+\label{fig:IABC_MMC_1_Cab1charg}}
+
+\hspace*{-1.2cm}
+\subfloat[Current in MMC-2 bus]{%
+  \includegraphics[height = 7cm,width = 18.5cm]{Diagrams/Chapter_5/IABC_MMC_2_Cab1charg.eps}%
+\label{fig:IABC_MMC_2_Cab1charg}}
+
+\caption{Currents in a) MMC-1 bus b) MMC-2 bus upon CB-1a closing operation for charging of cable-1}
+\label{fig:IABC_MMC_1_2_CB_Cab1charg}
 \end{figure}
 
-Once the system gets stabilized, the generation is increased and voltage is ensured to be within limits at all \gls{PCC}s. The power flow to the \gls{MMC}-2 is to be controlled in the next step. This is done by controlling the active power reference of \gls{MMC}-2. It is changed in such a manner that there is equal distribution of power between \gls{MMC}-1 and \gls{MMC}-2. For this study, it is modelled such that all \gls{WG}s have the same scaling of power and hence they all produce the same amount of power at every instant. In small steps, the generation of the \gls{WG}s are increased and correspondingly the reference power to \gls{MMC}-2 is also changed. Finally, the \gls{WG}s are made to generate 500 MW each and the total of nearly 2 GW power is equally split between \gls{MMC}-1 and \gls{MMC}-2 as shown in Figure \ref{P_MMC_1_2_WT1234connect}.
+\begin{figure}[H]
+%\centering
+\hspace*{-1.2cm}
+    \includegraphics[height = 7cm,width = 18.5cm]{Diagrams/Chapter_5/IABC_Cab1_Cab1charg.eps}
+    \caption{Currents in cable-1 charging of cable-1}
+    \label{fig:IABC_Cab1_Cab1charg}
+\end{figure}
+
+After cable-1 has been charged, the breaker at the \gls{OWF}-1 end (CB-1b) is switched on. \gls{OWF}-1 gets connected to the network. As mentioned in Section \ref{energization_HVAC_Cables}, the \gls{OWF}-1 is connected initially with less generation to keep the voltage at \gls{PCC}-1 within limits. The initial high voltage at the \gls{PCC}-1 before closing the breaker as seen in Figure \ref{VACP_WT1_WT1connect} is due to the capacitance in the DC link. Once the breaker is closed, the voltage is maintained at nearly 1 p.u. as shown in Figure \ref{VACP_WT1_WT1connect} and the currents in \gls{PCC}-1 also increase as shown in Figure \ref{IABC_WT1_WT1connect}. The \gls{OWF} starts generating 50 MW and this flows through \gls{MMC}-1 as shown in Figure \ref{P_MMC_1_2_WT1234connect} a). In a similar way all the other \gls{OWF}s are connected. All \gls{OWF}s are connected with 50 MW generation. A total power of 200 MW through \gls{MMC}-1 after connection of \gls{OWF}-1, \gls{OWF}-2, \gls{OWF}-3 and \gls{OWF}-4 is clearly depicted in Figure \ref{P_MMC_1_2_WT1234connect}a). There is no flow of active power in \gls{MMC}-2 (Figure \ref{P_MMC_1_2_WT1234connect}b)) since the rated capacity of 1 GW of \gls{MMC}-1 is yet to be reached.
 
 \begin{figure}[H]
 \centering
 %\hspace*{-1.2cm}
-    \includegraphics[height = 5.5cm,width = 8cm]{Diagrams/Chapter_5/P_MMC_1_2_All_WTconnect.eps}
+    \includegraphics[height = 6.5cm,width = 9cm]{Diagrams/Chapter_5/VACP_WT1_WT1connect.eps}
+    \caption{Voltage at PCC-1 upon connecting OWF-1 with 50 MW generation to the network}
+    \label{VACP_WT1_WT1connect}
+\end{figure}
+
+\begin{figure}[H]
+%\centering
+\hspace*{-1.2cm}
+    \includegraphics[height = 8.5cm,width = 19.5cm]{Diagrams/Chapter_5/IABC_WT1_WT1connect.eps}
+    \caption{Currents at PCC-1 upon connecting OWF-1 with 50 MW generation to the network}
+    \label{IABC_WT1_WT1connect}
+\end{figure}
+
+\begin{figure}[H]
+%\centering
+\hspace*{-1.7cm}
+    \includegraphics[height = 8.5cm,width = 20.5cm]{Diagrams/Chapter_5/P_MMC_1_2_WT1234connect.eps}
+    \caption{Active power in a) MMC-1 and b) MMC-2 upon connecting all OWFs}
+    \label{P_MMC_1_2_WT1234connect}
+\end{figure}
+
+Once the system gets stabilized, the generation is increased in steps by increasing the number of parallel \gls{WG} units. On doing so, the voltage is ensured to be within limits at all \gls{PCC}s. The power flow to the \gls{MMC}-2 is to be controlled in the next step. This is done by controlling the active power reference of \gls{MMC}-2. For this study, it is modelled such that all \gls{OWF}s have the same scaling of power and hence they all produce the same amount of power at every instant. An step-by-step increment of 50 MW in all \gls{OWF} is done and correspondingly the active power reference for \gls{MMC}-2 is also increased. Finally, the \gls{OWF}s are made to generate 500 MW each and the total of nearly 2 GW power is equally split between \gls{MMC}-1 and \gls{MMC}-2 having nearly 960 MW active power in each as seen from the final steady state plots in Figure \ref{P_MMC_1_2_All_WTconnect}.
+
+\begin{figure}[H]
+\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 6cm,width = 9cm]{Diagrams/Chapter_5/P_MMC_1_2_All_WTconnect.eps}
     \caption{Active power in MMC-1 and MMC-2 upon connecting all 4 WGs in full generation}
     \label{P_MMC_1_2_All_WTconnect}
 \end{figure}
 
-The synchronization of both \gls{MMC}s and the energization of the offshore \gls{AC} grid is done successfully. The offshore \gls{AC} grid converters and cables now operate at a voltage of 66 kV, the \gls{HVDC} voltage is set to 640 kV and the total active power transmitted is nearly 2 GW in the network. Frequency of the system is stabilized at 50 Hz and the power system is said to be operating in the steady state condition.  
+From Figure \ref{fig:VABC_MMC_1_2_CB_5a} to \ref{P_MMC_1_2_All_WTconnect}, it can be said that, by viewing the respective voltages, currents and powers, the synchronization of both \gls{MMC}s and the energization of the offshore \gls{AC} grid is done successfully. The offshore \gls{AC} grid converters and cables now operate at a voltage of 66 kV, the \gls{HVDC} voltage is set to 640 kV and the total active power transmitted is nearly 2 GW in the network. Frequency of the system is stabilized at 50 Hz and the power system is said to be operating in the steady state condition.  
 
 \section{Dynamic performance analysis}
-Fault events and perturbations occur in the grid and the components in the system must be able to withstand the voltage surges and fault currents for a specific time span. To analyse the performance and coordination of the different controllers in the network, the system was tested for different cases of perturbations.  
+Fault events and perturbations can occur in the grid and the components in the system must be able to withstand these voltage surges and fault currents for a short duration of time. The performance of the network in terms of short-term (fault occurring for a time span of 6-10 cycles accounting for 120 ms-200 ms) voltage stability and power flow is analysed. The coordination among different controllers available in the network is studied during severe perturbations in the network as described below.  
 
-\subsection{Disconnection of one set of WG}
-The first event is a sudden disconnection of 1 set of \gls{WG}. \gls{WG}-2 is permanently disconnected from the circuit by opening the breaker connected towards \gls{WG}-2 cable end (CB-2a) at 500 ms. Once the breaker is open, the generation is lost and the current flowing reduces as witnessed in Figure \ref{IABC_MMC_1_2_WT2off}. The power flow is reduced through \gls{MMC}-1 as shown in Figure \ref{P_MMC_1_2_WT2off} due to the fact that \gls{MMC}-1 is the one in grid forming control (absorbs and provides power) and also the active power reference of \gls{MMC}-2 is unchanged.
-In the post fault period, since the active power reference of \gls{MMC}-2 is not changed and the total amount of power is reduced, the flow of power is slightly more in \gls{MMC}-2 than in its pre-fault state as can be seen in Figure \ref{P_MMC_1_2_WT2off}. The \gls{MMC}-2 is seen to be operating with the maximum rated capacity of 1 GW in this condition.
+\subsection{Disconnection of one OWF}\label{disconnection_one_OWF}
+The first event is a sudden disconnection of one \gls{OWF}. \gls{OWF}-2 is permanently disconnected from the circuit by opening the breaker, CB-2a connected towards the \gls{OWF}-2 cable end at 0.5 seconds. Once the breaker is open, the generation of 500 MW is lost and the power flow is reduced through \gls{MMC}-1 as shown in Figure \ref{P_MMC_1_2_WT2off}. This is due to the fact that \gls{MMC}-1 is the one in grid forming control (provides power balance in the network) and also the active power reference of \gls{MMC}-2 is unchanged. In the post-fault period, the active power flow through \gls{MMC}-2 is seen to be higher than the pre-fault period. The reason for this can be justified from the increase in voltage at the \gls{OWF} side shown in the following section. \gls{MMC}-2 is seen to be operating with the maximum rated capacity of 1 GW in this condition. The decrease in generation in \gls{MMC}-1 can also be viewed from the current flowing in \gls{MMC}-1 as witnessed in Figure \ref{fig:IABC_MMC_1_WT2off} whereas the current remains the same in \gls{MMC}-2 as seen from the current graphs in Figure \ref{fig:IABC_MMC_2_WT2off}.  
+
 
 \begin{figure}[H]
 \centering
 %\hspace*{-1.2cm}
-    \includegraphics[height = 5.5cm,width = 8cm]{Diagrams/Chapter_5/P_MMC_1_2_WT2off.eps}
-    \caption{Active power in MMC-1 connected bus and MMC-2 connected bus during WG-2 disconnection event}
+    \includegraphics[height = 6cm,width = 9cm]{Diagrams/Chapter_5/P_MMC_1_2_WT2off.eps}
+    \caption{Active power in MMC-1 connected bus and MMC-2 connected bus during OWF-2 disconnection event}
     \label{P_MMC_1_2_WT2off}
 \end{figure}
 
 \begin{figure}[H]
 %\centering
 \hspace*{-1.2cm}
-    \includegraphics[height =8.5cm,width = 18.5cm]{Diagrams/Chapter_5/IABC_MMC_1_2_WT2off.eps}
-    \caption{Currents in a) MMC-1 bus and b) MMC-2 bus during WG-2 disconnection event}
-    \label{IABC_MMC_1_2_WT2off}
+\subfloat[Current in MMC-1 bus]{%
+  \includegraphics[height = 7cm,width = 18.5cm]{Diagrams/Chapter_5/IABC_MMC_1_WT2off.eps}%
+\label{fig:IABC_MMC_1_WT2off}}
+
+\hspace*{-1.2cm}
+\subfloat[Current in MMC-2 bus]{%
+  \includegraphics[height = 7cm,width = 18.5cm]{Diagrams/Chapter_5/IABC_MMC_2_WT2off.eps}%
+\label{fig:IABC_MMC_2_WT2off}}
+
+\caption{Currents in a) MMC-1 bus and b) MMC-2 bus during OWF-2 disconnection event}
+\label{fig:IABC_MMC_1_2_WT2off}
 \end{figure}
 
 
-In the \gls{OWF} side, the voltage at \gls{PCC}-2 goes to instability and is in the condition as before energizing. The currents and the voltages at the \gls{PCC}s of \gls{WG}s 1,3 and 4 observe transient during the instant of fault and then comes to a stable state. The voltage drops and there is a rise in current during the instant of fault, as shown in Figure \ref{IABC_WT1234_WT2off} and Figure \ref{VACP_WT134_WT2off} respectively. The voltage in the post-fault is slightly higher than pre-fault state. This happens in order to maintain sufficient amount of power to be transmitted to \gls{MMC}-2 for the specified active power reference without \gls{WG}-2 in the network. These can be observed in the graphs in Figure \ref{VACP_WT134_WT2off} and Figure \ref{IABC_WT1234_WT2off}.
+In the \gls{OWF}s side, the voltage at \gls{PCC}-2 goes to beyond bounds and is in the condition as before energizing. This can be observed from the voltage in p.u. graph in Figure \ref{VACP_WT134_WT2off}b). During the disconnection of \gls{OWF}-2, there occurs drop in voltage at \gls{PCC}-1, 3 and 4 as well as seen from the voltage graphs in Figure \ref{VACP_WT134_WT2off}a), c) and d). This happens since they are all connected to a common bus (\gls{MMC} bus). Moreover, in the post-fault period, the voltages at \gls{PCC}-1, 3 and 4 settles to a higher value (nearly 1.08 p.u.) than the pre-fault voltage in order to compensate for the loss of \gls{OWF}-2. But the currents at these \gls{OWF}s remain the same since the scaling factor for each \gls{OWF} is still 83 (83 $\times$ 6 = 498 MW). This can be viewed from the current measured at \gls{PCC}-1 in Figure \ref{IABC_WT1_WT2off}. Similar is the case for \gls{PCC}-3 and \gls{PCC}-4 and the graphs are shown in Appendix. As the voltage increases and the current remains the same, the active power generated from the \gls{OWF}- 1, 3 and 4 increases and therefore the power flowing through \gls{MMC}-2 also increases.
 
 \begin{figure}[H]
-\centering
-%\hspace*{-1.2cm}
-    \includegraphics[height = 6.5cm,width = 17.5cm]{Diagrams/Chapter_5/IABC_WT1234_WT2off.eps}
-    \caption{Currents at PCC-1, 3 and 4 during WG-2 disconnection event}
-    \label{IABC_WT1234_WT2off}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-%\hspace*{-1.2cm}
-    \includegraphics[height = 7.5cm,width = 9cm]{Diagrams/Chapter_5/VACP_WT134_WT2off.eps}
-    \caption{Voltages at PCC-1, 3 and 4 during WG-2 disconnection event}
+%\centering
+\hspace*{-1.7cm}
+    \includegraphics[height = 10.5cm,width = 20.5cm]{Diagrams/Chapter_5/VACP_WT1234_WT2off.eps}
+    \caption{Voltages at a) PCC-1, b) PCC-2, c) PCC-3 and d) PCC-4 during OWF-2 disconnection event}
     \label{VACP_WT134_WT2off}
 \end{figure}
 
-\subsection{Three phase line to ground fault}
+\begin{figure}[H]
+\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 6.5cm,width = 17.5cm]{Diagrams/Chapter_5/IABC_WT1_WT2off.eps}
+    \caption{Currents at PCC-1 during OWF-2 disconnection event}
+    \label{IABC_WT1_WT2off}
+\end{figure}
 
-Before the application of three-phase line to ground fault, a logic to operate the circuit breaker (CB-1a) at the cable-1 end is developed as shown in Figure \ref{fig:Fault_logic}. For the fault, the line to ground fault logic available in RSCAD library is used.
+\subsection{Three-phase line to ground fault}
 
-\subsubsection{Circuit breaker operation}\label{Fault logic and cb}
-Once the system is fully operational after connecting all the four \gls{WG}s and achieving 1 GW power in each \gls{MMC}s, the 'Activ' switch in Figure \ref{fig:Fault_logic} is turned on. This is done to provide the switching operation of the breaker. The system is still in steady state condition. This loop allows comparison of the RMS current ($I_{rms}$) and the maximum phase current ($I_{phase\_max}$) and provides control action for the circuit breaker. Once fault is applied, when $I_{rms}$ becomes greater than $I_{phase\_max}$, the SR flip flop detects the change and holds a value of zero for the signal 'SWD2A' (\gls{CB} operating signal). This action causes the breaker to open. The delay block before the signal provides the time delay for the operation of \gls{CB} after the fault has been detected.
+Before the application of three-phase line to ground fault, a logic to operate the circuit breaker (CB-1a) at the cable-1 end is developed as shown in Figure \ref{fig:Fault_logic}. This logic is inspired from the "Fault Control" model \footnote{Tutorial >> SAMPLES >> Mainstep >> Fault Control} available in RSCAD. For the fault, the line to ground fault component available in RSCAD library is used \cite{rtds_tech}.
+
+\subsubsection{Circuit Breaker (CB) operation logic}\label{Fault logic and cb}
+The logic is developed for the operation of the circuit breaker CB-1a in Figure \ref{fig:WT4_MMC2_Chap5} by detecting overcurrent. The signal 'SWD2A' is the signal for operating CB-1a. Initially, the breaker is closed during the energizing process using the switch 'CabMMC$\_$side'. Once the system is fully operational after connecting all the four \gls{OWF}s and achieving 2 GW power in the network, the 'Activ' switch in Figure \ref{fig:Fault_logic} is turned on. This is done to provide the switching operation of CB-1a by comparing the RMS current ($I_{rms}$) and the maximum phase current ($I_{phase\_max}$)\footnote{$I_{phase\_max}$ = 10 \% above $I_{phase}$ = 1.1 $\times$ $I_{phase}$
+
+$I_{phase}$ = $\frac{Apparent \;\; power \;\; in \;\; single-phase}{Line \;\; to \;\; neutral \;\; voltage}$} at CB-1a. The system is still in steady state condition. Once fault is applied, when $I_{rms}$ becomes greater than $I_{phase\_max}$, the SR flip flop detects the change and holds a value of zero for the signal 'SWD2A'. This action causes the breaker CB-1a to open. The delay block before the signal 'SWD2A' provides the time delay for the operation of \gls{CB} after the fault has been detected.
 
 \begin{figure}[H]
 \centering
@@ -156,25 +249,17 @@ Once the system is fully operational after connecting all the four \gls{WG}s and
     \label{fig:Fault_logic}
 \end{figure}
 
-In order to analyse the stability of the system under dynamic conditions, a permanent three-phase line to ground fault is applied in the middle of the \gls{WG}-1 cable. This allows the user to analyse the performance of the various control structures present in the network. The response of the system is recorded and depicted in Figure \ref{1516_3phaseSC} to Figure \ref{18_3phaseSC} for the event. The logic developed detects the over current in CB-1a at the cable-1 end which results in opening of the breaker. The overcurrent is detected at 0.53 seconds of the simulation from the developed logic and a short delay of nearly 12 ms is provided to open the breaker after the fault has been detected similar to a practical scenario (Figure \ref{Circuit_breaker_3phasefault}). After the breaker has been opened, the \gls{WG}-1 is taken out from the network and the total power provided to the onshore network is reduced. The total power in the pre-fault period is 2 GW and after the fault the total power is reduced to 1500 MW. This can be observed from the graphs in Figure \ref{17_3phaseSC}. As in the previous case, the power flow is reduced through \gls{MMC}-1 as shown in Figure \ref{1516_3phaseSC}. The graphs also depict that, after the breaker has been opened, the system gets to a stable operation. 
-
-\begin{figure}[H]
-\centering
-%\hspace*{-1.2cm}
-    \includegraphics[height = 6.5cm,width = 9.5cm]{Diagrams/Chapter_5/IABC_CB_3phaseSC_new_2.eps}
-    \caption{Currents in circuit breaker (CB-1a) during three-phase line to ground fault in cable-1}
-    \label{Circuit_breaker_3phasefault}
-\end{figure}
-
-A major observation can be viewed from the profile of transients during the fault in the currents of both the \gls{MMC}s. The initial transients is due to the occurrence of fault until it is detected at 0.53 s. The transients in currents after the breaker has been opened (at 0.59 s) are complementary in both \gls{MMC}s. It means that \gls{MMC}-1 has the dominating control during steady-state conditions and after the breaker has been operated. 
+In order to analyse the short-term voltage stability of the system, a permanent three-phase line to ground fault is applied in the middle of the \gls{OWF}-1 cable. The response of the network is recorded and the plots for voltages, currents, active and reactive powers are depicted from Figure \ref{Circuit_breaker_3phasefault} to Figure \ref{18_3phaseSC} for the event. During the time of fault, the RMS current exceeds the maximum phase current and the logic developed detects this over current at CB-1a. This leads to the opening of breaker CB-1a according to the logic explained in previous paragraph. The overcurrent is detected at 0.53 s of the simulation from the developed logic and a short delay of nearly 12 ms is provided to open the breaker after the fault has been detected similar to a practical scenario (Figure \ref{Circuit_breaker_3phasefault}). After the breaker has been opened, the \gls{OWF}-1 is isolated from the network and the total power provided to the onshore network is reduced. The total power in the pre-fault period is 2 GW and after the fault the total power is reduced to 1500 MW. Similar to the disconnection of one \gls{OWF} discussed earlier in Section \ref{disconnection_one_OWF}, the power flow is reduced through \gls{MMC}-1 as shown in Figure \ref{17_3phaseSC}. It is also worthy to mention that the network is stable by viewing the the stable voltage in the post-fault period in \gls{MMC} as shown in Figure \ref{VABC_MMC_1_3phaseSC}.
 
 \begin{figure}[H]
 %\centering
 \hspace*{-1.2cm}
-    \includegraphics[height = 8.5cm,width = 18.5cm]{Diagrams/Chapter_5/IABC_MMC_1_2_3phaseSC.eps}
-    \caption{Currents in a) MMC-1 connected bus and b) MMC-2 connected bus during three-phase line to ground fault in cable-1}
-    \label{1516_3phaseSC}
+    \includegraphics[height = 7cm,width = 19.5cm]{Diagrams/Chapter_5/IABC_CB_3phaseSC_new_4.eps}
+    \caption{Currents in circuit breaker (CB-1a) during three-phase line to ground fault in cable-1}
+    \label{Circuit_breaker_3phasefault}
 \end{figure}
+
+A major observation can be viewed from the profile of transients during the fault in the currents of both the \gls{MMC}s in Figure \ref{fig:IABC_MMC_1_3phaseSC} and Figure \ref{fig:IABC_MMC_2_3phaseSC}. The initial rise in current till 0.53 s is due to the occurrence of the three-phase fault. The breaker is opened at 0.542 s. The profile of the currents at around 0.59 s are complementary in both \gls{MMC}s i.e. the currents are decreasing in \gls{MMC}-1 and increasing in \gls{MMC}-2. This is due to the difference in control strategies in \gls{MMC}-1 (U/F control) and \gls{MMC}-2 (active power control). The increase in current in \gls{MMC}-2 after the fault has been cleared can be explained by viewing the current profiles in the \gls{OWF}s which is detailed in the following section.
 
 \begin{figure}[H]
 \centering
@@ -184,7 +269,33 @@ A major observation can be viewed from the profile of transients during the faul
     \label{17_3phaseSC}
 \end{figure}
 
-Analysing at the \gls{WG} side of the network, the control is modelled to provide rated reactive current to flow to the fault location by controlling the voltage of the converter. From Figure \ref{WT1_voltages_3phasefault}, it can be seen that the voltage at the \gls{PCC}-1 drops and remains low throughout the fault period. During the time of fault, the angular reference of voltage at \gls{PCC}-1 is created by the \gls{PLL} modelled in the \gls{DVC} of \gls{WG}-1. This feature allows the implemented strategy to control the d-axis reference voltage of the \gls{GSC} and thereby indirectly controlling the current coming out of the \gls{GSC} to the \gls{PCC}. After the disconnection of \gls{WG}-1 from the network, the control allows reactive current thus reactive power to be passed through the fault location shown in Figure \ref{WT1_currents_3phasefault}. The current limitation algorithm implemented in the \gls{DVC} limits the current to the rating of the converter, hence rated reactive current flows from the \gls{GSC}.   
+\begin{figure}[H]
+\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 6.5cm,width = 17.5cm]{Diagrams/Chapter_5/VABC_MMC_1_3phaseSC.eps}
+    \caption{Voltage at MMC bus during three-phase line to ground fault in the middle of cable-1}
+    \label{VABC_MMC_1_3phaseSC}
+\end{figure}
+
+\begin{figure}[H]
+%\centering
+\hspace*{-1.2cm}
+\subfloat[Current in MMC-1 bus]{%
+  \includegraphics[height = 7cm,width = 18.5cm]{Diagrams/Chapter_5/IABC_MMC_1_3phaseSC.eps}%
+\label{fig:IABC_MMC_1_3phaseSC}}
+
+\hspace*{-1.2cm}
+\subfloat[Current in MMC-2 bus]{%
+  \includegraphics[height = 7cm,width = 18.5cm]{Diagrams/Chapter_5/IABC_MMC_2_3phaseSC.eps}%
+\label{fig:IABC_MMC_2_3phaseSC}}
+
+\caption{Currents in a) MMC-1 bus and b) MMC-2 bus during three-phase line to ground fault in the middle of cable-1}
+\label{fig:IABC_MMC_2_3phaseSC}
+\end{figure}
+
+
+Analysing at the \gls{OWF}s side of the network, the \gls{DVC} is modelled to provide rated reactive current to flow to the fault location by controlling the voltage of the converter as explained in Section \ref{DVC_RSCAD}. From the voltage in p.u. plot in Figure \ref{WT1_voltages_3phasefault} and the three-phase voltage plot in Figure \ref{VABC_WT1_3phaseSC}, it can be seen that the voltage at the \gls{PCC}-1 drops and remains low throughout the fault period. During the time of fault in cable-1 and after CB-1a is opened, the voltage angle and magnitude at \gls{PCC}-1 goes to zero. The \gls{PLL} is synchronized with the \gls{AC} voltage at the \gls{PCC}-1. The voltage magnitude at \gls{GSC} remains non-zero, and the voltage angle is zero  during the time of fault as the \gls{PLL} follows the angular reference at \gls{PCC}-1. Therefore, due to higher voltage magnitude at the \gls{GSC} than the magnitude at \gls{PCC}-1, reactive power will flow from the \gls{GSC} to \gls{PCC}-1 and since the voltage angle is zero at \gls{GSC} and \gls{PCC}-1, the active power transmitted is zero during the time of fault. This is performed in \gls{DVC} by controlling the d-axis reference voltage of the \gls{GSC} and thereby indirectly controlling the current coming out of the \gls{GSC} to \gls{PCC}-1. The current limitation algorithm implemented in the \gls{DVC} in Section \ref{currentlimitation_RSCAD}, limits the output current to the rating of the converter and hence rated reactive current flows from the \gls{GSC} as seen in Figure \ref{WT1_currents_3phasefault}.
+
 \begin{figure}[H]
 \centering
 %\hspace*{-1.2cm}
@@ -193,18 +304,26 @@ Analysing at the \gls{WG} side of the network, the control is modelled to provid
     \label{WT1_voltages_3phasefault}
 \end{figure}
 
-Also the voltages at the \gls{PCC} of \gls{WG}s- 2,3 and 4 have transients during the time of fault and is then stabilised to nearly a higher value than the pre-fault state. The post voltage value is within the tolerance limit ($\pm$10 \% ) and this can be viewed from the graphs in Figure \ref{VACP_WT234_3phaseSC} a). An important observation in the voltage graphs of \gls{WG}s -2,3 and 4 is the occurrence spikes right after the fault is released, as can be seen in Figure \ref{VACP_WT234_3phaseSC} b). The interactions between the \gls{PLL}s in the \gls{DVC}s and the \gls{PLL} in the U/F control as to which control dominates right when the fault is released, to calculate the angular reference can be understood to be the reason for this surge. This is an important issue faced by the industry experts are requires intensive research.
+\begin{figure}[H]
+\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 6.5cm,width = 17.5cm]{Diagrams/Chapter_5/VABC_WT1_3phaseSC.eps}
+    \caption{Voltages at PCC-1 during three-phase line to ground fault in cable-1}
+    \label{VABC_WT1_3phaseSC}
+\end{figure}
+
+Also the voltages at the \gls{PCC} of \gls{WG}s- 2, 3 and 4 have transients during the time of fault and is then stabilised to slightly higher value than the pre-fault state to compensate for the loss of \gls{OWF}-1 from the network. The post-fault voltage value is within the tolerance limit ($\pm$10 \% ) and this can be viewed from the graphs in Figure \ref{VACP_WT234_3phaseSC} a). An important observation in the voltage graphs of \gls{WG}s -2,3 and 4 is the occurrence spikes right after the fault is released, as can be seen in Figure \ref{VACP_WT234_3phaseSC} b). The interactions between the \gls{PLL}s in the \gls{DVC}s and the \gls{PLL} in the U/F control as to which control dominates right when the fault is released, to calculate the angular reference can be understood to be the reason for this surge. This is an important issue faced by the industry experts are requires intensive research.
 
 \begin{figure}[H]
 \centering
 %\hspace*{-1.2cm}
-    \includegraphics[height = 6.5cm,width = 17.25cm]{Diagrams/Chapter_5/IABC_WT1_3phaseSC.eps}
+    \includegraphics[height = 6.5cm,width = 17.5cm]{Diagrams/Chapter_5/IABC_WT1_3phaseSC.eps}
     \caption{Currents at PCC-1 during three-phase line to ground fault in cable-1}
     \label{WT1_currents_3phasefault}
 \end{figure}
 
 
-The currents from these other \gls{WG}s are slightly reduced in the post fault region (Figure \ref{IABC_WT234_3phaseSC}). The \gls{DVC} control in these \gls{WG}s operate during the time of fault and limit the currents by controlling the voltages at their respective \gls{PCC}s. These \gls{WG}s provide slightly higher amount of power as compared to the pre-fault state to be fed to the \gls{MMC}s due to the fact that the active power reference for \gls{MMC}-2 is set back to the initial value during the post fault period. Another important finding is in the profile of transients of currents during the occurrence of fault in \gls{WG}s-2,3 and 4. The current is limited during the time of fault and after the breaker has been operated, the profile is similar to that of the \gls{MMC}-2. This shows that \gls{MMC}-1 is dominating during the steady-state conditions and \gls{DVC} takes over control during dynamic scenarios. In practicality, since the fault occurs in the middle of the sea and it is difficult that the fault clears on its own, this control proves to be a valid strategy to control the voltage instabilities during the islanding of the offshore \gls{OWF}s. 
+The currents from these other \gls{WG}s are slightly reduced in the post-fault region (Figure \ref{IABC_WT234_3phaseSC}). The \gls{DVC} control in these \gls{WG}s operate during the time of fault and limit the currents by controlling the voltages at their respective \gls{PCC}s. These \gls{WG}s provide slightly higher amount of power as compared to the pre-fault state to be fed to the \gls{MMC}s due to the fact that the active power reference for \gls{MMC}-2 is set back to the initial value during the post-fault period. Another important finding is in the profile of transients of currents during the occurrence of fault in \gls{WG}s-2,3 and 4. The current is limited during the time of fault and after the breaker has been operated, the profile is similar to that of the \gls{MMC}-2. This shows that \gls{MMC}-1 is dominating during the steady-state conditions and \gls{DVC} takes over control during dynamic scenarios. In practicality, since the fault occurs in the middle of the sea and it is difficult that the fault clears on its own, this control proves to be a valid strategy to control the voltage instabilities during the islanding of the offshore \gls{OWF}s. 
 
 \begin{figure}[H]
 %\centering

@@ -169,7 +169,7 @@ The switching of the valves has to be configured using a control mechanism to en
     \label{fig:2levelVSC_switching}
 \end{figure}
 
-\subsubsection{Reference frame transformation}
+\subsubsection{Reference frame transformation}\label{ref_frame_trafo}
 There need to be mechanisms for the control operation of the \gls{VSC}s. \gls{PI} controllers are widely used for control operation in power systems. It is therefore relevant to translate from three-phase abc frame to a rotating dq frame in order to have a two signal representation of three-phase \gls{AC} signals. The Clarke-Parke transformation is used for this purpose, as shown in Figure \ref{fig:DQTransformation}. The three-phase measured signals from the node are translated to a stationary reference frame ($\alpha \beta$) using the Clarke transform. It is then translated to a synchronous rotating reference (dq) frame using the Park transform. The reference signal for control is provided to the corresponding frame, and after the control process is established, it is translated back to the three-phase signals. Generally, in the real scenario, during translation to dq frame, the d-axis is made to align with the voltage of the grid and q-axis is aligned to zero. This approach provides control of active power or \gls{DC} voltage using d-axis current component of the converter, whereas the reactive power or \gls{AC} voltage can be controlled using the q-axis current component of the converter.   
 
 \begin{figure}[H]
@@ -203,7 +203,7 @@ Usually, the generator is also governed by the Maximum Power Point Tracking (\gl
 \subsection{Grid Side Converter (GSC) or Line Side Converter (LSC) Control}
 The \gls{GSC} is connected back to back with the \gls{MSC} through a \gls{DC} link. The \gls{GSC} is mainly responsible for providing \gls{DC} voltage control and the \gls{AC} side reactive power control. 
 
-\subsubsection{Classical Current Control}
+\subsubsection{Conventional Current Control}\label{conv_current_control}
 The conventional control of \gls{GSC} implemented in power systems follows the current control strategy that involves an outer loop to control the \gls{DC} voltage and provides reference set points for the inner current control loop. The inner loop consists of \gls{PI} controllers and feed-forward terms that form the major part of the control. The decoupling terms are added at the end of the current regulator output to improve the dynamic performance of the system. The control architecture is provided in Figure \ref{fig:Diss_GSC_control}.  
 
 By far, the conventional current control explained above has not led to any major issues as the conventional synchronous generators were capable of absorbing the injected currents. However, this is not the case for a network that is dominantly connected using \gls{PE} interface. An example of such a situation is an \gls{OWF} network. The effect could also be severe for a large scale network involving more \gls{PE} converters to be connected to the network. Hence this calls for the need for better control strategies, as explained in the following section.
@@ -212,7 +212,7 @@ By far, the conventional current control explained above has not led to any majo
 \centering
 %\hspace*{-1.2cm}
     \includegraphics[height = 7.5cm,width = 16.5cm]{Diagrams/Chapter_2/Diss_GSC_control.PNG}
-    \caption{Classical current control in GSC/LSC \cite{korai_dynamic_2019}}
+    \caption{Conventional current control in GSC/LSC \cite{korai_dynamic_2019}}
     \label{fig:Diss_GSC_control}
 \end{figure}
 

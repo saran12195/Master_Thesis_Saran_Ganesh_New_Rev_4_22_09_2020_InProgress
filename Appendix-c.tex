@@ -77,3 +77,60 @@ The ".clo" file must be added first using the 'Dnm1' option, which is obtained b
   \caption{Configuring Tline model in RSCAD}
   \label{fig:Tline_config_RSCAD}
 \end{figure}
+
+\section{Representation of symmetrical monopole configuration in RSCAD}
+\begin{figure}[H]
+\centering
+%\hspace*{-1.2cm}
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[height=4.5cm,width=8.5cm]{Diagrams/Chapter_4/DC_Source_Cab1.PNG}
+  \caption{DC source-1 connected to the receiving end of HVDC cable-1}
+  \label{DC_Source_Cab1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[height=4.5cm,width=8.5cm]{Diagrams/Chapter_4/DC_Source_Cab2.PNG}
+  \caption{DC source-2 connected to the receiving end of HVDC cable-2}
+  \label{DC_Source_Cab2}
+\end{subfigure}
+\caption{Onshore MMC station representation using DC source in RSCAD}
+\label{fig:DC_source_cab}
+\end{figure}
+
+
+The outer control loop model available in \cite{vrana2013cigre} is suitable for 145 kV \gls{HVAC} network. Hence, for the 66 kV \gls{HVAC} network developed for this work, the outer loop is simplified and the reference values ($i_{d\_ref\_2}$ and $i_{q\_ref\_2}$) for the inner control loop is directly defined by the user.
+
+\subsubsection{Modification in Outer Loop Control}
+In order to simplify the system, the active power loop output variable which is the active power reference ($I_{d\_ref}$) is made to be controlled by the user using a slider ($ID\_ref\_control$) in Runtime file directly. This allows the user to control the amount of active power flowing through the \gls{MMC}-2 bus. The $I_{d\_ref}$ value is varied from 0 to a maximum of 0.4. There is no flow of power in \gls{MMC}-2 when $I_{d\_ref}$ = 0. The maximum power flow is achieved when $I_{d\_ref}$ = 0.4. %If $I_{d\_ref}$ is increased beyond 0.4, the transformer would be operated above 100\% of its rating and is not desirable. 
+
+The RMS current ($I_{rms}$) is calculated at the breaker (CB-1a) and is compared with the maximum current ($I_{phase\_max}$) which is 10\% above the phase current as given in Equation \ref{i_phase_max_eq}. When the RMS current exceeds the maximum current, $I_{d\_ref}$ is set to zero for that duration. Once, $I_{rms}$ becomes less than $I_{phase\_max}$, the control is given back to the slider in Runtime module, as shown in Figure \ref{fig:Idref_control}. This allows power to flow in \gls{MMC}-2 after the breaker has been operated. The circuit breaker operation is explained in Section \ref{Fault logic and cb}.
+
+\begin{equation}
+    I_{phase} = \frac{S_{single\_phase}}{V_{LN}}
+\end{equation}
+
+\begin{equation}\label{i_phase_max_eq}
+    I_{phase\_max} = 1.1 * I_{phase}
+\end{equation}
+
+\begin{figure}[H]
+\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 6cm,width = 5.5cm]{Diagrams/Chapter_4/Idref_control.PNG}
+    \caption{$I_{d\_ref}$ control logic}
+    \label{fig:Idref_control}
+\end{figure}
+
+\section{U/F control parameters}
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+Parameter & Value \\ \hline
+$k_{p\_vf}$     & 0.2 \\ \hline
+$k_{i\_vf}$     & 30 \\ \hline
+\end{tabular}
+\caption{Parameters for PI gains in U/F control loop \cite{vrana2013cigre}}
+\label{tab:U_F_para}
+\end{table}
