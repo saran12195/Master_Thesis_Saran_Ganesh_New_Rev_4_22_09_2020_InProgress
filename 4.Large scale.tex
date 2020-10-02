@@ -50,17 +50,17 @@ The layout of 2 GW network is built by resorting to scaling of the aggregated \g
 
 
 \begin{figure}[H]
-\centering
+%\centering
 %\hspace*{-1.2cm}
-    \includegraphics[height = 21cm,width = 17cm]{Diagrams/Chapter_4/Steps_for_Scaling.pdf}
+    \includegraphics[height = 21cm,width = \textwidth]{Diagrams/Chapter_4/Steps_for_Scaling.pdf}
     \caption{a) WG-1 connected to 66 kV AC source, b) WG-1 and WG-2 connected in parallel to 66 kV AC source c) WG-1 and WG-2 connected in parallel to MMC-1}
     \label{fig:Steps_for_Scaling}
 \end{figure}
 
 \begin{figure}[H]
-\centering
+%\centering
 %\hspace*{-1.5cm}
-    \includegraphics[height = 12cm,width = 17cm]{Diagrams/Chapter_4/WT4_MMC2_new.pdf}
+    \includegraphics[height = 12cm,width = \textwidth]{Diagrams/Chapter_4/WT4_MMC2_new.pdf}
     \caption{Single line diagram of 2 GW, 66 kV HVAC offshore network connected to 2 x 1 GW HVDC links with offshore MMC stations in RSCAD}
     \label{fig:WT4_MMC2}
 \end{figure}
@@ -316,11 +316,13 @@ The inner loop consists of \gls{PI} controllers for d and q axis separately and 
 \begin{figure}[H]
 \centering
 
+%\hspace{4cm}
 \subfloat[Outer control loop representation for d-axis ($i_{d\_ref\_2}$)]{%
   \includegraphics[clip,width=0.65\columnwidth]{Diagrams/Chapter_4/Control_loop_MMC_Id.pdf}%
 \label{Control_loop_MMC_Id}}
 
 \vspace{10mm}
+%\hspace{4cm}
 \subfloat[Outer control loop representation for q-axis ($i_{q\_ref\_2}$)]{%
   \includegraphics[clip,width=0.65\columnwidth]{Diagrams/Chapter_4/Control_loop_MMC_Iq.pdf}%
 \label{Control_loop_MMC_Iq}}

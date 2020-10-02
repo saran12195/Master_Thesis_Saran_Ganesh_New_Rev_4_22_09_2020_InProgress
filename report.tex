@@ -15,7 +15,8 @@
 \usepackage{tikz}
 \usepackage{PTSansNarrow}
 \usepackage[T1]{fontenc}
-
+\usepackage{pdfpages} %nived's pdf package
+%\usepackage{changes}
 %\chapterfont{\color{blue}}
 %\sectionfont{\color{blue}}
 %\subsectionfont{\color{blue}}
@@ -122,18 +123,18 @@
 
 \frontmatter
 
-%\title{Development of a Generic Model for Real Time Simulation and Assessment of the Dynamic Performance of a Large Scale Offshore Transmission Network}
+\title{Development of a Generic Model for Real- time Simulation and Assessment of the Dynamic Performance of a Large Scale Offshore Transmission Network}
 
 
-%\author{Saran Ganesh}
-\affiliation{Technische Universiteit Delft}
-\coverimage{Saran_cover.svg}
-\makecover
+\author{Saran Ganesh}
+%\affiliation{Technische Universiteit Delft}
+\includepdf{cover/Saran_cover_diff_color_newmargin.pdf}
+%\makecover
 
 %% Include an optional title page.
-%\input{title}
+\input{title}
 
-%\input{preface}
+\input{preface}
 
 \tableofcontents
 

@@ -96,7 +96,7 @@ After understanding the basics of RSCAD software, a 66 kV offshore network, as s
 \begin{figure}[H]
 \centering
 %\hspace*{-1cm}
-    \includegraphics[height = 5.5cm,width = 17cm]{Diagrams/Chapter_3/WT1_AC_RSCAD_OWF.pdf}
+    \includegraphics[height = 5.5cm,width = \textwidth]{Diagrams/Chapter_3/WT1_AC_RSCAD_OWF.pdf}
     \caption{Single line diagram of the 66 kV HVAC offshore test network in RSCAD}
     \label{fig:WT1_Model_RSCAD}
 \end{figure}
@@ -326,7 +326,7 @@ The active power control consists of the \gls{DC} voltage, direct frequency cont
 \begin{equation}\label{P_eq}
     p = u_Ti_d = -u_T\frac{u_{conv,q}}{x}
 \end{equation}
-where $u_T$ is the terminal voltage at PCC.
+where $u_T$ is the voltage at \gls{PCC}.
 
 The direct frequency control provides control in case of under frequency and over frequency. The control is modelled to be activated when the frequency is above 50.2 Hz or below 49.8 Hz.
 The VDAPR control is provided to control the power injection capacity of the \gls{GSC}. Since power cannot be injected to the grid by the \gls{GSC} during the time of faults, the VDAPR allows in reducing the set point of reference power and thereby refining the dynamic stability of the network. 
@@ -385,8 +385,9 @@ The \gls{AC} voltage of the \gls{VSC} is generally limited by the \gls{DC} volta
 \end{equation}
 
 \section{Analysis of the dynamic performance of 66 kV test system}
-After the 66 kV system is modelled, it has to be tested for operation in steady-state and dynamic conditions. The performance related to voltage restoration and reactive power injection by the \gls{DVC} during the worst dynamic situation in the grid has to be analyzed. A three-phase short circuit in the middle of the \gls{HVAC} cable is chosen to test the same.  
-\subsection{Three phase line to ground fault}
+After the 66 kV system is modelled, it has to be tested for operation in steady-state and dynamic conditions. The performance related to voltage restoration and reactive power injection by the \gls{DVC} during the worst dynamic situation in the grid has to be analyzed. A three-phase short circuit in the middle of the \gls{HVAC} cable is chosen to test the same.
+
+\subsection{Three-phase line to ground fault}
 
 The line to ground fault logic available in the power system library in RSCAD is adapted in this network by splitting the cable model into two halves and connecting it in the middle of the two halves of the cables as shown in Figure \ref{fig:2cablesblockwithfault}. The fault logic is explained in Appendix. [] 
 The Draft module is compiled, and after ensuring no errors, the system is run in the Runtime module. The system is stabilized with the voltage values within the tolerance limit of $\pm$ 10\% during steady-state operation.
@@ -399,12 +400,12 @@ The Draft module is compiled, and after ensuring no errors, the system is run in
     \label{fig:2cablesblockwithfault}
 \end{figure}
 
-The three-phase line to ground fault is applied at 0.5 s with a fault clearing time of 140 ms. The voltage and frequency responses are as shown in Figure \ref{fig:Vol_Freq_3phaseSC}. In the pre-fault condition, the voltage is stabilized and the active current of nearly 1 p.u. is provided by the \gls{GSC}. There is no reactive current or reactive power injection during this time. During the time of fault, the voltage drops at \gls{PCC} as expected for a three-phase line to ground fault (Figure \ref{fig:Vol_Freq_3phaseSC} a)). \gls{DVC} allows reactive current and hence reactive power to be injected by \gls{GSC} during the time of fault to support the voltage, as shown in Figure \ref{fig:ID_IQ_fullACSource}. The corresponding behaviour is a major requirement as per the grid codes during dynamic conditions, as mentioned in \cite{mohseni_review_2012}. At the same time, the active current and thus active power is limited, and hence there is no generation from the \gls{WG} (Figure \ref{fig:ID_IQ_fullACSource}). Simultaneously, the voltage across DC-link increases in order to maintain the power balance as per the Equation \ref{powbaleq}. The chopper gets activated when \gls{DC} voltage goes beyond a particular limit in order to protect the \gls{DC} link from overvoltage. After the fault is cleared, the \gls{DVC} allows for quick recovery and voltage and powers return to the pre-fault values. There is no major drop in frequency as well since there are no loads connected to the \gls{OWF} (Figure \ref{fig:Vol_Freq_3phaseSC} b)). Hence the frequency control does not get activated since deviation is less than 49.8 Hz and 50.2 Hz. Another important observation is the transients in the currents during the occurrence of the fault in Figure \ref{fig:ID_IQ_fullACSource}. These are due to the dynamic effects that arise due to the exclusion of an integrator \cite{korai_dynamic_2019}. It can be controlled by proper tuning of washout filters.
+The three-phase line to ground fault is applied at 0.5 s with a fault clearing time of 140 ms. The voltage and frequency responses are as shown in Figure \ref{fig:Vol_Freq_3phaseSC}. In the pre-fault condition, the voltage is stabilized and the active current of nearly 1 p.u. is provided by the \gls{GSC}. There is no reactive current or reactive power injection during this time. During the time of fault, the voltage drops at \gls{PCC} as expected for a three-phase line to ground fault (Figure \ref{fig:Vol_Freq_3phaseSC} a)). \gls{DVC} allows reactive current and hence reactive power to be injected by \gls{GSC} during the time of fault to support the voltage, as shown in Figure \ref{fig:ID_IQ_Final_3}. The corresponding behaviour is a major requirement as per the grid codes during dynamic conditions, as mentioned in \cite{mohseni_review_2012}. At the same time, the active current and thus active power is limited, and hence there is no generation from the \gls{WG} (Figure \ref{fig:ID_IQ_Final_3}). Simultaneously, the voltage across DC-link increases in order to maintain the power balance as per the Equation \ref{powbaleq}. The chopper gets activated when \gls{DC} voltage goes beyond a particular limit in order to protect the \gls{DC} link from overvoltage. After the fault is cleared, the \gls{DVC} allows for quick recovery and voltage and powers return to the pre-fault values. There is no major drop in frequency as well since there are no loads connected to the \gls{OWF} (Figure \ref{fig:Vol_Freq_3phaseSC} b)). Hence the frequency control does not get activated since deviation remains within 49.8 Hz and 50.2 Hz. Another important observation is the transients in the currents during the occurrence of the fault in Figure \ref{fig:ID_IQ_Final_3}. These are due to the dynamic effects that arise due to the exclusion of an integrator \cite{korai_dynamic_2019}. It can be controlled by proper tuning of washout filters.
 
 \begin{figure}[H]
-\centering
-\hspace*{-2cm}
-    \includegraphics[height = 7cm,width = 18.5cm]{Diagrams/Chapter_3/VACP_Freq_Final_3.eps}
+%\centering
+%\hspace*{-2cm}
+    \includegraphics[height = 7cm,width = \textwidth]{Diagrams/Chapter_3/VACP_Freq_Final_3.eps}
     \caption{a) Voltage at PCC and b) Frequency response synthesised by PLL following a three phase fault in the middle of the cable}
     \label{fig:Vol_Freq_3phaseSC}
 \end{figure}
@@ -412,18 +413,18 @@ The three-phase line to ground fault is applied at 0.5 s with a fault clearing t
 
 \begin{figure}[H]
 %\centering
-\hspace*{-0.1cm}
-    \includegraphics[height = 6.5cm,width = 15.5cm]{Diagrams/Chapter_3/ID_IQ_Final_3.eps}
+%\hspace*{-0.1cm}
+    \includegraphics[height = 6.5cm,width = \textwidth]{Diagrams/Chapter_3/ID_IQ_Final_3.eps}
     \caption{Active and reactive currents flowing to the network for a three phase fault in the middle of the cable}
-    \label{fig:ID_IQ_fullACSource}
+    \label{fig:ID_IQ_Final_3}
 \end{figure}
 
 
 \subsubsection{Parameter selection for Washout Filters}\label{para_selection_washout}
-The damping during the transient process mentioned in Section \ref{DVC_theory} is ensured by the washout filters in the active power and reactive power control loops as seen in Figure \ref{fig:Active_Power_Control_Loop} and Figure \ref{fig:Reactive_Power_Control_Loop} respectively. The parameters for the washout filters need to be chosen wisely in order to ensure fast damping of transients. The output of the washout filter for various proportional gains for a step response is depicted in Figure \ref{fig:Washout_gain_output}. The proportional gain represents value to which the output of the washout filter changes when there is a change in the input. The time constant represents the rate of this change. It can be seen that the output of the washout filter changes proportionally to the gain value specified and comes back to the initial value after a specific time, depending on the time constant mentioned.
+The damping during the transient process mentioned in Section \ref{DVC_theory} is ensured by the washout filters in the reactive power and active power control loops as seen in Figure \ref{fig:Reactive_Power_Control_Loop} and Figure \ref{fig:Active_Power_Control_Loop} respectively. The parameters for the washout filters need to be chosen wisely in order to ensure fast damping of transients. The output of the washout filter for various proportional gains for a step response is depicted in Figure \ref{fig:Washout_gain_output}. The proportional gain represents values to which the output of the washout filter changes when there is a change in the input. The time constant represents the rate of this change. It can be seen that the output of the washout filter changes proportionally to the gain value specified and comes back to the initial value after a specific time, depending on the time constant mentioned.
 
 
-Effect of this property of the washout filter is observed in active and reactive currents of the system for a three-phase fault, as shown in Figure. \ref{fig:ID_IQ_Washout_comp}. The proportional gain is set as 0.01, 0.03 and 0.05 for comparison keeping the time constant = 0.01 s for all the three cases. It is observed that faster damping can be achieved for higher proportional gains, as shown in Figure. \ref{fig:ID_IQ_Washout_comp}. It makes sense as the system would try to damp the transients to the maximum possible value in order to have minimum fluctuations and also to limit interactions with other controllers during this period. Thereby, it is worthy to conclude that choosing the right parameters for the washout filter is one among the key factors in this control approach.
+Effect of this property of the washout filter is observed in active and reactive currents of at the \gls{PCC} for a three-phase fault, as shown in Figure \ref{fig:ID_Washout_Comp} and \ref{fig:IQ_Washout_Comp} respectively. The proportional gain is set as 0.01, 0.03 and 0.05 for comparison keeping the time constant = 0.01 s for all the three cases. It is observed that faster damping can be achieved for higher proportional gains, as shown in Figure \ref{fig:ID_IQ_Washout_Comp}. It makes sense as the system would try to damp the transients to the maximum possible value in order to have minimum fluctuations and also to limit interactions with other controllers during this period. Thereby, it is worthy to conclude that choosing the right parameters for the washout filter is one among the key factors in this control approach.
 
 \begin{figure}[H]
 \centering
@@ -434,21 +435,21 @@ Effect of this property of the washout filter is observed in active and reactive
 \end{figure}
 
 \begin{figure}[H]
-\centering
+%\centering
 \begin{subfigure}{0.5\textwidth}
-  \centering
-  \includegraphics[height = 7cm,width = 9cm]{Diagrams/Chapter_3/ID_Washout_Comp.eps}
-  \caption{Sending end terminal}
-  \label{fig:CableParaBlock_sen_term}
+ % \centering
+  \includegraphics[height = 7cm,width = \textwidth]{Diagrams/Chapter_3/ID_Washout_Comp.eps}
+  \caption{Current in d axis during three phase fault for gain 0.01, 0.03 and 0.05}
+  \label{fig:ID_Washout_Comp}
 \end{subfigure}%
 \begin{subfigure}{0.5\textwidth}
-  \centering
-  \includegraphics[height = 7cm,width = 9cm]{Diagrams/Chapter_3/IQ_Washout_Comp.eps}
-  \caption{Receiving end terminal}
-  \label{fig:CableParaBlock_rec_term}
+  %\centering
+  \includegraphics[height = 7cm,width = \textwidth]{Diagrams/Chapter_3/IQ_Washout_Comp.eps}
+  \caption{Current in q axis during three phase fault for gain 0.01, 0.03 and 0.05}
+  \label{fig:IQ_Washout_Comp}
 \end{subfigure}
-\caption{Configuration of the terminal blocks}
-\label{fig:Terminal_options}
+\caption{Currents in d and q axes during three-phase fault in the middle of the cable for different proportional gains of washout filters}
+\label{fig:ID_IQ_Washout_Comp}
 \end{figure}
 
 \section{DIgSILENT PowerFactory Software}
@@ -476,15 +477,15 @@ The 66 kV offshore network is modelled in PowerFactory as shown in Figure \ref{f
 \end{itemize}
 
 \begin{figure}[H]
-\centering
+%\centering
 %\hspace*{-1.2cm}
-    \includegraphics[height = 6cm,width = 16.5cm]{Diagrams/Chapter_3/WT1_AC_PFD.pdf}
+    \includegraphics[height = 6cm,width = \textwidth]{Diagrams/Chapter_3/WT1_AC_PFD.pdf}
     \caption{Single line diagram of the 66 kV HVAC offshore test network in PowerFactory}
     \label{fig:WT1_Model_PFD_comp}
 \end{figure}
 
 \subsection{Simplified model of WG System}
-The wind turbine and \gls{MSC} are simplified since they do not contribute to the dynamics of grid. \gls{LSC} modelling is alone considered. A constant injection of active current is proposed from the \gls{MSC} to the \gls{DC} side \cite{korai_dynamic_2019}. Hence it is modelled as a \gls{DC} current source. The \gls{WG} unit is represented as a static generator model with 750 MVA nominal apparent power. It is made to operate with constant reactive power (Q) control in order to set the active and reactive power set points same as in RSCAD model. The active power flow is set to 700 MW, similar to the RSCAD model.
+The wind turbine and \gls{MSC} are simplified since they do not contribute to the dynamics of grid. \gls{LSC} is modelled in detail. A constant injection of active current is proposed from the \gls{MSC} to the \gls{DC} side \cite{korai_dynamic_2019}. Hence it is modelled as a \gls{DC} current source. The \gls{WG} unit is represented as a static generator model with 750 MVA nominal apparent power. It is made to operate with constant reactive power (Q) control in order to set the active and reactive power set points same as in RSCAD model. The active power flow is set to 700 MW, similar to the RSCAD model.
 
 \subsubsection{DC Circuit}
 The \gls{DC} voltage across the capacitor is set to 4 kV. The chopper activation control is provided when the \gls{DC} voltage crosses a minimum set value. 
@@ -554,24 +555,24 @@ Before the start of the simulation, a specific time step value suitable for both
 \end{figure}
 
 \subsection{Event comparison in RSCAD and PowerFactory}
-The 66 kV offshore network model in RSCAD and PowerFactory are compared for a three-phase short circuit in the middle of the cable. A fault is applied at 0.5 seconds with a clearing time of 140 ms. The resulting voltage and current waveforms are as shown in Figure \ref{fig:VACP_comp} and \ref{fig:ID_IQ_Comp} respectively. As can be observed in Figure \ref{fig:VACP_comp}, voltage drops and the generation is stopped during the fault period. The voltage profile is the same in RSCAD and PowerFactory models during the pre-fault, fault and post fault conditions as can be observed. The drop in voltage in both the graphs is the same due to equal impedance in both the models. 
+The 66 kV offshore network model in RSCAD and PowerFactory are compared for a three-phase short circuit in the middle of the cable. A fault is applied at 0.5 seconds with a clearing time of 140 ms. The resulting voltage and current waveforms are as shown in Figure \ref{fig:VACP_comp},  \ref{fig:ID_fullACSource} and \ref{fig:IQ_fullACSource} respectively. As can be observed in Figure \ref{fig:VACP_comp}, voltage drops and the generation is stopped during the fault period. The voltage profile is the same in RSCAD and PowerFactory models during the pre-fault, fault and post fault conditions as can be observed. The drop in voltage in both the graphs is the same due to equal impedance in both the models. 
 
 \begin{figure}[H]
-\centering
+%\centering
 %\hspace*{-1.2cm}
-    \includegraphics[height = 6.5cm,width = 14.5cm]{Diagrams/Chapter_3/VACP_Comp_New_3.eps}
+    \includegraphics[height = 6.5cm,width = \textwidth]{Diagrams/Chapter_3/VACP_Comp_New_3.eps}
     \caption{Voltage measured at PCC for a three phase fault in the middle of the cable in RSCAD and PowerFactory}
     \label{fig:VACP_comp}
 \end{figure}
 
 
-The currents in both the models also have a similar profile, as summarized in Figure \ref{fig:ID_IQ_Comp}. The active and reactive currents generated by the \gls{WG} have the same set points in both the models during the steady state conditions confirming that the power flow in both the models is similar. The reactive power injection in RSCAD model during the time of fault is achieved similar to the PowerFactory model. The transients occurring during the time of fault can be damped by controlling the parameters of the washout filters, as seen in Section \ref{para_selection_washout}. The spike in the profiles is due to the dynamics of the \gls{PLL}. Therefore, it can be concluded that the RSCAD model with the implemented \gls{DVC} provides accurate results similar to the benchmark PowerFactory model and can be used as a base model for reference as it provides a better representation of the real-world operation.  
+The currents in both the models also have a similar profile, as summarized for the d-axis in Figure \ref{fig:ID_fullACSource} and q-axis in Figure \ref{fig:IQ_fullACSource}. The active and reactive currents generated by the \gls{WG} have the same set points in both the models during the steady state conditions confirming that the power flow in both the models is similar. The reactive power injection in RSCAD model during the time of fault is achieved similar to the PowerFactory model. The transients occurring during the time of fault can be damped by controlling the parameters of the washout filters, as seen in Section \ref{para_selection_washout}. The spike in the profiles is due to the dynamics of the \gls{PLL}. Therefore, it can be concluded that the RSCAD model with the implemented \gls{DVC} provides accurate results similar to the benchmark PowerFactory model and can be used as a base model for reference as it provides a better representation of the real-world operation.  
 
 \begin{comment}
 \begin{figure}[H]
-\centering
+%\centering
 %\hspace*{-1.2cm}
-    \includegraphics[height = 6.5cm,width = 14.5cm]{Diagrams/Chapter_3/ID_IQ_Comp_New_3.eps}
+    \includegraphics[height = 6.5cm,width = \textwidth]{Diagrams/Chapter_3/ID_IQ_Comp_New_3.eps}
     \caption{Active and reactive currents measured for a three phase fault in the middle of the cable in RSCAD and PowerFactory}
     \label{fig:ID_IQ_Comp}
 \end{figure}
@@ -579,16 +580,16 @@ The currents in both the models also have a similar profile, as summarized in Fi
 
 \begin{figure}[H]
 %\centering
-\hspace*{-0.1cm}
-    \includegraphics[height = 6.5cm,width = 15.5cm]{Diagrams/Chapter_3/ID_RSCAD_PFD_Comp.eps}
-    \caption{Active and reactive currents flowing to the network for a three phase fault in the middle of the cable}
-    \label{fig:ID_IQ_fullACSource}
+%\hspace*{-0.1cm}
+    \includegraphics[height = 6.5cm,width = \textwidth]{Diagrams/Chapter_3/ID_RSCAD_PFD_Comp.eps}
+    \caption{Active currents flowing to the network for a three phase fault in the middle of the cable}
+    \label{fig:ID_fullACSource}
 \end{figure}
 
 \begin{figure}[H]
 %\centering
-\hspace*{-0.1cm}
-    \includegraphics[height = 6.5cm,width = 15.5cm]{Diagrams/Chapter_3/IQ_RSCAD_PFD_Comp.eps}
-    \caption{Active and reactive currents flowing to the network for a three phase fault in the middle of the cable}
-    \label{fig:ID_IQ_fullACSource}
+%\hspace*{-0.1cm}
+    \includegraphics[height = 6.5cm,width = \textwidth]{Diagrams/Chapter_3/IQ_RSCAD_PFD_Comp.eps}
+    \caption{Reactive currents flowing to the network for a three phase fault in the middle of the cable}
+    \label{fig:IQ_fullACSource}
 \end{figure}
