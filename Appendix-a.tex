@@ -69,7 +69,7 @@ The input for the two-mass model are the mechanical torque from the aerodynamic 
     \label{fig:Pitch_controller}
 \end{figure}
 
-\section{Machine Side Converter model}
+\section{Machine Side Converter model}\label{MSC_Control}
 
 The overall \gls{MSC} control is depicted, as shown in Figure \ref{fig:MSC_Control}. A three-level \gls{VSC} is used for operation as \gls{MSC} in this model. The conventional vector current control utilized in the \gls{MSC} control. As required for \gls{PI} control operation, the abc signals are transformed to the dq frame using the rotor angle measurement for alignment and synchronizing with the dq reference frame. The \gls{MSC} control consists of two inner fast control loops using \gls{PI} controllers that regulate the converter currents during all conditions i.e. steady-state and dynamic scenarios. The reference values for the inner control loop is provided by the outer control loop. By measurement of active power of the \gls{WG}, a \gls{MPPT} control is used to output an optimum speed reference ($WMOPTPU$) as shown in Figure \ref{fig:MPPT_control}. The error difference from the optimum speed reference and the rotor speed is regulated through a outer \gls{PI} control loop. The modulation index for the \gls{MSC} control is same as \gls{GSC} control and is given by Equation \ref{MI_eq}.
 
@@ -150,7 +150,7 @@ There exists a \gls{DC} link in between the \gls{MSC} and the \gls{GSC} consisti
   \label{fig:Chopper_circuit_firing}
 \end{subfigure}
 \caption{Chopper circuit in small-time step block}
-\label{fig:aerodynamic_model_data}
+\label{fig:Chopper_circuit_valve_firing}
 \end{figure}
 
 \section{Grid Side Converter model}

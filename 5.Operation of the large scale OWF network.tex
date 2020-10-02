@@ -1,12 +1,14 @@
 \chapter{Analysis of the Dynamic Performance of 2 GW, 66 kV HVAC Offshore Network}\label{5}
 
-Connecting a large scale \gls{OWF} network to an offshore-onshore \gls{HVDC} link has always been a challenge. In this chapter, the operation scheme of the 2 GW offshore network presented in Chapter \ref{4} is simulated and analyzed. Firstly, the initial conditions of the converters are defined and then the stage-wise synchronization and operation of the network is explained. Later, the network is tested for short-term voltage stability and the power flow analysis for severe disturbances such as sudden disconnection of one set of \gls{WG} and a three phase line to ground fault in the middle of a \gls{HVAC} cable.
+Connecting a large scale \gls{OWF} network to an offshore-onshore \gls{HVDC} link has always been a challenge. In this chapter, the operation scheme of the 2 GW offshore network presented in Chapter \ref{4} is simulated and analyzed. Firstly, the initial conditions of the converters are defined and then the stage-wise synchronization and operation of the network is explained. Later, the network is tested for short-term voltage stability and the power flow analysis for severe disturbances such as sudden disconnection of one set of \gls{OWF} and a three-phase line to ground fault in the middle of a \gls{HVAC} cable.
 
 \begin{figure}[H]
 \centering
 %\hspace*{-1.5cm}
-    \includegraphics[height = 12cm,width = 17cm]{Diagrams/Chapter_4/WT4_MMC2_new.pdf}
-    \caption{Single line diagram of 2 GW, 66 kV HVAC offshore network connected to 2 x 1 GW HVDC links with offshore MMC stations in RSCAD}
+    \includegraphics[height = 12cm,width = \textwidth]{Diagrams/Chapter_5/WT4_MMC2_fault.pdf}
+    \caption{6 kV HVAC offshore network connected to 2 x 1 GW HVDC links with offshore MMC stations in RSCAD for two dynamic scenarios- \newline 
+    a) Disconnection of OWF-2 (represented by the cross symbol) \newline 
+    b) Three-phase line to ground fault in the middle of cable-1 (represented by the fault symbol)}
     \label{fig:WT4_MMC2_Chap5}
 \end{figure}
 
@@ -96,18 +98,18 @@ The next step is to close the circuit breaker, CB-6a to connect \gls{MMC}-2 to t
 %\hspace*{-1.2cm}
 \subfloat[Currents in MMC-1 bus]{%
   \includegraphics[height = 7.5cm,width = \textwidth]{Diagrams/Chapter_5/IABC_MMC_1_CB_6a.eps}%
-\label{fig:IABC_MMC_1_CB_5a}}
+\label{fig:IABC_MMC_1_CB_6a}}
 
 %\hspace*{-1.2cm}
 \subfloat[Currents in MMC-2 bus]{%
   \includegraphics[height = 7.5cm,width = \textwidth]{Diagrams/Chapter_5/IABC_MMC_2_CB_6a.eps}%
-\label{fig:IABC_MMC_2_CB_5a}}
+\label{fig:IABC_MMC_2_CB_6a}}
 
 \caption{Currents in a) MMC-1 bus and b) MMC-2 bus upon CB-6a closing operation}
 \label{fig:IABC_MMC_1_2_CB_6a}
 \end{figure}
 
-\section{Energization of the HVAC cables and WGs}\label{energization_HVAC_Cables}
+\section{Energization of the HVAC cables and OWFs}\label{energization_HVAC_Cables}
 The energization procedure of the \gls{AC} network followed in this work involves charging of each \gls{HVAC} cable and the corresponding \gls{OWF}. Initially cable-1 is charged and then \gls{OWF}-1 is connected. The same is followed for the other sets of \gls{OWF}s as well. As mentioned in Section \ref{Aggregated_OWF_large_scale} in Chapter \ref{4}, each \gls{OWF} have a maximum capacity of 500 MW that is represented by scaling up (by using the scaling factor function in RSCAD) of a \gls{WG} model of 6 MW rated power. For the energization process, the \gls{OWF}s are connected initially with lesser number of \gls{WG} units (9 $\times$ 6 = 48 MW) of nearly 50 MW power to avoid surge of voltage at \gls{PCC} and to maintain the voltage within limits. Once stability is attained after connecting all the \gls{OWF}s, the scaling in all \gls{OWF}s is incremented. Since power only flows through \gls{MMC}-1 until then, the increment can be until the maximum capacity of \gls{MMC}-1 i.e. 1 GW.
 
 The cable-1 gets energized when the CB-1a circuit breaker, as shown in Figure \ref{fig:WT4_MMC2_Chap5}, is switched on. The voltage at \gls{MMC} common bus is increased and set to a value of nearly 1.05 p.u. as seen in Figure \ref{VACP_MMC_bus_Cab1charg}. The current for cable charging is provided by \gls{MMC}-1 and the active power reference for the \gls{MMC}-2 is not changed in this process. Hence, current flow in \gls{MMC}-1 bus increases for cable-1 charging as shown in Figure \ref{fig:IABC_MMC_1_Cab1charg} and the current flow in \gls{MMC}-2 bus remains unchanged as shown in Figure \ref{fig:IABC_MMC_2_Cab1charg}. The disturbances observed during the switching operation at 0.5 seconds, before the currents stabilize to a particular value at 0.75 seconds, is due to the \gls{PI} parameters chosen for the U/F control in \gls{MMC}-1. Optimizing these parameters through small-signal stability analysis could achieve smoother signals. The current in cable-1 upon CB-1a closing is depicted in Figure \ref{fig:IABC_Cab1_Cab1charg}. 
@@ -303,7 +305,7 @@ The increase in active power in \gls{MMC}-2 after the fault has been cleared (as
 \label{fig:IABC_MMC_2_3phaseSC}}
 
 \caption{Currents in a) MMC-1 bus and b) MMC-2 bus upon three-phase line to ground fault in the middle of cable-1}
-\label{fig:IABC_MMC_2_3phaseSC}
+\label{fig:IABC_MMC_1_2_3phaseSC}
 \end{figure}
 
 Analysing at the \gls{OWF}s side of the network, the \gls{DVC} is modelled to provide rated reactive current to flow to the fault location by controlling the voltage of the converter as explained in Section \ref{DVC_RSCAD}. From the voltage in p.u. plot in Figure \ref{VACP_WT1_3phaseSC} and the three-phase voltage plot in Figure \ref{VABC_WT1_3phaseSC}, it can be seen that the voltage at the \gls{PCC}-1 drops and remains low throughout the fault period. During the time of fault in cable-1 and after CB-1a is opened, the voltage angle and magnitude at \gls{PCC}-1 goes to zero. The \gls{PLL} is synchronized with the \gls{AC} voltage at the \gls{PCC}-1. The voltage magnitude at \gls{GSC} remains non-zero, and the voltage angle is zero  during the time of fault as the \gls{PLL} follows the angular reference at \gls{PCC}-1. Therefore, due to higher voltage magnitude at the \gls{GSC} than the magnitude at \gls{PCC}-1, reactive power will flow from the \gls{GSC} to \gls{PCC}-1 and since the voltage angle is zero at \gls{GSC} and \gls{PCC}-1, the active power transmitted is zero during the time of fault. This is performed in \gls{DVC} by controlling the d-axis reference voltage of the \gls{GSC} and thereby indirectly controlling the current coming out of the \gls{GSC} to \gls{PCC}-1. The current limitation algorithm implemented in the \gls{DVC} in Section \ref{currentlimitation_RSCAD}, limits the output current to the rating of the converter and hence rated reactive current flows from the \gls{GSC} as seen in Figure \ref{WT1_currents_3phasefault}.

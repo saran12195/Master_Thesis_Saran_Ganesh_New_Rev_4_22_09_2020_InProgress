@@ -13,6 +13,34 @@
 \label{tab:Power_flow_control_in_MMC-2}
 \end{table}
 
+\section{Cable module configuration}\label{config_cable}
+The cable module opens a cable setup popup menu into which the cable parameters are added. The file is then compiled and saved in a ".clo" file format. The cable parameters are referenced through the external file previously created using the cable module. In RSCAD, Pi cable models are derived from Bergeron cable model. Initially, a Bergeron cable model is created with RLC parameters and then the option to make it work as a Pi model is chosen. The ".clo" file must be added first using the 'Dnm1' option, which is obtained by double-clicking on the calculation box (Figure \ref{fig:CableConfig}). The cable constants are of type Bergeron as chosen in the 'cntyp' parameter in Figure \ref{fig:CableConfig}. The 'frcpi' parameter available in the "Options when using Bergeron data" tab, forces the use of Pi section model manually by the user. The selection is made as shown by the red box in Figure \ref{fig:CabAddit}. The terminal block must be specified as either the sending or receiving end as shown in Figure \ref{fig:Terminal_options} and the cable name provided in the calculation block has to entered in the terminal blocks as well.\\
+
+\begin{figure}[H]
+\centering
+\subfloat[Cable configuration]{\label{fig:CableConfig}\includegraphics[width=.5\linewidth]{Diagrams/Chapter_3/CableParaBlockInside1.PNG}}\hfill
+\subfloat[Additional options]{\label{fig:CabAddit}\includegraphics[width=.5\linewidth]{Diagrams/Chapter_3/CableParaBlockInside2_mark.png}}
+\caption{Configuration of the calculation block}
+\label{fig}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.5\textwidth}
+  \centering
+  \includegraphics[height = 4cm,width = 8.5cm]{Diagrams/Chapter_3/CableParaBlock_sen_term.PNG}
+  \caption{Sending end terminal}
+  \label{fig:CableParaBlock_sen_term}
+\end{subfigure}%
+\begin{subfigure}{0.5\textwidth}
+  \centering
+  \includegraphics[height = 4cm,width = 8.5cm]{Diagrams/Chapter_3/CableParaBlock_rec_term.PNG}
+  \caption{Receiving end terminal}
+  \label{fig:CableParaBlock_rec_term}
+\end{subfigure}
+\caption{Configuration of the terminal blocks}
+\label{fig:Terminal_options}
+\end{figure}
 
 \section{Core assignment in RSCAD}
 \begin{figure}[H]
@@ -70,7 +98,7 @@ The parameters are entered in the Tline popup menu and the file is compiled and 
 The cable parameters are referenced through the external file previously created using the cable module. %Initially, a Bergeron cable model is created with RLC parameters in the Tline module. 
 The ".clo" file must be added first using the 'Dnm1' option, which is obtained by double-clicking on the calculation box (Figure \ref{fig:Tline_calculationbox_RSCAD}). The cable constants are of type Bergeron as chosen in the 'cntyp' parameter in Figure \ref{fig:CableConfig}.
 
-\begin{figure}
+\begin{figure}[H]
   \centering
   % include second image
   \includegraphics[height = 4cm,width = 9cm]{Diagrams/Chapter_4/TlineParaBlock_side1_mark.png}  
