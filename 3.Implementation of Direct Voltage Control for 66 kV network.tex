@@ -273,23 +273,23 @@ From the control structure, it can be seen that, unlike in conventional current 
 \begin{figure}[H]
 \centering
 %\hspace*{-1.2cm}
-    \includegraphics[height = 5.5cm,width = 14.5cm]{Diagrams/Chapter_3/Reactive_power_loop.pdf}
+    \includegraphics[height = 6.5cm,width = \textwidth]{Diagrams/Chapter_3/Reactive_power_loop.pdf}
     \caption{Reactive Power control loop \cite{korai_dynamic_2019}}
     \label{fig:Reactive_Power_Control_Loop}
 \end{figure}
 
 \paragraph{Slow global VAR control}
-It is the upper-level controller and can be modelled as a power factor, reactive power or voltage controller. The reference values can be directly sent as inputs to the \gls{PI} controller if the controller is made to use for reactive power or power factor control. The voltage controller is used here, and this requires reactive power reference to be determined from a predefined voltage versus reactive power droop characteristic. A voltage value for which the injection of reactive power is zero is obtained from this characteristic. The obtained reactive power reference output is provided as input to the \gls{PI} controller having a small proportional gain and ample time constant in order to avoid transformer tap changes and not very fast in order to avoid unwanted controller interactions. The automatic adjustment of reactive power in relation to varying voltage using the proportional gain $k_{QU}$ is significant. There is no dead-band present in order to ensure continuous voltage control. The  proportional gain that represents the droop can be obtained from the following relation,
+It is the upper-level controller and can be modelled as a power factor, reactive power or voltage controller. The reference values can be directly sent as inputs to the \gls{PI} controller if the controller is made to use for reactive power or power factor control. The voltage controller is used here, and this requires reactive power reference to be determined from a predefined voltage versus reactive power droop characteristic. A voltage value for which the injection of reactive power is zero is obtained from this characteristic. The obtained reactive power reference output is provided as input to the \gls{PI} controller having a small proportional gain and ample time constant in order to avoid transformer tap changes and not very fast in order to avoid unwanted controller interactions. The automatic adjustment of reactive power in relation to varying voltage using the proportional gain $k_{QV}$ is significant. There is no dead-band present in order to ensure continuous voltage control. The  proportional gain that represents the droop can be obtained from the following relation,
 
 \begin{equation}
-    k_{QU} = \frac{\Delta q_{gsc}}{\Delta u_N}
+    k_{QV} = \frac{\Delta q_{gsc}}{\Delta V_N}
 \end{equation}
 
-In theory, the proportional gain can be varied with changes in power flow. But this is not practically feasible and hence it is recommended to set the reactive power reference ($q_{ref}$) based on load flow calculation in the network and corresponding optimum power flow (OPF) calculations. The values could be updated at regular intervals. $U_{N\_{ref}}$ can be determined from $q_{vsc\_ref}$ as,
+In theory, the proportional gain can be varied with changes in power flow. But this is not practically feasible and hence it is recommended to set the reactive power reference ($q_{ref}$) based on load flow calculation in the network and corresponding optimum power flow (OPF) calculations. The values could be updated at regular intervals. $V_{N\_{ref}}$ can be determined from $q_{vsc\_ref}$ as,
 \begin{equation}
-    U_{N\_{ref}} = -\frac{q_{vsc\_ref}}{k_{QU}} + U_N
+    V_{N\_{ref}} = -\frac{q_{vsc\_ref}}{k_{QV}} + V_N
 \end{equation}
-where $U_N$ is desired voltage and $U_{N\_{ref}}$ is the voltage at which no reactive power injection is required.
+where $V_N$ is desired voltage and $V_{N\_{ref}}$ is the voltage at which no reactive power injection is required.
 The reactive power limits $q_{vsc\_max}$ and $q_{vsc\_min}$ are the continuous values in steady-state and can be computed from the P-Q diagram of the converter operation. The time constant is chosen in the range of 5-30 seconds wherein a value in the higher range tends to stabilize whereas a value in the lower range can cause interactions with other controllers.
 
 The slow global VAR controller must be made inactive once the converter current limit is reached and also during cases of large voltage sags or swells by providing a signal to deactivate the controller. A scenario that could lead to the case mentioned above is a three-phase short circuit event. The output from the upper-level controller must be constant because of the chosen high integration time constant or must be limited by a blocking signal \cite{korai_dynamic_2019}.
@@ -298,7 +298,7 @@ The slow global VAR controller must be made inactive once the converter current 
 The terminal voltage reference output received from the slow global VAR controller is provided as input to the fast local controller. This controller must be able to provide prompt support for grid voltage during the time of faults. The response of the controller in terms of voltage support must depend on local inputs sensed at the \gls{PCC} and not on quantities that need to be measured at remote places using a communication mechanism. A proportional gain is used for this purpose. The proportional gain can be obtained from the following relation \cite{korai_dynamic_2019},
 
 \begin{equation}
-    k_V = \frac{\Delta i_{Q\_vsc}}{\Delta U_N }
+    k_V = \frac{\Delta i_{Q\_vsc}}{\Delta V_N }
 \end{equation}
 
 The primary control action is provided by the feed-forward term, $x$, which is the reactance of the \gls{PE} converter. The voltage output obtained on multiplying the current with $x$ is the set point voltage of the converter in steady state.
@@ -307,16 +307,16 @@ The primary control action is provided by the feed-forward term, $x$, which is t
 The active power control consists of the \gls{DC} voltage, direct frequency control and Voltage Dependent Active Power Reduction (VDAPR) control, as shown in Figure \ref{fig:Active_Power_Control_Loop}. The control of active power is provided using the q-axis component of \gls{GSC} voltage as per the Equation \ref{P_eq}. Practically, since the \gls{DC} capacitor provides the active power control, the \gls{DC} energy barrier should be made higher which is to be done by increasing the capacitor size and \gls{DC} voltage when in comparison with the conventional \gls{PI} based current control \cite{korai_dynamic_2019}. One modification that was done is providing the minimum limit, $V_{a\_lim\_min}$, for the voltage measurement. A small value needs to be set for this parameter since in RSCAD software without a minimum limit, an error causing division by zero would be bound to occur during the start of the simulation. 
 
 \begin{equation}\label{P_eq}
-    p = u_Ti_d = -u_T\frac{u_{conv,q}}{x}
+    p = V_Ti_d = -V_T\frac{v_{conv,q}}{x}
 \end{equation}
-where $u_T$ is the voltage at \gls{PCC}.
+where $V_T$ is the voltage at \gls{PCC}.
 
 The direct frequency control provides control in case of under frequency and over frequency. The control is modelled to be activated when the frequency is above 50.2 Hz or below 49.8 Hz.
 The VDAPR control is provided to control the power injection capacity of the \gls{GSC}. Since power cannot be injected to the grid by the \gls{GSC} during the time of faults, the VDAPR allows in reducing the set point of reference power and thereby refining the dynamic stability of the network. 
 \begin{figure}[H]
 \centering
 %\hspace*{-1.2cm}
-    \includegraphics[height = 9cm,width = 14.5cm]{Diagrams/Chapter_3/Active_power_loop_withfreq.pdf}
+    \includegraphics[height = 10cm,width = \textwidth]{Diagrams/Chapter_3/Active_power_loop_withfreq.pdf}
     \caption{Active Power control loop \cite{korai_dynamic_2019}}
     \label{fig:Active_Power_Control_Loop}
 \end{figure}
