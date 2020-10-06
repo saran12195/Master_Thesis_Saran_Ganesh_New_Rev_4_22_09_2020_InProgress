@@ -1,4 +1,6 @@
-\chapter{WG model utilized in RSCAD}\label{Appendix_A}
+\chapter{WG model Utilized in RSCAD and PowerFactory}\label{Appendix_A}
+
+\section{RSCAD model}
 
 The Type-4 \gls{WG} model is utilized for the thesis work and the complete implementation of the model is described in this section. 
 
@@ -188,7 +190,41 @@ The \gls{GSC} control block has the abc to dq transformation and vice versa, of 
 \begin{figure}[H]
 \centering
 %\hspace*{-1.2cm}
-    \includegraphics[height = 22cm,width = 11.5cm]{Diagrams/Appendix_A/GSC_Control_RSCAD_2.pdf}
+    \includegraphics[height = 22cm,width = 12.5cm]{Diagrams/Appendix_A/GSC_Control_RSCAD_2.pdf}
     \caption{DVC representation in RSCAD}
     \label{fig:GSC_Control_RSCAD_2}
+\end{figure}
+
+\section{PowerFactory model}
+
+\begin{figure}[H]
+\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 24cm,width = \textwidth]{Diagrams/Appendix_A/FSC_PFD.pdf}
+    \caption{FSC representation in PowerFactory \cite{erlich_description_nodate}}
+    \label{fig:FSC_PFD}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 24cm,width =\textwidth]{Diagrams/Appendix_A/DC_bus_PFD.pdf}
+    \caption{DC bus representation in PowerFactory \cite{erlich_description_nodate}}
+    \label{fig:DC_bus_PFD}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 24cm,width =\textwidth]{Diagrams/Appendix_A/Udc_controller_PFD.pdf}
+    \caption{DVC representation in PowerFactory \cite{erlich_description_nodate}}
+    \label{fig:Udc_controller_PFD}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 17cm,width =15cm]{Diagrams/Appendix_A/Damping_terms_PFD.pdf}
+    \caption{Washout filter representation in PowerFactory \cite{erlich_description_nodate}}
+    \label{fig:Damping_terms_PFD}
 \end{figure}

@@ -257,8 +257,8 @@ The detailed representation of the cable parameters in Cable module, and the rep
   \label{fig:CableParaBlock}
 \end{figure}
 
-\subsection{AC Equivalent Source}
-The equivalent source shows the grid connection and is modelled as an \gls{AC} voltage source that represents an infinite grid. The infinite grid representation is similar to the representation of a synchronous generator with high inertia constant. For a strong grid, typical values of inertia constant of 5 MW/MVA$^2$ depicting a synchronous generator is chosen from \cite{kothari2003modern}. The commonly represented damping constant is the frequency-dependent load damping constant. However, the damping constant is zero in this case as no loads and a lossless machine is considered. The source voltage is rated at 66 kV (line-line RMS).
+\subsection{External AC system}\label{ext_AC_source}
+The external \gls{AC} system represents the infinite grid connection and is modelled as an \gls{AC} voltage source. The infinite grid representation is similar to the representation of a synchronous generator with high inertia constant. For a strong grid, typical values of inertia constant of 5 MW/MVA$^2$ depicting a synchronous generator is chosen from \cite{kothari2003modern}. The commonly represented damping constant is the frequency-dependent load damping constant. However, the damping constant is zero in this case as no loads and a lossless machine is considered. Alternatively, for short circuit calculations, the reference parameters given in \cite{wachal2014guide} can be chosen for representing a infinite grid. The parameters include short circuit power of 30 GVA and X/R of 10. The \gls{AC} source voltage is rated at 66 kV (line-line RMS).
 
 \section{Control structures}
 The control strategies are implemented in the \gls{MSC} and \gls{GSC} of the \gls{WG}. The decoupled current control architecture utilized in \gls{MSC} is explained in Appendix \ref{MSC_Control}. The major area of interest for this thesis is the control strategy of \gls{GSC}. The \gls{DVC} illustrated in Section \ref{DVC_theory} is implemented in the \gls{GSC}.   
@@ -397,7 +397,7 @@ The three-phase line to ground fault is applied at 0.5 s with a fault clearing t
 \begin{figure}[H]
 %\centering
 %\hspace*{-0.1cm}
-    \includegraphics[height = 6.5cm,width = \textwidth]{Diagrams/Chapter_3/ID_IQ_Final_3.eps}
+    \includegraphics[height = 6.5cm,width = \textwidth]{Diagrams/Chapter_3/ID_IQ_Final_4.eps}
     \caption{Active and reactive currents flowing to the network for a three phase fault in the middle of the cable}
     \label{fig:ID_IQ_Final_3}
 \end{figure}
@@ -412,7 +412,7 @@ Effect of this property of the washout filter is observed in active and reactive
 \begin{figure}[H]
 \centering
 %\hspace*{-1cm}
-    \includegraphics[height = 6cm,width = 14.5cm]{Diagrams/Chapter_3/Washout_gain_output.eps}
+    \includegraphics[height = 6cm,width = 14.5cm]{Diagrams/Chapter_3/Washout_gain_output_4.eps}
     \caption{Output of a washout filter for different proportional gains for a step response}
     \label{fig:Washout_gain_output}
 \end{figure}
@@ -421,13 +421,13 @@ Effect of this property of the washout filter is observed in active and reactive
 %\centering
 \begin{subfigure}{0.5\textwidth}
  % \centering
-  \includegraphics[height = 6.5cm,width = \textwidth]{Diagrams/Chapter_3/ID_Washout_Comp.eps}
+  \includegraphics[height = 6.5cm,width = \textwidth]{Diagrams/Chapter_3/ID_Washout_Comp_4.eps}
   \caption{Current in d axis during three phase fault for gain 0.01, 0.03 and 0.05}
   \label{fig:ID_Washout_Comp}
 \end{subfigure}%
 \begin{subfigure}{0.5\textwidth}
   %\centering
-  \includegraphics[height = 6.5cm,width = \textwidth]{Diagrams/Chapter_3/IQ_Washout_Comp.eps}
+  \includegraphics[height = 6.5cm,width = \textwidth]{Diagrams/Chapter_3/IQ_Washout_Comp_4.eps}
   \caption{Current in q axis during three phase fault for gain 0.01, 0.03 and 0.05}
   \label{fig:IQ_Washout_Comp}
 \end{subfigure}
@@ -486,6 +486,9 @@ A two winding transformer available in the equipment library folder of DIgSILENT
 The cables are rated at 66 kV same as the RSCAD model. The cable is modelled from the "Cables" section available in the equipment library in DIgSILENT library. The type of model is chosen to be the Pi model. %as shown in Figure \ref{fig:CableModel_PFD}. 
 Pi model is utilized as it is easier to input the cable parameters in terms of RLC in both RSCAD and PowerFactory.
 
+\subsection{External AC system}
+The external \gls{AC} system in PowerFactory also represents an infinite grid. Similar to the model in RSCAD in Section \ref{ext_AC_source}, the infinite grid is modelled as a \gls{AC} voltage source available in the PowerFactory drawing toolbar. 
+
 \section{Comparison of models in RSCAD and PowerFactory }
 The major differences between the 66 kV \gls{HVAC} network built in RSCAD and PowerFactory are illustrated in Table. \ref{tab:Comp_RSCAD_PFD_Para}. 
 \vspace{-1mm}
@@ -498,22 +501,22 @@ The major differences between the 66 kV \gls{HVAC} network built in RSCAD and Po
 \begin{tabular}{|c|c|c|}
 \hline
 \textbf{Parameters}            & \textbf{PowerFactory} & \textbf{RSCAD}            \\ \hline
-Wind Generator         & Simplified          & PMSG                      \\ \hline
+Wind Generator         & Simplified (Constant power model)          & PMSG                      \\ \hline
 Machine Side Converter control        & Not modelled          & Decoupled current control \\ \hline
 Grid Side Converter & \multicolumn{1}{l|}{Controlled Voltage Source with no PWM} & {VSC with PWM} \\ \hline
 Generated active power from WG & 700 MW                & 6 MW                      \\ \hline
-Scaling factor at transformer  & Not applicable        & 117                       \\ \hline
+Scaling factor at transformer  & Not applicable        & 117 (cf. Section. \ref{scaling_OWF})                      \\ \hline
 \end{tabular}
 \caption{Differences in models in PowerFactory and RSCAD}
 \label{tab:Comp_RSCAD_PFD_Para}
 \end{table}
 \endgroup
 
+\vspace{-6mm}
+\paragraph{Representation of \gls{GSC}}: One of the differences in both models is the usage of average model representation of \gls{VSC} with \gls{PWM} in RSCAD for the \gls{GSC}, whereas a controlled voltage source model is utilized in the PowerFactory model.
+\vspace{-3mm}
+\paragraph{Scaling of power}: Another significant difference between the two models is that the components connected to the secondary side of the transformer are modelled for one \gls{WG} of 6 MW in RSCAD whereas it is directly modelled for 700 MW in PowerFactory. The scaling of power to 700 MW in RSCAD is done at the 66/2 kV \gls{OWF} transformer, as explained in Section \ref{scaling_OWF}. This helps in modelling and analysis in the real world in terms of single \gls{WG}.
 
-\begin{itemize}[noitemsep]
-    \item One of the differences in both models is the usage of average model representation of \gls{VSC} with \gls{PWM} in RSCAD for the \gls{GSC}, whereas a controlled voltage source model is utilized in the PowerFactory model. 
-    \item Another significant difference between the two models is that the secondary side of the transformer is modelled in terms of one \gls{WG} of 6 MW in RSCAD whereas it is directly modelled for 700 MW in PowerFactory. The scaling of power to 700 MW in RSCAD is done by the \gls{OWF} transformer, as explained in Section \ref{scaling_OWF}. This helps in modelling and analysis in the real world in terms of single \gls{WG}.
-  \end{itemize}
 
 \subsection{Selection of time step in RSCAD and PowerFactory}
 Before the start of the simulation, a specific time step value suitable for both the RSCAD and PowerFactory models need to be set. As mentioned in Section \ref{OWF}, the ratio of large time step to small-time step needs to higher than 12 in RSCAD model if NovaCor processor is used. Hence a value of 50 $\mu$s was chosen for the large time step. The setting can be done by right-clicking on the Draft module and selecting "Circuit Options" in RSCAD. In PowerFactory, it can be edited in the "Step Size" option available in the "Calculation of initial conditions" tab, as shown in Figure \ref{fig:Stepsize_RSCAD_PFD}.  
@@ -523,7 +526,7 @@ Before the start of the simulation, a specific time step value suitable for both
 %\hspace*{-1.2cm}
 \begin{subfigure}{.55\textwidth}
   \centering
-  \includegraphics[height=3.5cm,width=7.5cm]{Diagrams/Chapter_3/Stepsize_RSCAD.PNG}
+  \includegraphics[height=4.5cm,width=7.5cm]{Diagrams/Chapter_3/Stepsize_RSCAD.PNG}
   \caption{Time step setting in RSCAD}
   \label{Stepsize_RSCAD}
 \end{subfigure}%
@@ -543,13 +546,13 @@ The 66 kV offshore network model in RSCAD and PowerFactory are compared for a th
 \begin{figure}[H]
 %\centering
 %\hspace*{-1.2cm}
-    \includegraphics[height = 6.5cm,width = \textwidth]{Diagrams/Chapter_3/VACP_Comp_New_3.eps}
+    \includegraphics[height = 7cm,width = \textwidth]{Diagrams/Chapter_3/VACP_Comp_New_4.eps}
     \caption{Voltage measured at PCC for a three phase fault in the middle of the cable in RSCAD and PowerFactory}
     \label{fig:VACP_comp}
 \end{figure}
 
 
-The currents in both the models also have a similar profile, as summarized for the d-axis in Figure \ref{fig:ID_fullACSource} and q-axis in Figure \ref{fig:IQ_fullACSource}. The active and reactive currents generated by the \gls{WG} have the same set points in both the models during the steady state conditions confirming that the power flow in both the models is similar. The reactive power injection in RSCAD model during the time of fault is achieved similar to the PowerFactory model. The transients occurring during the time of fault can be damped by controlling the parameters of the washout filters, as seen in Section \ref{para_selection_washout}. The spike in the profiles is due to the dynamics of the \gls{PLL}. Therefore, it can be concluded that the RSCAD model with the implemented \gls{DVC} provides accurate results similar to the benchmark PowerFactory model and can be used as a base model for reference as it provides a better representation of the real-world operation.  
+Due to the unavoidable modelling difference of the software packages, the currents are measured at \gls{PCC} bus for the RSCAD model and at \gls{FSC} bus for the PowerFactory model. However, this does not affect the magnitude as the currents are measured in per unit. The currents in both the models have a similar profile, as summarized for the d-axis in Figure \ref{fig:ID_fullACSource} and q-axis in Figure \ref{fig:IQ_fullACSource}. The active and reactive currents generated by the \gls{WG} have the same set points in both the models during the steady state conditions confirming that the power flow in both the models is similar. The reactive power injection in RSCAD model during the time of fault is achieved similar to the PowerFactory model. The transients occurring during the time of fault can be damped by controlling the parameters of the washout filters, as seen in Section \ref{para_selection_washout}. The spike in the profiles is due to the dynamics of \gls{PLL} in both the software packages. Therefore, it can be concluded that the RSCAD model with the implemented \gls{DVC} provides accurate results similar to the benchmark PowerFactory model and can be used as a base model for reference as it provides a better representation of the real-world operation.  
 
 \begin{comment}
 \begin{figure}[H]
@@ -564,15 +567,15 @@ The currents in both the models also have a similar profile, as summarized for t
 \begin{figure}[H]
 %\centering
 %\hspace*{-0.1cm}
-    \includegraphics[height = 6cm,width = \textwidth]{Diagrams/Chapter_3/ID_RSCAD_PFD_Comp.eps}
+    \includegraphics[height = 7cm,width = \textwidth]{Diagrams/Chapter_3/ID_RSCAD_PFD_Comp.eps}
     \caption{Active currents flowing to the network for a three phase fault in the middle of the cable}
     \label{fig:ID_fullACSource}
 \end{figure}
-\vspace{-8mm}
+\vspace{-10mm}
 \begin{figure}[H]
 %\centering
 %\hspace*{-0.1cm}
-    \includegraphics[height = 6cm,width = \textwidth]{Diagrams/Chapter_3/IQ_RSCAD_PFD_Comp.eps}
+    \includegraphics[height = 7cm,width = \textwidth]{Diagrams/Chapter_3/IQ_RSCAD_PFD_Comp.eps}
     \caption{Reactive currents flowing to the network for a three phase fault in the middle of the cable}
     \label{fig:IQ_fullACSource}
 \end{figure}

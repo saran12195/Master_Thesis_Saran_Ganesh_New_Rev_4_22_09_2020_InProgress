@@ -1,138 +1,28 @@
-\chapter{User manual for the 2 GW model}
+\chapter{2 GW Network Representation in RSCAD}
 
- \begin{table}[H]
- \centering
-\begin{tabular}{|c|c|}
-\hline
-\textbf{$I_{D\_ref}$ control} & \textbf{Power through MMC-2} \\ \hline
-0                    & 0 MW                         \\ \hline
-0.2                  & 475 MW                       \\ \hline
-0.4                  & 950 MW                       \\ \hline
-\end{tabular}
-\caption{Power flow control in MMC-2}
-\label{tab:Power_flow_control_in_MMC-2}
-\end{table}
+\section{MMCs and HVAC cables in Draft module}
+\begin{figure}[H]
+\centering
+%\hspace*{-0.2cm}
+    \includegraphics[height = 16cm,width = 10.5cm]{Diagrams/Appendix_C/MMC_2_RSCAD_Rep.pdf}
+    \caption{Subsystem-1: 66 kV HVAC cables connected to offshore MMC stations in Draft module in RSCAD}
+    \label{fig:MMC_2_RSCAD_Rep}
+\end{figure}
 
-\section{Cable module configuration}\label{config_cable}
-The cable module opens a cable setup popup menu into which the cable parameters are added. The file is then compiled and saved in a ".clo" file format. The cable parameters are referenced through the external file previously created using the cable module. In RSCAD, Pi cable models are derived from Bergeron cable model. Initially, a Bergeron cable model is created with RLC parameters and then the option to make it work as a Pi model is chosen. The ".clo" file must be added first using the 'Dnm1' option, which is obtained by double-clicking on the calculation box (Figure \ref{fig:CableConfig}). The cable constants are of type Bergeron as chosen in the 'cntyp' parameter in Figure \ref{fig:CableConfig}. The 'frcpi' parameter available in the "Options when using Bergeron data" tab, forces the use of Pi section model manually by the user. The selection is made as shown by the red box in Figure \ref{fig:CabAddit}. The terminal block must be specified as either the sending or receiving end as shown in Figure \ref{fig:Terminal_options} and the cable name provided in the calculation block has to entered in the terminal blocks as well.\\
+\section{OWFs in Draft module}
 
 \begin{figure}[H]
 \centering
-\subfloat[Cable configuration]{\label{fig:CableConfig}\includegraphics[width=.5\linewidth]{Diagrams/Chapter_3/CableParaBlockInside1.PNG}}\hfill
-\subfloat[Additional options]{\label{fig:CabAddit}\includegraphics[width=.5\linewidth]{Diagrams/Chapter_3/CableParaBlockInside2_mark.png}}
-\caption{Configuration of the calculation block}
-\label{fig}
+%\hspace*{-0.2cm}
+    \includegraphics[height = 11cm,width = \textwidth]{Diagrams/Appendix_C/MMC_2_RSCAD_Rep_2.pdf}
+    \caption{Subsystem-2: OWFs connected to HVAC cables in Draft module in RSCAD}
+    \label{fig:MMC_2_RSCAD_Rep_2}
 \end{figure}
 
-\begin{figure}[H]
-\centering
-\begin{subfigure}{0.5\textwidth}
-  \centering
-  \includegraphics[height = 4cm,width = 8.5cm]{Diagrams/Chapter_3/CableParaBlock_sen_term.PNG}
-  \caption{Sending end terminal}
-  \label{fig:CableParaBlock_sen_term}
-\end{subfigure}%
-\begin{subfigure}{0.5\textwidth}
-  \centering
-  \includegraphics[height = 4cm,width = 8.5cm]{Diagrams/Chapter_3/CableParaBlock_rec_term.PNG}
-  \caption{Receiving end terminal}
-  \label{fig:CableParaBlock_rec_term}
-\end{subfigure}
-\caption{Configuration of the terminal blocks}
-\label{fig:Terminal_options}
-\end{figure}
+\subsection{Modification in Outer Loop Control}\label{modific_outer_loop}
+In order to simplify the system, the active power loop output variable which is the active power reference (idref2) is made to be controlled by the user using a slider (ID\_ref\_control) in Runtime file directly as shown in Figure \ref{fig:Idref_control}. This allows the user to control the amount of active power flowing through the \gls{MMC}-2 bus. The 'ID\_ref\_control' value is varied from 0 to a maximum of 0.4. There is no flow of power in \gls{MMC}-2 when 'ID\_ref\_control' = 0. The maximum power flow is achieved when 'ID\_ref\_control' = 0.4. 
 
-\section{Core assignment in RSCAD}
-\begin{figure}[H]
-\begin{subfigure}{.5\textwidth}
-  \centering
-  % include first image
-  \includegraphics[height = 3cm,width = 8cm]{Diagrams/Chapter_4/Core_assignment_OWF1.PNG}  
-  \caption{Core assignment of OWF-1}
-  \label{fig:Core_assignment_OWF1}
-\end{subfigure}
-\begin{subfigure}{.5\textwidth}
-  \centering
-  % include second image
-  \includegraphics[height = 3cm,width = 8cm]{Diagrams/Chapter_4/Core_assignment_OWF2.PNG}  
-  \caption{Core assignment of OWF-2}
-  \label{fig:Core_assignment_OWF2}
-\end{subfigure}
-
-\newline
-
-\begin{subfigure}{.5\textwidth}
-  \centering
-  % include third image
-  \includegraphics[height = 3cm,width = 8cm]{Diagrams/Chapter_4/Core_assignment_OWF3.PNG}  
-  \caption{Core assignment of OWF-3}
-  \label{fig:Core_assignment_OWF3}
-\end{subfigure}
-\begin{subfigure}{.5\textwidth}
-  \centering
-  % include fourth image
-  \includegraphics[height = 3cm,width = 8cm]{Diagrams/Chapter_4/Core_assignment_OWF4.PNG}  
-  \caption{Core assignment of OWF-4}
-  \label{fig:Core_assignment_OWF4}
-\end{subfigure}
-\caption{Core assignment of the 4 small time-step boxes representing 4 OWFs}
-\label{fig:Complete_Core_assignment_OWF}
-\end{figure}
-
-After assigning the cores for the small-time step blocks, the processor assignment for subsystem 2 is as illustrated in Figure \ref{fig:subsystem2_processor}.
-
-\begin{figure}[H]
-\centering
-%\hspace*{-2.2cm}
-    \includegraphics[height = 8cm,width = 17cm]{Diagrams/Chapter_4/subsystem2_processor.PNG}
-    \caption{Processor assignment chart for subsystem 2}
-    \label{fig:subsystem2_processor}
-\end{figure}
-
-The 'Core Assignment' tab is available by right-clicking the small-time block and choosing "Edit" and then "Parameters" as shown in Figure \ref{fig:Complete_Core_assignment_OWF}. Setting the 'Am' parameter to 'No' for all the small-time blocks causes all the available cores to be full and leaving no room for a processor to allocate control signals. Hence these cores should be manually assigned, and proper allocation has to be done.
-
-
-\section{Configuring Tline module}\label{config_Tline}
-The parameters are entered in the Tline popup menu and the file is compiled and saved in a ".clo" format.
-
-The cable parameters are referenced through the external file previously created using the cable module. %Initially, a Bergeron cable model is created with RLC parameters in the Tline module. 
-The ".clo" file must be added first using the 'Dnm1' option, which is obtained by double-clicking on the calculation box (Figure \ref{fig:Tline_calculationbox_RSCAD}). The cable constants are of type Bergeron as chosen in the 'cntyp' parameter in Figure \ref{fig:CableConfig}.
-
-\begin{figure}[H]
-  \centering
-  % include second image
-  \includegraphics[height = 4cm,width = 9cm]{Diagrams/Chapter_4/TlineParaBlock_side1_mark.png}  
-  \caption{Configuring Tline model in RSCAD}
-  \label{fig:Tline_config_RSCAD}
-\end{figure}
-
-\section{Representation of symmetrical monopole configuration in RSCAD}
-\begin{figure}[H]
-\centering
-%\hspace*{-1.2cm}
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[height=4.5cm,width=8.5cm]{Diagrams/Chapter_4/DC_Source_Cab1.PNG}
-  \caption{DC source-1 connected to the receiving end of HVDC cable-1}
-  \label{DC_Source_Cab1}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[height=4.5cm,width=8.5cm]{Diagrams/Chapter_4/DC_Source_Cab2.PNG}
-  \caption{DC source-2 connected to the receiving end of HVDC cable-2}
-  \label{DC_Source_Cab2}
-\end{subfigure}
-\caption{Onshore MMC station representation using DC source in RSCAD}
-\label{fig:DC_source_cab}
-\end{figure}
-
-
-The outer control loop model available in \cite{vrana2013cigre} is suitable for 145 kV \gls{HVAC} network. Hence, for the 66 kV \gls{HVAC} network developed for this work, the outer loop is simplified and the reference values ($i_{d\_ref\_2}$ and $i_{q\_ref\_2}$) for the inner control loop is directly defined by the user.
-
-\subsubsection{Modification in Outer Loop Control}
-In order to simplify the system, the active power loop output variable which is the active power reference ($I_{d\_ref}$) is made to be controlled by the user using a slider ($ID\_ref\_control$) in Runtime file directly. This allows the user to control the amount of active power flowing through the \gls{MMC}-2 bus. The $I_{d\_ref}$ value is varied from 0 to a maximum of 0.4. There is no flow of power in \gls{MMC}-2 when $I_{d\_ref}$ = 0. The maximum power flow is achieved when $I_{d\_ref}$ = 0.4. %If $I_{d\_ref}$ is increased beyond 0.4, the transformer would be operated above 100\% of its rating and is not desirable. 
-
-The RMS current ($I_{rms}$) is calculated at the breaker (CB-1a) and is compared with the maximum current ($I_{phase\_max}$) which is 10\% above the phase current as given in Equation \ref{i_phase_max_eq}. When the RMS current exceeds the maximum current, $I_{d\_ref}$ is set to zero for that duration. Once, $I_{rms}$ becomes less than $I_{phase\_max}$, the control is given back to the slider in Runtime module, as shown in Figure \ref{fig:Idref_control}. This allows power to flow in \gls{MMC}-2 after the breaker has been operated. The circuit breaker operation is explained in Section \ref{Fault logic and cb}.
+The RMS current (I\_rms) is calculated at the breaker (CB-1a) and is compared with the maximum current (I\_phase\_max) which is 10\% above the phase current as given in Equation \ref{i_phase_max_eq}. When 'I\_rms' current exceeds 'I\_phase\_max', 'idref2' is set to zero for that duration. Once, 'I\_rms' becomes less than 'I\_phase\_max', the control is given back to 'ID\_ref\_control' slider in Runtime module, as shown in Figure \ref{fig:Idref_control}. This allows power to flow in \gls{MMC}-2 after the breaker CB-1a has been operated.
 
 \begin{equation}
     I_{phase} = \frac{S_{single\_phase}}{V_{LN}}
@@ -146,19 +36,235 @@ The RMS current ($I_{rms}$) is calculated at the breaker (CB-1a) and is compared
 \centering
 %\hspace*{-1.2cm}
     \includegraphics[height = 6cm,width = 5.5cm]{Diagrams/Chapter_4/Idref_control.PNG}
-    \caption{$I_{d\_ref}$ control logic}
+    \caption{Idref2 control logic}
     \label{fig:Idref_control}
 \end{figure}
 
-\section{U/F control parameters}
-\begin{table}[H]
+\section{Steps for operation of the model in Runtime module}
+
+Scaling factor is set to 10 before simulation.
+ID\_ref\_control is also set to 0 before starting the simulation.
+
+\subsection{Energization of the network}\label{energ_appendix}
+
+\begin{itemize}
+    \item Compile the Draft file "WT4\_MMC2\_Draft.dft" and ensure there are no errors.
+    \item Open the Runtime file "WT4\_MMC2\_Draft.sib".
+    \item Switch on the 'MMCBRK' switch to charge the \gls{MMC} bus.
+    
+    \begin{figure}[H]
 \centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 2cm,width = 2cm]{Diagrams/Appendix_C/MMCBRK.PNG}
+    \caption{MMCBRK switch}
+    \label{fig:MMCBRK}
+\end{figure}
+    
+    \item Switch on the 'MMCBRK\_2' switch to connect \gls{MMC}-2 to the network.
+    
+    \begin{figure}[H]
+\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 2cm,width = 2cm]{Diagrams/Appendix_C/MMCBRK_2.PNG}
+    \caption{MMCBRK\_2 switch}
+    \label{fig:MMCBRK_2}
+\end{figure}
+    
+    \item Switch on the 'CabMMC\_Side' breaker switch to charge Cable-1. Then switch on 'CabWT\_Side' breaker switch to connect \gls{OWF}-1 to the network.
+    
+      \begin{figure}[H]
+\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 2cm,width = 3.5cm]{Diagrams/Appendix_C/Cab_1.PNG}
+    \caption{CabMMC\_Side and CabWT\_Side switches}
+    \label{fig:Cab_1}
+\end{figure}  
+    
+    \item Switch on the 'CabMMC\_Side\_2' breaker switch to charge Cable-2. Then switch on 'CabWT\_Side\_2' breaker switch to connect \gls{OWF}-2 to the network.
+ 
+     \begin{figure}[H]
+\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 2cm,width = 3.5cm]{Diagrams/Appendix_C/Cab_2.PNG}
+    \caption{CabMMC\_Side\_2 and CabWT\_Side\_2 switches}
+    \label{fig:Cab_2}
+\end{figure}
+    
+    \item Switch on the 'CabMMC\_Side\_3' breaker switch to charge Cable-3. Then switch on 'CabWT\_Side\_3' breaker switch to connect \gls{OWF}-3 to the network.
+    
+        \begin{figure}[H]
+\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 2cm,width = 3.5cm]{Diagrams/Appendix_C/Cab_3.PNG}
+    \caption{CabMMC\_Side\_3 and CabWT\_Side\_3 switches}
+    \label{fig:Cab_3}
+\end{figure}
+
+    \item Switch on the 'CabMMC\_Side\_4' breaker switch to charge Cable-4. Then switch on 'CabWT\_Side\_4' breaker switch to connect \gls{OWF}-4 to the network.
+    
+        \begin{figure}[H]
+\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 2cm,width = 3.5cm]{Diagrams/Appendix_C/Cab_4.PNG}
+    \caption{CabMMC\_Side\_4 and CabWT\_Side\_4 switches}
+    \label{fig:Cab_4}
+\end{figure}
+
+\end{itemize}
+After the final step, nearly 200 MW active power flows through \gls{MMC}-1 and there is no power flow in \gls{MMC}-2.
+
+
+\subsection{Full generation from OWFs and power flow in MMC-1 and MMC-2}\label{full_gen_appendix}
+    \begin{itemize}
+        \item Increase scaling\_factor from 10 to 40.
+        \item Change ID\_ref\_control from 0 to 0.2.
+        \item Increase scaling\_factor from 40 to 60.
+        \item Change ID\_ref\_control from 0.2 to 0.3.
+        \item Increase scaling\_factor from 60 to 80.
+        \item Change ID\_ref\_control from 0.3 to 0.38.
+        \item Increase scaling\_factor from 80 to 90.
+        \item Change ID\_ref\_control from 0.38 to 0.4.
+        \item Finally, increase scaling\_factor from 90 to 92.
+    \end{itemize} 
+
+A total of nearly 2 GW power flows in the network after the above steps. 1 GW through \gls{MMC}-1 and 1 GW through \gls{MMC}-2.
+
+
+ \begin{table}[H]
+ \centering
 \begin{tabular}{|c|c|}
 \hline
-Parameter & Value \\ \hline
-$k_{p\_vf}$     & 0.2 \\ \hline
-$k_{i\_vf}$     & 30 \\ \hline
+\textbf{ID\_ref\_control} & \textbf{Power through MMC-2} \\ \hline
+0                    & 0 MW                         \\ \hline
+0.2                  & 475 MW                       \\ \hline
+0.4                  & 950 MW                       \\ \hline
 \end{tabular}
-\caption{Parameters for PI gains in U/F control loop \cite{vrana2013cigre}}
-\label{tab:U_F_para}
+\caption{Power flow control in MMC-2}
+\label{tab:Power_flow_control_in_MMC-2}
 \end{table}
+
+\subsection{Disconnection of set of OWF}
+\gls{OWF}-2 is chosen for this thesis. 
+\begin{itemize}
+    \item Open the breaker switch 'CabMMC\_Side\_2' to disconnect \gls{OWF}-2.
+    \item The above test can also be performed on other \gls{OWF}s as well by opening 'CabMMC\_Side' for \gls{OWF}-1, 'CabMMC\_Side\_3' for \gls{OWF}-3 and 'CabMMC\_Side\_4' for \gls{OWF}-4 respectively.
+\end{itemize}
+
+\subsection{Three-phase line to ground fault in the middle of a HVAC cable}
+The control logic in Figure \ref{fig:Idref_control} and the breaker logic in Section \ref{fig:Fault_logic} is modelled for \gls{HVAC} cable-1 for this work. 
+
+First, the steps \ref{energ_appendix} and \ref{full_gen_appendix} must be performed to achieved 2 GW power transmission.
+
+\begin{itemize}
+    \item Switch on the 'Active' switch  to change control of circuit breaker CB-1a from 'CabMMC\_Side' switch to the logic explained in Section \ref{Fault logic and cb}. The network still operates in steady state in this condition.
+    \item Apply the fault by clicking the 'LG\_FLT8' button (red in colour).
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 2cm,width = 1.75cm]{Diagrams/Appendix_C/Fault_button.PNG}
+    \caption{Fault button}
+    \label{fig:Fault_button}
+\end{figure}
+
+\section{Additional graphs}
+\subsection{Disconnection of OWF-2}
+
+\begin{figure}[H]
+%\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 7cm,width = \textwidth]{Diagrams/Appendix_C/VABC_WT1_WT2off.eps}
+    \caption{Voltages at PCC-1 upon OWF-2 disconnection event}
+    \label{VABC_WT1_WT2off}
+\end{figure}
+
+\begin{figure}[H]
+%\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 7cm,width = \textwidth]{Diagrams/Appendix_C/VABC_WT3_WT2off.eps}
+    \caption{Voltages at PCC-3 upon OWF-2 disconnection event}
+    \label{VABC_WT3_WT2off}
+\end{figure}
+
+\begin{figure}[H]
+%\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 7cm,width = \textwidth]{Diagrams/Appendix_C/VABC_WT4_WT2off.eps}
+    \caption{Voltages at PCC-4 upon OWF-2 disconnection event}
+    \label{VABC_WT4_WT2off}
+\end{figure}
+
+\begin{figure}[H]
+%\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 7cm,width = \textwidth]{Diagrams/Appendix_C/IABC_WT3_WT2off.eps}
+    \caption{Currents in PCC-3 upon OWF-2 disconnection event}
+    \label{IABC_WT3_WT2off}
+\end{figure}
+
+\begin{figure}[H]
+%\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 7cm,width = \textwidth]{Diagrams/Appendix_C/IABC_WT4_WT2off.eps}
+    \caption{Currents in PCC-4 upon OWF-2 disconnection event}
+    \label{IABC_WT4_WT2off}
+\end{figure}
+
+\subsection{Three-phase fault line to ground fault in the middle of cable-1}
+
+\begin{figure}[H]
+%\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 7cm,width = \textwidth]{Diagrams/Appendix_C/VABC_WT2_3phaseSC.eps}
+    \caption{Voltages at PCC-2 upon three-phase line to ground fault in the middle of cable-1}
+    \label{VABC_WT2_3phaseSC}
+\end{figure}
+
+\begin{figure}[H]
+%\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 7cm,width = \textwidth]{Diagrams/Appendix_C/VABC_WT3_3phaseSC.eps}
+    \caption{Voltages at PCC-3 upon three-phase line to ground fault in the middle of cable-1}
+    \label{VABC_WT3_3phaseSC}
+\end{figure}
+
+\begin{figure}[H]
+%\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 7cm,width = \textwidth]{Diagrams/Appendix_C/VABC_WT4_3phaseSC.eps}
+    \caption{Voltages at PCC-4 upon three-phase line to ground fault in the middle of cable-1}
+    \label{VABC_WT4_3phaseSC}
+\end{figure}
+
+\begin{figure}[H]
+%\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 7cm,width = \textwidth]{Diagrams/Appendix_C/IABC_WT3_3phaseSC.eps}
+    \caption{Currents in PCC-3 upon three-phase line to ground fault in the middle of cable-1}
+    \label{IABC_WT3_3phaseSC}
+\end{figure}
+
+\begin{figure}[H]
+%\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 7cm,width = \textwidth]{Diagrams/Appendix_C/IABC_WT4_3phaseSC.eps}
+    \caption{Currents in PCC-4 upon three-phase line to ground fault in the middle of cable-1}
+    \label{IABC_WT4_3phaseSC}
+\end{figure}
+
+\begin{figure}[H]
+%\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 7cm,width = \textwidth]{Diagrams/Appendix_C/IDQ_WT3_3phaseSC.eps}
+    \caption{Currents in d and q axes in PCC-3 upon three-phase line to ground fault in the middle of cable-1}
+    \label{IDQ_WT3_3phaseSC}
+\end{figure}
+
+\begin{figure}[H]
+%\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 7cm,width = \textwidth]{Diagrams/Appendix_C/IDQ_WT4_3phaseSC.eps}
+    \caption{Currents in d and q axes in PCC-4 upon three-phase line to ground fault in the middle of cable-1}
+    \label{IDQ_WT4_3phaseSC}
+\end{figure}
