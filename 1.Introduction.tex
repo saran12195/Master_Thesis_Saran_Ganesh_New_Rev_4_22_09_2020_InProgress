@@ -1,6 +1,6 @@
 \chapter{Introduction}\label{1}
 
-This chapter provides an overall picture of the chosen topic for investigation. The relevant background on the high penetration of Renewable Energy Sources (\gls{RES}) in the upcoming years is explained. The control strategies available to solve the defined challenges are explained through a literature review. Lastly, the research questions followed by the thesis contribution and the outline of the thesis are defined. 
+This chapter discusses the motivation, specific context, research gaps of literature, goals and research questions, overall methodological approach, and the list of scientific contributions.
 
 \section{Background and Motivation}\label{Background}
 
@@ -16,12 +16,12 @@ The plans involve a future target of nearly 70 GW to 150 GW offshore wind power 
     \label{fig:Paris_roll_out}
 \end{figure}
 
-\gls{RES} are connected to the grid through Power Electronic (\gls{PE}) converters as shown in Figure \ref{fig:Energy_conv_system_2}. Until now integration of \gls{RES} has not created major problems since the stability of the grid is maintained by synchronous machines in power plants. The compelling need to move towards large scale \gls{RES} causes increasing penetration of the \gls{PE} converters in the grid. Simultaneously, conventional power plants need to be disconnected from the network. Traditionally, the inertia for the power system is provided by the conventional units connected to the network (Figure \ref{fig:Energy_conv_system}). Disconnection of these conventional generators can lead to major technical challenges and thereby requires the \gls{PE} converter based generation units to take up the role of governing the grid.
+\gls{RES} are connected to the power system through Power Electronic (\gls{PE}) converters as shown in Figure \ref{fig:Energy_conv_system_2}. The \gls{PE} converters do not posses inherent inertial response characteristics. Until now integration of \gls{RES} has not created major problems since the stability of the system is maintained by the synchronous machines in power plants. Traditionally, the inertia for the power system is provided by these conventional units connected to the network (Figure \ref{fig:Energy_conv_system}). However, an increase in \gls{RES} in the future causes an increase in \gls{PE} converter based generation units. Simultaneously, conventional power plants using non-renewable energy sources need to be disconnected from the network. This makes the power systems weak due to low short circuit power available and low system inertia. The disconnection of conventional generators also requires the \gls{RES} connected through \gls{PE} converter based generation units to take up the role of governing the stability of the system.
 
 \begin{figure}[H]
 \centering
 %\hspace*{-1.2cm}
-    \includegraphics[height = 3cm,width = 10.5cm]{Diagrams/Chapter_1/Energy_conv_system_2.pdf}
+    \includegraphics[height = 3cm,width = 12cm]{Diagrams/Chapter_1/Energy_conv_system_2.pdf}
     \caption{PE converter-based generation connection to the grid \cite{denis_migrate_2018}}
     \label{fig:Energy_conv_system_2}
 \end{figure}
@@ -29,10 +29,20 @@ The plans involve a future target of nearly 70 GW to 150 GW offshore wind power 
 \begin{figure}[H]
 \centering
 %\hspace*{-1.2cm}
-    \includegraphics[height = 3cm,width = 11.5cm]{Diagrams/Chapter_1/Energy_conv_system.pdf}
+    \includegraphics[height = 3cm,width = 12.5cm]{Diagrams/Chapter_1/Energy_conv_system.pdf}
     \caption{Conventional generators connection to the grid \cite{denis_migrate_2018}}
     \label{fig:Energy_conv_system}
 \end{figure}
+
+The majorly contributing source among the \gls{RES} is wind energy and the deployment of wind energy technology is expected to grow further. As the share of wind energy among the \gls{RES} increases, the integration of \gls{PE} converter based generation units becomes more challenging. The continuous variations in wind speed causes constant change in the active power output of the wind power plant. This could lead to an increase in the reactive power output and consequently voltage at the point of common coupling (\gls{PCC}). 
+
+The conventional current control methods using Proportional Integral (\gls{PI}) controllers in the modern wind turbines are capable of providing voltage control by injecting reactive currents when connected to a strong network \footnote{SCR = SC$_{MVA}$/P;\; where SC$_{MVA}$ is the short circuit power of the network and P is the active power generation. \\
+If SCR = 100 to 250, it is a strong grid. If SCR = 5 to 25, it is a weak grid.}, capable of absorbing the injected currents. However, these controllers are not suitable for operation in highly \gls{PE} converter dominated grids as the connected network is weak and is not capable of absorbing the injected currents. Furthermore, during the scenario of islanding, voltage control by the conventional controllers is ineffective as the deviation in voltage is not high enough to activate a productive voltage reduction mechanism. Moreover, the frequency of such an islanded network is not controlled as the conventional controllers in the wind generators are not equipped with such capability.  
+
+       
+
+Furthermore, the compelling need to move towards large scale offshore networks increases the challenges from the technical point of view.
+
 
 The first significant challenge is the control of voltage and frequency by the \gls{PE} converters without the presence of conventional units in the grid. The absence of conventional generators would mean that the \gls{PE} converters will have to take into account the decreasing inertia of the system that leads to a faster dynamic behaviour and needs controllers with faster time response. 
 
@@ -111,7 +121,7 @@ A brief outline of the main chapters is presented below, and a figurative repres
 \begin{figure}[H]
 \centering
 %\hspace*{-1.2cm}
-    \includegraphics[height = 9cm,width = 16.5cm]{Diagrams/Chapter_1/Thesis_flowchart.pdf}
+    \includegraphics[height = 9.5cm,width =\textwidth]{Diagrams/Chapter_1/Thesis_flowchart.pdf}
     \caption{Work Flow of Thesis}
     \label{fig:Thesis_outline}
 \end{figure}

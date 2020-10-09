@@ -1,13 +1,59 @@
 \chapter{Parameters and Configurations in RSCAD}
 
+\section{Reactive power control parameters in DVC}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Parameter} & \textbf{Description}                                      & \textbf{Unit} & \textbf{Value} \\ \hline
+$k_{QV}$           & Static gain for slow global reactive power control        & p.u.          & 6.6            \\ \hline
+$q_{vsc\_max/min}$ & Maximum/minimum reactive power                            & p.u.          & 0.31           \\ \hline
+$k_Q$              & Slow global reactive power control proportional gain      & p.u.          & 0.002          \\ \hline
+$T_Q$              & Slow global reactive power control integral time constant & s             & 15             \\ \hline
+$k_V$              & Fast local voltage control proportional gain              & p.u.          & 0.2            \\ \hline
+$x$                & Converter reactance                                       & p.u.          & 0.1            \\ \hline
+$k_P$              & Washout filter proportional gain                          & p.u.          & 0.05           \\ \hline
+$T_w$              & Washout filter time constant                              & s             & 0.01           \\ \hline
+\end{tabular}
+\caption{Parameters of reactive power control loop in DVC}
+\label{tab:Reactive_pow_para}
+\end{table}
+
+\section{Active power control parameters in DVC}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Parameter} & \textbf{Description}                                  & \textbf{Unit} & \textbf{Value} \\ \hline
+$k_s$              & DC voltage control proportional gain                  & p.u.          & 1              \\ \hline
+$T_s$              & DC voltage control integral time constant             & p.u.          & 0.1            \\ \hline
+$k_{Rf}$           & Proportional gain for direct frequency control        & p.u.          & 1              \\ \hline
+$T_{Rf}$           & First order delay for direct frequency control        & s             & 0.2            \\ \hline
+$T_{U_v}$ & \begin{tabular}[c]{@{}c@{}}Washout time constant for the voltage dependent active power\\ reduction\end{tabular} & s    & 60    \\ \hline
+$k_{Ufv}$ & Proportional gain for voltage dependent active power reduction                                                   & p.u. & 2     \\ \hline
+$T_{Ufv}$ & \begin{tabular}[c]{@{}c@{}}First order delay for the voltage dependent active power\\ reduction\end{tabular}     & s    & 0.005 \\ \hline
+$x$                & Converter reactance                                   & p.u.            & 0.1            \\ \hline
+$k_Q$              & Washout filter proportional gain                      & p.u.          & 0.05           \\ \hline
+$T_w$              & Washout filter time constant                          & s             & 0.01           \\ \hline
+$T_a$              & Voltage measurement delay                             & s             & 5              \\ \hline
+                   & Deadband for direct frequency control                 & Hz            & 0.2            \\ \hline
+                   & Deadband for voltage dependent active power reduction & p.u.          & 0.1            \\ \hline
+\end{tabular}
+\caption{Parameters of reactive power control loop in DVC}
+\label{tab:Reactive_pow_para}
+\end{table}
+
 \section{V/F control parameters}
 \begin{table}[H]
 \centering
-\begin{tabular}{|c|c|}
+\begin{tabular}{|c|c|c|}
 \hline
-Parameter & Value \\ \hline
-$k_{p\_vf}$     & 0.2 \\ \hline
-$k_{i\_vf}$     & 30 \\ \hline
+\textbf{Parameter}  & \textbf{Unit}
+& \textbf{Value} \\ \hline
+$k_{p\_vf}$     & p.u. & 0.2 \\ \hline
+$k_{i\_vf}$     & p.u. & 30 \\ \hline
 \end{tabular}
 \caption{Parameters for PI gains in V/F control loop \cite{vrana2013cigre}}
 \label{tab:U_F_para}
@@ -129,5 +175,5 @@ The ".clo" file must be added first using the 'Dnm1' option, which is obtained b
 \end{figure}
 
 
-The outer control loop model available in \cite{vrana2013cigre} is suitable for 145 kV \gls{HVAC} network. Hence, for the 66 kV \gls{HVAC} network developed for this work, the outer loop is simplified and the reference values ($i_{d\_ref\_2}$ and $i_{q\_ref\_2}$) for the inner control loop is directly defined by the user.
+%The outer control loop model available in \cite{vrana2013cigre} is suitable for 145 kV \gls{HVAC} network. Hence, for the 66 kV \gls{HVAC} network developed for this work, the outer loop is simplified and the reference values ($i_{d\_ref\_2}$ and $i_{q\_ref\_2}$) for the inner control loop is directly defined by the user.
 
