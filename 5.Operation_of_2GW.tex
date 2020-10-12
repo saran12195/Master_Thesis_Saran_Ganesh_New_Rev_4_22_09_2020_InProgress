@@ -357,26 +357,28 @@ The currents from the \gls{OWF}s-2, 3 and 4 are the same in the post-fault regio
 %\centering
 %\hspace*{-1.2cm}
 \captionsetup{justification=centering}
-    \includegraphics[height = 6cm,width = \textwidth]{Diagrams/Chapter_5/IABC_WT2_3phaseSC.eps}
+    \includegraphics[height = 6.5cm,width = \textwidth]{Diagrams/Chapter_5/IABC_WT2_3phaseSC.eps}
     \caption{Currents in PCC-2 upon three-phase line to ground fault in the middle of cable-1}
     \label{IABC_WT2_3phaseSC}
 \end{figure}
 
-In practice, if a three-phase fault occurs in a subsea cable, it is difficult that the fault clears on its own and would require human interference. During such critical islanding situations, the \gls{DVC} allows rated reactive current to flow to the fault location by controlling the \gls{GSC} voltage and thereby protecting the converters in the \gls{OWF} from high overcurrents. Based on the reference grid codes mentioned in \cite{mohseni_review_2012}, during normal operation active current must be the priority and during the time of fault the priority must be changed to reactive current. The major takeaway from this chapter is that, the \gls{DVC} follows the reactive current injection requirement during the time of fault as shown in Figure \ref{IDQ_WT1_3phaseSC} even while working in coordination with other controls in the network. The current is limited to the rated current of the converter by the current limitation algorithm in \gls{DVC} without requirement of any external controls. Simultaneously, the currents in the other \gls{OWF}s are balanced as per the active power required in \gls{MMC}-2 as seen in Figure \ref{IDQ_WT2_3phaseSC}. 
+In practice, if a three-phase fault occurs in a subsea cable, it is difficult that the fault clears on its own and would require human interference. During such critical islanding situations, the \gls{DVC} allows rated reactive current to flow to the fault location by controlling the \gls{GSC} voltage and thereby protecting the converters in the \gls{OWF} from high overcurrents. Based on the reference grid codes mentioned in \cite{mohseni_review_2012}, during normal operation active current must be the priority and during the time of fault the priority must be changed to reactive current. The major takeaway from this chapter is that, the \gls{DVC} follows the reactive current injection requirement during the time of fault as shown in Figure \ref{IDQ_WT1_3phaseSC} even while working in coordination with other controls in the network. The current is limited to the rated current of the converter by the current limitation algorithm in \gls{DVC} without requirement of any external controls. %Simultaneously, the currents in the other \gls{OWF}s are balanced as per the active power required in \gls{MMC}-2 as seen in Figure \ref{IDQ_WT2_3phaseSC}. 
 
 \vspace{-3mm}
 \begin{figure}[H]
 %\centering
 %\hspace*{-1.2cm}
-    \includegraphics[height = 6cm,width = \textwidth]{Diagrams/Chapter_5/IDQ_WT1_3phaseSC.eps}
+    \includegraphics[height = 6.5cm,width = \textwidth]{Diagrams/Chapter_5/IDQ_WT1_3phaseSC_2.eps}
     \caption{Currents in d and q axes in PCC-1 upon three-phase line to ground fault in the middle of cable-1}
     \label{IDQ_WT1_3phaseSC}
 \end{figure}
-\vspace{-5mm}
-\begin{figure}[H]
-%\centering
-%\hspace*{-1.2cm}
-    \includegraphics[height = 6cm,width = \textwidth]{Diagrams/Chapter_5/IDQ_WT2_3phaseSC.eps}
-    \caption{Currents in d and q axes in PCC-2 upon three-phase line to ground fault in the middle of cable-1}
-    \label{IDQ_WT2_3phaseSC}
-\end{figure}
+
+
+% \vspace{-5mm}
+% \begin{figure}[H]
+% %\centering
+% %\hspace*{-1.2cm}
+%     \includegraphics[height = 6cm,width = \textwidth]{Diagrams/Chapter_5/IDQ_WT2_3phaseSC.eps}
+%     \caption{Currents in d and q axes in PCC-2 upon three-phase line to ground fault in the middle of cable-1}
+%     \label{IDQ_WT2_3phaseSC}
+% \end{figure}
