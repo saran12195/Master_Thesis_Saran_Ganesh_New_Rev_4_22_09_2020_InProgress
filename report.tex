@@ -112,6 +112,9 @@
 \newglossaryentry{HV}{name={HV}, description={High Voltage}}
 \newglossaryentry{LV}{name={LV}, description={Low Voltage}}
 \newglossaryentry{dq}{name={dq}, description={Direct Quadrature}}
+\newglossaryentry{RTDS}{name={RTDS}, description={Real Time Digital Simulator}}
+\newglossaryentry{VDAPR}{name={VDAPR}, description={Voltage Dependent Active Power Reduction}}
+\newglossaryentry{FSC}{name={FSC}, description={Full scale converter}}
 
 \glstoctrue
 
@@ -130,13 +133,13 @@
 
 \author{Saran Ganesh}
 %\affiliation{Technische Universiteit Delft}
-%\includepdf{Saran_cover_diff_color_newmargin.pdf}
+\includepdf{Saran_cover_diff_color_newmargin.pdf}
 %\makecover
 
 %% Include an optional title page.
-%\input{title}
+\input{title}
 
-%\input{Acknowledgement}
+\input{Acknowledgement}
 \input{Abstract}
 
 \tableofcontents
@@ -147,26 +150,26 @@
 
 %\listoftables
 
-%\printglossary[title=List of Abbreviations]
+\printglossary[title=List of Abbreviations]
 
 
 %% Use Arabic numerals for the page numbers of the chapters.
 
 \mainmatter
 
-\input{1.Introduction}
-%\input{2.Scientific_Background}
-%\input{3.Implementation_of_DVC}
-\input{4.Large_scale}
-\input{5.Operation_of_2GW}
-\input{6.Conclusions_and_future_scope}
+% \input{1.Introduction}
+% \input{2.Scientific_Background}
+ \input{3.Implementation_of_DVC}
+ \input{4.Large_scale}
+% \input{5.Operation_of_2GW}
+% \input{6.Conclusions_and_future_scope}
 
-% \begin{appendices}
-% \input{Appendix-a}
-% \input{Appendix-b}
-% \input{Appendix-c}
-% \input{Appendix-d}
-% \end{appendices}
+ \begin{appendices}
+%  \input{Appendix-a}
+%  \input{Appendix-b}
+  \input{Appendix-c}
+ \input{Appendix-d}
+  \end{appendices}
 \bibliographystyle{ieeetran}
 %% Use letters for the chapter numbers of the appendices.
 
