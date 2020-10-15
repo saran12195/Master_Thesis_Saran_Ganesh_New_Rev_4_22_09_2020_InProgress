@@ -56,7 +56,7 @@ With the available \gls{MMC}-\gls{HVDC} transmission technology, multiple \gls{M
 % the connection of distant \gls{OWF}s also creates challenges for the system operators. High Voltage Direct Current (\gls{HVDC}) transmission is preferred over High Voltage Alternating Current (\gls{HVAC}) for longer distances due to lower losses and lower investment costs \cite{ryndzionek_evolution_2020}. Conventionally, 
 
 
-\section{Literature Review}
+\section{Literature Review}\label{lit_review}
 
 As seen in Section \ref{Background}, the major challenges are; development of large scale offshore networks with available technology is challenging, no much knowledge about 66 kV \gls{HVAC} transmission available, and new control strategies are required that can provide better control of voltage and frequency. Hence, a generic model for large scale offshore networks with the latest trend in available technology, and enhanced control strategies is a key research requirement. 
 % The literature review is mainly focused on three aspects: 1) control strategies to overcome the technical challenges related to voltage and frequency control in \gls{WG}s, 2) power transfer from the \gls{OWF}s to the offshore \gls{MMC} converter and 3) topology of  
@@ -92,7 +92,7 @@ Typically, \gls{PE} converters in the \gls{WG}s are connected to the network for
     The control is similar to the conventional current control with an additional inertia control in the outer control loop by using a synthetic inertia controller that gives a behaviour similar to that of a synchronous machine \cite{duckwitz_derivation_2019} \cite{liu2017control}. 
 \end{itemize}
 
-Studies of I. Erlich et al. and A. Korai et al. in \cite{erlich_new_2017} and \cite{korai_dynamic_2019} show appealing results of the implemented \gls{DVC} for highly \gls{PE} dominated systems. The simulations are tested for different grids based on real world data and provide promising outcomes with effective voltage and frequency control. Hence, with such proven results and available models, the \gls{DVC} strategy was chosen to be incorporated for this work. Moreover, the real-time implementation of \gls{DVC} in Type-4 \gls{WG} is attempted in \cite{sethi_real-time_nodate-new}, but the latest trend of 66 kV \gls{HVAC} transmission and the major requirement of reactive current injection by the \gls{WG}s during dynamic conditions is lacking.
+Studies performed by I. Erlich et al. and A. Korai et al. in \cite{erlich_new_2017} and \cite{korai_dynamic_2019} show appealing results of the implemented \gls{DVC} for highly \gls{PE} dominated systems. The simulations are tested for different grids based on real world data and provide promising outcomes with effective voltage and frequency control. Hence, with such proven results and available models, the \gls{DVC} strategy was chosen to be incorporated for this work. Moreover, the real-time implementation of \gls{DVC} in Type-4 \gls{WG} is attempted in \cite{sethi_real-time_nodate-new}, but the latest trend of 66 kV \gls{HVAC} transmission and the major requirement of reactive current injection by the \gls{WG}s during dynamic conditions is lacking.
 
 It is also good to analyze the effectiveness of other control strategies mentioned above. With a generic offshore network model, different control strategies can be implemented in the \gls{OWF}s and the complexity related to the interoperability of the controllers can be assessed. However, this lies beyond the scope of this project.
 

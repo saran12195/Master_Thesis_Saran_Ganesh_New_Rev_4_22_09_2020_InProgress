@@ -260,7 +260,7 @@ The detailed representation of the cable parameters in Cable module, and the rep
 \subsection{External AC system}\label{ext_AC_source}
 The external \gls{AC} system represents the infinite grid connection and is modelled as an \gls{AC} voltage source. The infinite grid is similar to the representation of a synchronous generator with high inertia constant. For a strong grid, typical values of inertia constant of 5 MW/MVA$^2$ depicting a synchronous generator is chosen from \cite{kothari2003modern}. The commonly represented damping constant is the frequency-dependent load damping constant. However, the damping constant is zero in this case as no loads and a lossless machine is considered. Alternatively, for short circuit calculations, the reference parameters given in \cite{wachal2014guide} can be chosen for representing a infinite grid. The parameters include short circuit power of 30 GVA and X/R \footnote{X/R = the amount of reactance X divided by the amount of resistance R} of 10. The \gls{AC} source voltage is rated at 66 kV.
 
-\section{Control structures}
+\section{Control Structures}
 The control strategies are implemented in the \gls{MSC} and \gls{GSC} of the Type-4 \gls{WG}. The conventional current control architecture utilized in \gls{MSC} is explained in Appendix \ref{MSC_Control}. The major area of interest for this thesis is the control strategy of \gls{GSC}. The \gls{DVC} illustrated in Section \ref{DVC_theory} is implemented in the \gls{GSC}.   
 
 \subsection{Implementation of DVC in RSCAD}\label{DVC_RSCAD}
@@ -550,7 +550,7 @@ Before the start of the simulation, a specific time step value suitable for both
 \label{fig:Stepsize_RSCAD_PFD}
 \end{figure}
 
-\subsection{Event comparison in RSCAD and PowerFactory}
+\subsection{Event Comparison in RSCAD and PowerFactory}
 The 66 kV offshore network model in RSCAD and PowerFactory are compared for a three-phase short circuit in the middle of the cable. A fault is applied at 0.5 seconds with a clearing time of 140 ms. The resulting voltage and current waveforms are as shown in Figure \ref{fig:VACP_comp},  \ref{fig:ID_fullACSource} and \ref{fig:IQ_fullACSource} respectively. As can be observed in Figure \ref{fig:VACP_comp}, voltage measured at \gls{PCC} drops and the generation is stopped during the fault period. The voltage profile is the same in RSCAD and PowerFactory models during the pre-fault, fault and post fault conditions as can be observed. The drop in voltage in both the graphs is the same due to equal impedance in both the models. 
 
 \begin{figure}[H]
