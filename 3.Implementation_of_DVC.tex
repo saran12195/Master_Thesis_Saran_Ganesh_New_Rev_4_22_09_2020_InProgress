@@ -89,7 +89,7 @@ After understanding the basics of RSCAD software, a 66 kV offshore network, as s
         \item High Pass filter (\gls{HPF}) with series reactor
         \item \gls{OWF} transformer
     \end{itemize}
-    \item \gls{HVAC} cable  
+    \item \gls{HVAC} cables  
      \item External \gls{AC} system
 \end{itemize}
 
@@ -117,7 +117,7 @@ The value can be entered by right-clicking on the small time step block and choo
 \end{figure}
 
 \subsubsection{Wind Generation System}
-The wind generation system consists of \gls{PMSG}, \gls{MSC}, \gls{DC} circuit and \gls{GSC}. Three-level \gls{VSC}s are utilized for the \gls{MSC} and \gls{GSC} for this work. The basic models for this project are considered from the MIGRATE project \cite{denis_migrate_2018}. The detailed description of the \gls{PMSG}, \gls{MSC} and \gls{DC} circuit models along with the control structures are explained in Appendix \ref{Appendix_A}. The control for \gls{GSC} developed in \cite{sethi_real-time_nodate-new} is modified and implemented in this thesis work. This is explained in detail in Section \ref{DVC_RSCAD}.
+The wind generation system consists of \gls{PMSG}, \gls{MSC}, \gls{DC} circuit and \gls{GSC}. The \gls{EMT} model of Type-4 \gls{WG} with detailed modelling of \gls{MSC}, \gls{DC} circuit and \gls{GSC} represented by three-level \gls{VSC}s are utilized for this work. The basic models for this work are considered from the MIGRATE project \cite{denis_migrate_2018}. The detailed description of the \gls{PMSG}, \gls{MSC} and \gls{DC} circuit models along with the control structures are explained in Appendix \ref{Appendix_A}. The control for \gls{GSC} developed in \cite{sethi_real-time_nodate-new} is modified and implemented in this thesis work. This is explained in detail in Section \ref{DVC_RSCAD}.
 
 \begin{figure}[H]
 \text{\rotatebox{90}{\hspace{5mm}
@@ -195,7 +195,7 @@ Upon deriving the inductance, the resistance is selected to match the impedance 
 The series reactor is used for limiting the current to the \gls{AC} network. The inductance value of the reactor was selected after precise tuning and is set to 0.9 mH to achieve voltage of 1 p.u. at the \gls{PCC}.
 
 \subsubsection{OWF Transformer}\label{scaling_OWF}
-The \gls{GSC} is connected in series to a three-phase offshore 66/2 kV, 6 MVA transformer through a series reactor and a shunt \gls{HPF} as seen in Figure \ref{fig:OveriewSmallTimeStepOWF}. Single-phase \gls{VSC} interface transformer shown in Figure \ref{fig:VSC_interface_trafo_smalldt} available in the small time step library is used for this approach. Three transformers each rated 2 MVA are connected in delta-wye configuration as seen in Figure \ref{fig:OveriewSmallTimeStepOWF}. In RSCAD, the scaling up of power is done at this transformer. The option for scaling up the primary current of the transformer is available in the \gls{VSC} interface transformer block as shown in Figure \ref{fig:VSC_interface_trafo_scaling} \cite{rtds_tech}. The user can control the amount of scaling, i.e. the number of parallel units by a slider, as shown in Figure \ref{fig:scaling_factor_RSCAD}. The user can model the components in the secondary side of the transformer as required for a single \gls{WG} and then scale it to the required power (nearly 700 MW in this case).
+The \gls{GSC} is connected in series to a three-phase offshore 66/2 kV, 6 MVA transformer with leakage reactance of 10 \%, through a series reactor and a shunt \gls{HPF} as seen in Figure \ref{fig:OveriewSmallTimeStepOWF}. Single-phase \gls{VSC} interface transformer shown in Figure \ref{fig:VSC_interface_trafo_smalldt} available in the small time step library is used for this approach. Three transformers each rated 2 MVA are connected in wye-delta configuration with as seen in Figure \ref{fig:OveriewSmallTimeStepOWF}. In RSCAD, the scaling up of power is done at this transformer. The option for scaling up the primary current of the transformer is available in the \gls{VSC} interface transformer block as shown in Figure \ref{fig:VSC_interface_trafo_scaling} \cite{rtds_tech}. The user can control the amount of scaling, i.e. the number of parallel units by a slider, as shown in Figure \ref{fig:scaling_factor_RSCAD}. The user can model the components in the secondary side of the transformer as required for a single \gls{WG} and then scale it to the required power (nearly 700 MW in this case).
 
 \begin{figure}[H]
 \centering
@@ -385,7 +385,7 @@ The Draft module is compiled, and after ensuring no errors, the system is run in
 \end{figure}
 
 The three-phase line to ground fault is applied at 0.5 s with a fault clearing time of 140 ms. The voltage and frequency responses are recorded, as shown in Figure \ref{fig:Vol_Freq_3phaseSC}. In the pre-fault condition, the voltage is stabilized at nearly 1.04 p.u., as seen in Figure \ref{fig:Vol_Freq_3phaseSC} a). 
-The frequency at the \gls{PCC} computed by the Phase Locked Loop (\gls{PLL}) is set to 50 Hz.
+The frequency at the \gls{PCC} computed by the \gls{PLL} is set to 50 Hz.
 The \gls{OWF} is generating nearly rated active power i.e. active current of nearly 1 p.u. is provided by the \gls{GSC}, as depicted by the green line in Figure \ref{fig:ID_IQ_Final_3}. There is no reactive current or reactive power injection by the \gls{GSC} during this time as seen from the purple line in Figure \ref{fig:ID_IQ_Final_3}. 
 
 During the time of fault, the voltage drops at \gls{PCC} as expected for a three-phase line to ground fault. There is no major drop in frequency since there are no loads connected to the \gls{OWF}. Hence the frequency control does not get activated since deviation remains within 49.8 Hz and 50.2 Hz.
@@ -475,20 +475,20 @@ The 66 kV offshore network is modelled in PowerFactory as shown in Figure \ref{f
     \label{fig:WT1_Model_PFD_comp}
 \end{figure}
 
-\subsection{Simplified FSC based WG System}
+\subsection{Simplified FSC based WG System}\label{simplified_FSC_WG}
 The wind turbine and \gls{MSC} are simplified since they do not contribute to the dynamics of grid. \gls{LSC} is modelled in detail. A constant injection of active current is proposed from the \gls{MSC} to the \gls{DC} side \cite{korai_dynamic_2019}. Hence it is modelled as a \gls{DC} current source. The \gls{WG} unit is represented as a static generator model with 750 MVA nominal apparent power. It is made to operate with constant reactive power (Q) control in order to achieve the active and reactive power set points same as in RSCAD model. The active power flow is set to 700 MW, similar to the RSCAD model.
 
 \subsubsection{DC Circuit}
-The \gls{DC} voltage across the capacitor is set to 4 kV. The chopper activation control is provided when the \gls{DC} voltage crosses a minimum set value. 
+The DC circuit is detailed and the voltage across the capacitor is set to 4 kV, same as the RSCAD model. The chopper activation control is provided when the \gls{DC} voltage crosses a minimum set value. 
 
-\subsubsection{Line Side Converter (LSC)}
-Unlike the RSCAD model, a two-level \gls{LSC} is utilized in this model. The \gls{PWM} is not used in this model, and the \gls{LSC} is modelled as a controlled voltage source. This is one among the major difference with the RSCAD model. The \gls{DVC} control for \gls{LSC} developed in \cite{korai_dynamic_2019} is provided in this model as explained in Section \ref{DVC_RSCAD}. The full representation of \gls{DVC} with active and reactive power loops in PowerFactory is depicted in Appendix \ref{pfd_model_appen}. 
+\subsubsection{Grid Side Converter (GSC)}
+Unlike the RSCAD model, a two-level \gls{GSC} is utilized in this model. The \gls{PWM} is not used in this model, and the \gls{GSC} is modelled as a controlled voltage source. This is one among the major difference with the RSCAD model. The \gls{DVC} control for \gls{GSC} developed in \cite{korai_dynamic_2019} is provided in this model as explained in Section \ref{DVC_RSCAD}. The full representation of \gls{DVC} with active and reactive power loops in PowerFactory is depicted in Appendix \ref{pfd_model_appen}. 
 
 \subsection{High Pass Filter (HPF) with Series Reactor}
 The shunt filter available in the PowerFactory drawing toolbar is chosen. The values for R, L and C are chosen the same as mentioned in Section \ref{HPF_design}. A common impedance element available in the drawing tool is chosen for the series reactor and is connected at the output of \gls{LSC}, as shown in Figure \ref{fig:WT1_Model_PFD_comp}. The inductance value chosen is the same as the RSCAD model to have an equal impedance for both the models.  
 
 \subsection{OWF Transformer}
-A two winding transformer available in the equipment library folder of DIgSILENT library is used. The transformer is rated 66/2 kV, 750 MVA with a delta-wye configuration. The leakage inductance and resistance of the transformer are set the same as the RSCAD model.
+A two winding transformer available in the equipment library folder of DIgSILENT library is used. The transformer is rated 66/2 kV, 750 MVA with a wye-delta configuration to block zero sequence currents. The leakage inductance and resistance of the transformer are set the same as the RSCAD model.
 
 \subsection{HVAC Cables}
 The cables are rated at 66 kV same as the RSCAD model. The cable is modelled from the "Cables" section available in the equipment library in DIgSILENT library. The type of model is chosen to be the Pi model. %as shown in Figure \ref{fig:CableModel_PFD}. 
@@ -497,8 +497,11 @@ Pi model is utilized as it is easier to input the cable parameters in terms of R
 \subsection{External AC system}
 The external \gls{AC} system in PowerFactory also represents an infinite grid. Similar to the model in RSCAD in Section \ref{ext_AC_source}, the infinite grid is modelled as a \gls{AC} voltage source available in the PowerFactory drawing toolbar. 
 
+\section{Control Structures}
+As mentioned in Section \ref{simplified_FSC_WG}, the wind turbine and \gls{MSC} models utilized are simplified and is made to inject constant active current to the \gls{DC} circuit. Hence, the control of \gls{MSC} and wind turbine is not required to be modelled. However, control structures are detailed for the \gls{DC} circuit and the \gls{GSC}. The benchmark model of \gls{DVC} from \cite{erlich_description_2018} is utilized here for the \gls{GSC}. The control structures are depicted in Appendix \ref{pfd_model_appen}.      
+
 \section{Comparison of Models in RSCAD and PowerFactory }
-The major differences between the 66 kV \gls{HVAC} network built in RSCAD and PowerFactory are illustrated in Table. \ref{tab:Comp_RSCAD_PFD_Para}. 
+The major differences between the 66 kV \gls{HVAC} network built in RSCAD and PowerFactory are illustrated in Table \ref{tab:Comp_RSCAD_PFD_Para}. 
 \vspace{-1mm}
 \begingroup
 %\setlength{\tabcolsep}{10pt} % Default value: 6pt
@@ -508,22 +511,23 @@ The major differences between the 66 kV \gls{HVAC} network built in RSCAD and Po
 %\hspace*{-0.5cm}
 \begin{tabular}{|c|c|c|}
 \hline
-\textbf{Parameters}            & \textbf{PowerFactory} & \textbf{RSCAD}            \\ \hline
-Wind Generator         & Simplified (Constant power model)          & PMSG                      \\ \hline
-Machine Side Converter control        & Not modelled          & Conventional current control \\ \hline
-Grid Side Converter & \multicolumn{1}{l|}{Controlled Voltage Source with no PWM} & {VSC with PWM} \\ \hline
-Generated active power from WG & 700 MW                & 6 MW                      \\ \hline
-Scaling factor at transformer  & Not applicable        & 117 (cf. Section. \ref{scaling_OWF})                      \\ \hline
+\textbf{Parameters}   & \textbf{RSCAD}         & \textbf{PowerFactory}             \\ \hline
+WG model      & PMSG   & Simplified (Constant power model)                                \\ \hline
+MSC control   & Conventional current control     & Not modelled           \\ \hline
+GSC model & {VSC with PWM} & \multicolumn{1}{l|}{Controlled Voltage Source with no PWM}  \\ \hline
+Generated active power from WG  & 6 MW  & 700 MW                                    \\ \hline
+Scaling factor at transformer & 117 (cf. Section. \ref{scaling_OWF}) & Not applicable                           \\ \hline
 \end{tabular}
-\caption{Differences in models in PowerFactory and RSCAD}
+\caption{Differences in models in RSCAD and PowerFactory}
 \label{tab:Comp_RSCAD_PFD_Para}
 \end{table}
 \endgroup
 
-\vspace{-6mm}
-\paragraph{Representation of \gls{GSC}}: One of the differences in both models is the usage of average model representation of \gls{VSC} with \gls{PWM} in RSCAD for the \gls{GSC}, whereas a controlled voltage source model is utilized in the PowerFactory model.
-\vspace{-3mm}
-\paragraph{Scaling of power}: Another significant difference between the two models is that the components connected to the secondary side of the transformer are modelled for one \gls{WG} of 6 MW in RSCAD whereas it is directly modelled for 700 MW in PowerFactory. The scaling of power to 700 MW in RSCAD is done at the 66/2 kV \gls{OWF} transformer, as explained in Section \ref{scaling_OWF}. This helps in modelling and analysis in the real world in terms of single \gls{WG}.
+%\vspace{-6mm}
+\textbf{Representation of \gls{GSC}}: One of the differences in both models is the usage of average model representation of \gls{VSC} with \gls{PWM} in RSCAD for the \gls{GSC}, whereas a controlled voltage source model is utilized in the PowerFactory model.
+\vspace{3mm}
+
+\textbf{Scaling of power}: Another significant difference between the two models is that the components connected to the secondary side of the transformer are modelled for one \gls{WG} of 6 MW in RSCAD whereas it is directly modelled for 700 MW in PowerFactory. The scaling of power to 700 MW in RSCAD is done at the 66/2 kV \gls{OWF} transformer, as explained in Section \ref{scaling_OWF}. This helps in modelling and analysis in the real world in terms of single \gls{WG}.
 \vspace{-3mm}
 \paragraph{}
 However, it must be noted that these differences does not affect the performance of the control operation and both the models have equal immpedances that makes the comparison significant. 
@@ -580,7 +584,7 @@ Due to the unavoidable modelling differences in the software packages, the curre
     \caption{Active currents flowing to the network for a three phase fault in the middle of the cable}
     \label{fig:ID_fullACSource}
 \end{figure}
-\vspace{-10mm}
+%\vspace{-10mm}
 \begin{figure}[H]
 %\centering
 %\hspace*{-0.1cm}
