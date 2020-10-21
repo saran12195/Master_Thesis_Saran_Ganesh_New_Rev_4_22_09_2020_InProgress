@@ -143,20 +143,20 @@ A total of nearly 2 GW power flows in the network after the above steps. 1 GW th
 \label{tab:Power_flow_control_in_MMC-2}
 \end{table}
 
-\subsection{Disconnection of set of OWF}
+\subsection{Disconnection of One OWF}
 \gls{OWF}-2 is chosen for this thesis. 
 \begin{itemize}
     \item Open the breaker switch 'CabMMC\_Side\_2' to disconnect \gls{OWF}-2.
     \item The above test can also be performed on other \gls{OWF}s as well by opening 'CabMMC\_Side' for \gls{OWF}-1, 'CabMMC\_Side\_3' for \gls{OWF}-3 and 'CabMMC\_Side\_4' for \gls{OWF}-4 respectively.
 \end{itemize}
 
-\subsection{Three-phase line to ground fault in the middle of a HVAC cable}
+\subsection{Three-phase line to ground fault}
 The control logic in Figure \ref{fig:Idref_control} and the breaker logic in Section \ref{fig:Fault_logic} is modelled for \gls{HVAC} cable-1 for this work. 
 
 First, the steps \ref{energ_appendix} and \ref{full_gen_appendix} must be performed to achieved 2 GW power transmission.
 
 \begin{itemize}
-    \item Switch on the 'Active' switch  to change control of circuit breaker CB-1a from 'CabMMC\_Side' switch to the logic explained in Section \ref{Fault logic and cb}. The network still operates in steady state in this condition.
+    \item Switch on the 'Activ' switch  to change control of circuit breaker CB-1a from 'CabMMC\_Side' switch to the logic explained in Section \ref{Fault logic and cb}. The network still operates in steady state in this condition.
     \item Apply the fault by clicking the 'LG\_FLT8' button (red in colour).
 \end{itemize}
 
@@ -206,17 +206,17 @@ First, the steps \ref{energ_appendix} and \ref{full_gen_appendix} must be perfor
 \begin{figure}[H]
 %\centering
 %\hspace*{-1.2cm}
-    \includegraphics[height = 7cm,width = \textwidth]{Diagrams/Appendix_C/IABC_WT4_WT2off.eps}
+    \includegraphics[height = 6.5cm,width = \textwidth]{Diagrams/Appendix_C/IABC_WT4_WT2off.eps}
     \caption{Currents in PCC-4 upon OWF-2 disconnection event}
     \label{IABC_WT4_WT2off}
 \end{figure}
 
-\subsection{Three-phase fault line to ground fault in the middle of cable-1}
+\subsection{Three-phase fault line to ground fault}
 
 \begin{figure}[H]
 %\centering
 %\hspace*{-1.2cm}
-    \includegraphics[height = 7cm,width = \textwidth]{Diagrams/Appendix_C/VABC_WT2_3phaseSC.eps}
+    \includegraphics[height = 6.5cm,width = \textwidth]{Diagrams/Appendix_C/VABC_WT2_3phaseSC.eps}
     \caption{Voltages at PCC-2 upon three-phase line to ground fault in the middle of cable-1}
     \label{VABC_WT2_3phaseSC}
 \end{figure}

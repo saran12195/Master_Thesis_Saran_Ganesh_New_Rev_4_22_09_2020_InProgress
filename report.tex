@@ -69,9 +69,9 @@
 \usepackage{enumitem}
 %\cfoot{\thepage\ of \pageref{LastPage}}
 
-%usepackage[acronym]{glossaries}
+%\usepackage[acronym]{glossaries}
 %\makeglossaries
-\usepackage[nonumberlist,acronym]{glossaries}
+\usepackage[nonumberlist,nopostdot,toc,acronym]{glossaries}
 \makeglossaries
 \usepackage[toc,page]{appendix}
 \newglossaryentry{RES}{name={RES},description={Renewable Energy Sources}}
@@ -103,7 +103,7 @@
 \newglossaryentry{PLL}{name={PLL}, description={Phase Locked Loop}}
 \newglossaryentry{LVRT}{name={LVRT}, description={Low Voltage Right Through}}
 \newglossaryentry{PEIG}{name={PEIG}, description={Power Electronic Interfaced Generation}}
-\newglossaryentry{EMT}{name={EMT}, description={Electromagnetic Transient}}
+\newglossaryentry{EMT}{name={EMT}, description={Electro-Magnetic Transient}}
 \newglossaryentry{NPC}{name={NPC}, description={Neutral Point Clamped}}
 \newglossaryentry{MPPT}{name={MPPT}, description={Maximum Power Point Tracking}}
 \newglossaryentry{WECS}{name={WECS}, description={Wind Energy Conversion Systems}}
@@ -116,7 +116,7 @@
 \newglossaryentry{dq}{name={dq}, description={Direct Quadrature}}
 \newglossaryentry{RTDS}{name={RTDS}, description={Real Time Digital Simulator}}
 \newglossaryentry{VDAPR}{name={VDAPR}, description={Voltage Dependent Active Power Reduction}}
-\newglossaryentry{FSC}{name={FSC}, description={Full scale converter}}
+\newglossaryentry{FSC}{name={FSC}, description={Full Scale Converter}}
 
 \glstoctrue
 
@@ -132,26 +132,34 @@
 
 \title{Development of a Generic Model for Real-time Simulation and Assessment of the Dynamic Performance of a Large Scale Offshore Transmission Network}
 %\coverimage{cover.jpg}
-
 \author{Saran Ganesh}
 %\affiliation{Technische Universiteit Delft}
 \includepdf{Saran_cover_diff_color_newmargin.pdf}
 %\makecover
 
 %% Include an optional title page.
-% \input{title}
+\input{title}
 
-% \input{Acknowledgement}
-% \input{Abstract}
-
-
-% \tableofcontents
+\input{Acknowledgement}
+\input{Abstract}
 
 
+\tableofcontents
 
-% \listoffigures
 
-% \listoftables
+
+\listoffigures
+
+%\listoftables
+
+%\renewcommand{\nomname}{List of Abbreviations}
+% \glsaddall
+% \printglossary[type=\acronymtype]
+% \printglossary[type=main,title={Glossary},toctitle={Glossary}]
+% \usepackage{nomencl}
+% \makenomenclature
+%\renewcommand{\nomname}{List of Abbreviations}
+% \usepackage{helvet}
 
 \printglossary[title=List of Abbreviations]
 
@@ -160,19 +168,19 @@
 
 \mainmatter
 
-% \input{1.Introduction}
-%  \input{2.Scientific_Background}
-% \input{3.Implementation_of_DVC}
-%  \input{4.Large_scale}
-% \input{5.Operation_of_2GW}
- \input{6.Conclusions_and_future_scope}
+\input{1.Introduction}
+ \input{2.Scientific_Background}
+ \input{3.Implementation_of_DVC}
+   \input{4.Large_scale}
+\input{5.Operation_of_2GW}
+\input{6.Conclusions_and_future_scope}
 
-%  \begin{appendices}
-%  \input{Appendix-a}
-%  \input{Appendix-b}
-%  \input{Appendix-c}
-% \input{Appendix-d}
-%   \end{appendices}
+ \begin{appendices}
+  \input{Appendix-a}
+ \input{Appendix-b}
+  \input{Appendix-c}
+\input{Appendix-d}
+  \end{appendices}
 \bibliographystyle{ieeetran}
 %% Use letters for the chapter numbers of the appendices.
 

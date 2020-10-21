@@ -75,7 +75,7 @@ The overall working of RSCAD can be understood as depicted by the flowchart in F
 After understanding the basics of RSCAD software, a 66 kV offshore network, as shown in Figure \ref{fig:WT1_Model_RSCAD} is developed. The network consists of the following components.
 
 \begin{itemize}
-    \item An aggregated representation of $\sim{700}$ MW installed capacity Offshore Wind Farm (\gls{OWF}) is modelled with the following elements:
+    \item An aggregated representation of $\sim{700}$ MW installed capacity \gls{OWF} is modelled with the following elements:
     \begin{itemize}
         \item A single Wind Generation System with 
     \begin{itemize}
@@ -99,10 +99,10 @@ After understanding the basics of RSCAD software, a 66 kV offshore network, as s
     \label{fig:WT1_Model_RSCAD}
 \end{figure}
 
-\subsection{ Aggregated Offshore Wind farm (OWF)}\label{OWF}
+\subsection{Aggregated Offshore Wind Farm (OWF)}\label{OWF}
 
 The $\sim{700}$ MW offshore wind power is represented by a single \gls{OWF} consisting of 116 \gls{WG}s, each rated 6 MW connected in parallel. Type-4 \gls{WG}s are used for all units. The RSCAD representation of aggregated \gls{OWF} is utilized in this work. The aggregated model consists of \gls{PE} components which require high switching frequency %(19*50 = 950 Hz in this case) 
-and hence is modelled in a small time step environment by selecting the "VSC Bridge Box" (Figure \ref{fig:SmallTimeStepBlock}) available in the small time step library in the Draft module. The box contains the \gls{PMSG}, \gls{MSC}, \gls{DC} capacitors, chopper circuit, \gls{GSC}, \gls{HPF} with series reactor and \gls{OWF} transformer as illustrated in Figure \ref{fig:OveriewSmallTimeStepOWF}. As mentioned in Section \ref{RTDS_Theory}, the block can be assigned to have a time step value between 1400 to 3750 ns. Hence, a value of 2500 ns is chosen for this model. 
+and hence is modelled in a small time step environment by selecting the "VSC Bridge Box" (Figure \ref{fig:SmallTimeStepBlock}) available in the small time step library in the Draft module. The box contains the \gls{PMSG}, \gls{MSC}, \gls{DC} capacitors, chopper circuit, \gls{GSC}, \gls{HPF} with a series reactor and \gls{OWF} transformer as illustrated in Figure \ref{fig:OveriewSmallTimeStepOWF}. As mentioned in Section \ref{RTDS_Theory}, the block can be assigned to have a time step value between 1400 to 3750 ns. Hence, a value of 2500 ns is chosen for this model. 
 %It is necessary to set this time step to a nearly high value to avoid the time step overflow error in RSCAD.
 The value can be entered by right-clicking on the small time step block and choosing "Edit" and then "Parameters" as shown in Figure \ref{fig:SmallTimeStepBlock}. Also, it must the noted that the above specified time step is only for initialization and the actually used time step can be viewed in the Map file which is accessible by right-clicking on any white space in the Draft file and selecting "View" then, "Map File". It is also worth mentioning that the ratio of the large time step to the small-time step in a network in RSCAD must be higher than 12 when using NovaCor and must be higher than 17 when using PB5 racks \cite{rtds_tech}. 
 
@@ -115,7 +115,7 @@ The value can be entered by right-clicking on the small time step block and choo
 \end{figure}
 
 \subsubsection{Wind Generation System}
-The wind generation system consists of \gls{PMSG}, \gls{MSC}, \gls{DC} circuit and \gls{GSC}. The \gls{EMT} model of Type-4 \gls{WG} with detailed modelling of \gls{MSC}, \gls{DC} circuit and \gls{GSC} represented by three-level \gls{VSC}s are utilized for this work. The basic models for this work are considered from the MIGRATE project \cite{denis_migrate_2018}. The detailed description of the \gls{PMSG}, \gls{MSC} and \gls{DC} circuit models along with the control structures are explained in Appendix \ref{Appendix_A}. The control for \gls{GSC} developed in \cite{sethi_real-time_nodate-new} is modified and implemented in this thesis work. This is explained in detail in Section \ref{DVC_RSCAD}.
+The Wind Generation System consists of \gls{PMSG}, \gls{MSC}, \gls{DC} circuit and \gls{GSC}. The \gls{EMT} model of Type-4 \gls{WG} with detailed modelling of \gls{MSC}, \gls{DC} circuit and \gls{GSC} represented by three-level \gls{VSC}s are utilized for this work. The basic models available in IEPG Section of Delft University of Technology (TU Delft), developed as a part of the MIGRATE project \cite{noauthor_migrate_2020} is considered for this work. The detailed description of the \gls{PMSG}, \gls{MSC} and \gls{DC} circuit models along with the control structures are explained in Appendix \ref{Appendix_A}. The control for \gls{GSC} developed in \cite{sethi_real-time_nodate-new} is modified and implemented in this thesis work. This is explained in detail in Section \ref{DVC_RSCAD}.
 
 \begin{figure}[H]
 \text{\rotatebox{90}{\hspace{5mm}
@@ -175,19 +175,19 @@ Hence, the value of capacitance at 50 Hz in Farad is calculated by using Equatio
 The next step is to calculate the inductance 'L'. Inductance must be selected such that the impedance of the inductor and capacitor cancel each other during the switching or modulating frequency (950 Hz in this case). The switching and higher frequencies can be passed to the ground and thereby purely sinusoidal signals will be transferred to the \gls{PCC}. The impedance of the inductor, resistor and capacitor must be equal at the switching frequency in order to pass the high frequencies to the ground. Therefore, to calculate inductance, it is considered as a series LC circuit. The resonant frequency of the LC circuit is given by Equation \ref{resosn_freq_eq}.
 
 \begin{equation}\label{resosn_freq_eq}
-    \omega = \frac{1}{\sqrt{L \times C}}    
+    \omega = \frac{1}{\sqrt{LC}}    
 \end{equation}
 
 Hence, the inductance value can be calculated as per the following equation.
 
 \begin{equation}
-    L = \frac{1}{\omega^2 \times C} = \frac{1}{(2\pi \times 950 Hz)^2 \times 4.77462 \times 10^{-4} F} = 5.8783 \times 10^{-5} H
+    L = \frac{1}{\omega^2 C} = \frac{1}{(2\pi \times 950 Hz)^2 \times 4.77462 \times 10^{-4} F} = 5.8783 \times 10^{-5} H
 \end{equation}
 
 Upon deriving the inductance, the resistance is selected to match the impedance of the parallel inductor at the modulating frequency.
 
 \begin{equation}
-    R = \omega \times L = (2\pi \times 950 Hz) \times 5.8783 \times 10^{-5} H = 0.3508 \Omega
+    R = \omega L = (2\pi \times 950 Hz) \times 5.8783 \times 10^{-5} H = 0.3508 \Omega
 \end{equation}
 
 The series reactor is used for limiting the current to the \gls{AC} network. The impedance value of the reactor is selected based on sensitivity analysis. A value of 0.9 mH is chosen to achieve a voltage of 1 p.u. at the \gls{PCC}.
@@ -259,14 +259,14 @@ The detailed representation of the cable parameters in Cable module, and the rep
 The external \gls{AC} system represents the infinite grid connection and is modelled as an \gls{AC} voltage source. The infinite grid is similar to the representation of a synchronous generator with high inertia constant. For a strong grid, typical values of inertia constant of 5 MW/MVA$^2$ depicting a synchronous generator is chosen from \cite{kothari2003modern}. The commonly represented damping constant is the frequency-dependent load damping constant. However, the damping constant is zero in this case as no loads and a lossless machine is considered. Alternatively, for short circuit calculations, the reference parameters given in \cite{wachal2014guide} can be chosen for representing an infinite grid. The parameters include short circuit power of 30 GVA and X/R of \footnote{X/R = the amount of reactance X divided by the amount of resistance R} 10. The \gls{AC} source voltage is rated at 66 kV.
 
 \section{Control Structures}
-The control strategies are implemented in the \gls{MSC} and \gls{GSC} of the Type-4 \gls{WG}. The conventional current control architecture utilized in \gls{MSC} is explained in Appendix \ref{MSC_Control}. The major area of interest for this thesis is the control strategy of \gls{GSC}. The \gls{DVC} illustrated in Section \ref{DVC_theory} is implemented in the \gls{GSC}.   
+The control strategies are implemented for the \gls{MSC}, \gls{DC} circuit and \gls{GSC} of the Type-4 \gls{WG}. The conventional current control architecture utilized in \gls{MSC} is explained in Appendix \ref{MSC_Control}. The major area of interest for this thesis is the control strategy of \gls{GSC}. The \gls{DVC} illustrated in Section \ref{DVC_theory} is implemented in the \gls{GSC}.   
 
 \subsection{Implementation of DVC in RSCAD}\label{DVC_RSCAD}
 The control strategy depicted in \cite{korai_dynamic_2019} is achieved in RSCAD software. The control was implemented in RSCAD in \cite{sethi_real-time_nodate-new} for a 33 kV \gls{HVAC} transmission network, but the final goal of achieving reactive current injection during severe dynamic conditions was lacking. The primary reason was due to the avoidance of the current limiter block that is explained later in this section. However, the block is implemented successfully in this work, and the results are illustrated. 
 Since RSCAD allows modelling of the secondary side of the transformer as required for one \gls{WG} as explained in Section \ref{scaling_OWF}, the control loop parameters of \gls{GSC} remain the same as 33 kV for a 66 kV offshore network and are based on the benchmark values provided in \cite{erlich_description_2018}. The control strategy described in Section \ref{DVC_theory} is incorporated in the reactive power and active power control loops defined in the following section. 
 
 \subsubsection{Reactive Power Control}
-From the control structure, it can be seen that, unlike in conventional current control, the reactive current is not directly utilized for voltage control. The converter voltage is directly controlled here, and this allows the current to modify on its own according to varying network conditions. This strategy is similar to the voltage control in conventional synchronous generators. The reactive control loop consists of an outer loop based on a slow VAR controller that tracks the changes in set-points required by the system-wide demand. The inner loop consists of a fast-acting controller, as the name suggests, that responds towards crucial changes in voltage where quick action is required \cite{korai_dynamic_2019}.
+From the control structure, it can be seen that, unlike in conventional current control, the reactive current is not directly utilized for voltage control. The converter voltage is directly controlled here, and this allows the current to modify on its own according to varying network conditions. This strategy is similar to the voltage control in conventional synchronous generators. The reactive control loop consists of an outer loop based on a slow VAR controller that tracks the changes in set points required by the system-wide demand. The inner loop consists of a fast-acting controller, as the name suggests, that responds towards crucial changes in voltage where quick action is required \cite{korai_dynamic_2019}.
 
 \begin{figure}[H]
 \centering
@@ -277,7 +277,7 @@ From the control structure, it can be seen that, unlike in conventional current 
 \end{figure}
 
 \paragraph{Slow global VAR control}:
-It is the upper-level controller and can be modelled as a power factor, reactive power or voltage controller. The reference values can be directly sent as inputs to the \gls{PI} controller if the controller is made to use for reactive power or power factor control. The voltage controller is used here, and this requires reactive power reference ($q_{GSC\_ref}$) to be determined from a predefined voltage versus reactive power droop characteristic. A voltage value for which the injection of reactive power is zero is obtained from this characteristic. The obtained reactive power reference output is provided as input to the \gls{PI} controller having a small proportional gain ($k_Q$) and ample time constant ($T_Q$) in order to avoid transformer tap changes and not very fast in order to avoid unwanted controller interactions. The automatic adjustment of reactive power in relation to varying voltage using the proportional gain, ($k_{QV}$) is significant. There is no dead-band present in order to ensure continuous voltage control. The  proportional gain that represents the droop can be obtained from the following relation,
+It is the upper-level controller and can be modelled as a power factor, reactive power or voltage controller. The reference values can be directly sent as inputs to the \gls{PI} controller if the controller is made to use for reactive power or power factor control. The voltage controller is used here, and this requires reactive power reference ($q_{GSC\_ref}$) to be determined from a predefined voltage versus reactive power droop characteristic. A voltage value for which the injection of reactive power is zero is obtained from this characteristic. The obtained reactive power reference output is provided as input to the \gls{PI} controller having a small proportional gain ($k_Q$) and ample time constant ($T_Q$) in order to avoid transformer tap changes and not very fast in order to avoid unwanted controller interactions. The automatic adjustment of reactive power in relation to varying voltage using the proportional gain, ($k_{QV}$) is significant. There is no dead band present in order to ensure continuous voltage control. The  proportional gain that represents the droop can be obtained from the following relation,
 
 \begin{equation}
     k_{QV} = \frac{\Delta q_{GSC}}{\Delta V_N}
@@ -288,18 +288,18 @@ In theory, the proportional gain can be varied with changes in power flow. Howev
     V_{N\_{ref}} = -\frac{q_{GSC\_ref}}{k_{QV}} + V_N
 \end{equation}
 where $V_N$ is desired voltage and $V_{N\_{ref}}$ is the voltage at which no reactive power injection is required.
-The reactive power limits ($q_{GSC\_max}$ and $q_{GSC\_min}$) are the continuous values in steady-state and can be computed from the P-Q diagram of the converter operation. The time constant is chosen in the range of 5-30 s wherein a value in the higher range tends to stabilize, whereas value in the lower range can cause interactions with other controllers.
+The reactive power limits ($q_{GSC\_max}$ and $q_{GSC\_min}$) are the continuous values in steady state and can be computed from the P-Q diagram of the converter operation. The time constant is chosen in the range of 5-30 s wherein a value in the higher range tends to stabilize, whereas value in the lower range can cause interactions with other controllers.
 
 The slow global VAR controller must be made inactive once the converter current limit is reached and also during cases of large voltage sags or swells by providing a signal to deactivate the controller. A scenario that could lead to the case mentioned above is a three-phase short circuit event. The output from the upper-level controller must be constant because of the chosen high integration time constant or must be limited by a blocking signal \cite{korai_dynamic_2019}.
 
 \paragraph{Fast local voltage control}:
-The voltage reference output ($V_{PCC\_ref}$) received from the slow global VAR controller is provided as input to the fast local controller. This controller must be able to provide prompt support for grid voltage during the time of faults. The response of the controller in terms of voltage support must depend on local inputs sensed at the \gls{PCC} and not on quantities that need to be measured at remote places using a communication mechanism. A proportional gain ($k_V$) is used for this purpose. The proportional gain can be obtained from the following relation \cite{korai_dynamic_2019},
+The voltage reference output ($V_{PCC\_ref}$) received from the slow global VAR controller is provided as input to the fast local controller. This controller must be able to provide prompt support for grid voltage during the time of faults. The response of the controller in terms of voltage support must depend on local inputs sensed at the \gls{PCC} ($V_{PCC}$) and not on quantities that need to be measured at remote places using a communication mechanism. A proportional gain ($k_V$) is used for this purpose. The proportional gain can be obtained from the following relation \cite{korai_dynamic_2019},
 
 \begin{equation}
     k_V = \frac{\Delta i_{Q\_GSC}}{\Delta V_N }
 \end{equation}
 
-The primary control action is provided by the feed-forward term, $x$, which is the reactance of the \gls{PE} converter (\gls{GSC}). The voltage output obtained on multiplying the current ($i_{q\_ref}$) with $x$ is the set point voltage of the converter in steady state. The reactive control loop parameters are shown in Appendix \ref{tab:Reactive_pow_para}.
+The primary control action is provided by the feed-forward term, $x$, which is the reactance of the \gls{PE} converter (\gls{GSC}). The voltage output obtained on multiplying the current ($i_{q\_ref}$) with $x$ is the set point voltage of \gls{GSC} in steady state. The reactive control loop parameters are shown in Appendix \ref{tab:Reactive_pow_para}.
 
 \subsubsection{Active Power Control}\label{Active_power_DVC_theory}
 The active power control consists of the \gls{DC} voltage, direct frequency control and Voltage Dependent Active Power Reduction (\gls{VDAPR}) control, as shown in Figure \ref{fig:Active_Power_Control_Loop}. The control of active power is provided using the q-axis component of \gls{GSC} voltage as per the Equation \ref{P_eq}. Theoretically, since the \gls{DC} capacitor provides the active power control, the \gls{DC} energy barrier should be made higher which is to be done by increasing the capacitor size and \gls{DC} voltage when in comparison with the conventional \gls{PI} based current control \cite{korai_dynamic_2019}. However, considering the practical aspect, such an increase in capacitance is not incorporated for this work and the \gls{DC} voltage is not increased beyond 4 kV. Another significant modification that was done is providing the minimum limit, $V_{a\_lim\_min}$, for the voltage measurement. A small value needs to be set for this parameter in RSCAD software, or else an error causing division by zero would be bound to occur during the start of the simulation. The active power is calculated as follows: 
@@ -310,7 +310,7 @@ The active power control consists of the \gls{DC} voltage, direct frequency cont
 %where $V_T$ is the voltage at \gls{PCC}.
 
 The direct frequency control provides control in case of under frequency and over frequency. The control is modelled to be activated when the frequency is above 50.2 Hz or below 49.8 Hz.
-The \gls{VDAPR} control is provided to control the power injection capacity of the \gls{GSC}. Since power cannot be injected to the grid by the \gls{GSC} during the time of faults, \gls{VDAPR} allows in reducing the set point of reference power and thereby refining the dynamic stability of the network. The active control loop parameters are shown in Appendix \ref{tab:Active_pow_para}.
+The \gls{VDAPR} control is provided to control the power injection capacity of the \gls{GSC}. Since power cannot be injected to the network by the \gls{GSC} during the time of faults, \gls{VDAPR} allows in reducing the set point of reference power and thereby refining the dynamic stability of the network. The active control loop parameters are shown in Appendix \ref{tab:Active_pow_para}.
 
 \begin{figure}[H]
 \centering
@@ -360,14 +360,14 @@ else
 \end{equation}
 
 \subsubsection{Voltage Limitation}
-The \gls{AC} voltage of the \gls{GSC} is generally limited by the \gls{DC} voltage value. The factor that brings the relationship between the \gls{AC} and \gls{DC} voltages is the modulation index. The modulation index is computed, as shown in Equation \ref{MI_eq}. The maximum value of the modulation index is set around to 1, and \gls{GSC} voltage must be limited at that point to avoid non-saturation of the \gls{GSC}. 
+The \gls{AC} voltage ($V_{AC}$) of the \gls{GSC} is generally limited by the \gls{DC} voltage ($V_{DC}$) value. The factor that brings the relationship between the \gls{AC} and \gls{DC} voltages is the modulation index. The modulation index is computed, as shown in Equation \ref{MI_eq}. The maximum value of the modulation index is set around to 1, and \gls{GSC} voltage must be limited at that point to avoid non-saturation of the \gls{GSC}. 
 
 \begin{equation}\label{MI_eq}
     m = \frac{2\sqrt{2} V_{AC}}{\sqrt{3} {V_{DC}}}
 \end{equation}
 
-\section{Analysis of the Dynamic Performance of 66 kV Test System}
-After the 66 kV system is modelled, it has to be tested for operation in steady-state and dynamic conditions. The performance related to short-term voltage stability and reactive power injection by the \gls{DVC} during the most severe dynamic situation in the grid has to be analyzed. A three-phase short circuit in the middle of the \gls{HVAC} cable is chosen to test the same.
+\section{Analysis of the Dynamic Performance of 66 kV Test System in RSCAD}
+After the 66 kV system is modelled, it has to be tested for operation in steady state and dynamic conditions. The performance related to short-term voltage stability (fault occurring for a span of 6-10 cycles accounting for 120-200 ms) and reactive power injection by the \gls{DVC} during the most severe dynamic situation in the network has to be analyzed. A three-phase short circuit in the middle of the \gls{HVAC} cable is chosen to test the same.
 
 \subsection{Three-phase Line to Ground Fault}
 
@@ -377,14 +377,22 @@ The Draft module is compiled, and after ensuring no errors, the system is run in
 \begin{figure}[H]
 \centering
 %\hspace*{-1.2cm}
-    \includegraphics[height = 11cm,width = \textwidth]{Diagrams/Chapter_3/2CablesBlockWithFault.pdf}
+    \includegraphics[height = 8cm,width = 14cm]{Diagrams/Chapter_3/2CablesBlockWithFault.pdf}
     \caption{Representation of three-phase fault in the middle of the cable in RSCAD}
     \label{fig:2cablesblockwithfault}
 \end{figure}
 
-The three-phase line to ground fault is applied at 0.5 s with a fault clearing time of 140 ms. The voltage and frequency responses are recorded, as shown in Figure \ref{fig:Vol_Freq_3phaseSC}. In the pre-fault condition, the voltage is stabilized at nearly 1.04 p.u., as seen in Figure \ref{fig:Vol_Freq_3phaseSC} a). 
-The frequency at the \gls{PCC} computed by the \gls{PLL} is set to 50 Hz.
+The three-phase line to ground fault is applied at 0.5 s with a fault clearing time of 140 ms. The voltage and frequency responses are plotted for a shorter period (0.3 s to 1.3 s) to have a clearer view of the signals during the occurrence of an event. In the pre-fault condition, the voltage is stabilized at nearly 1.04 p.u., as seen in Figure \ref{fig:Vol_3phaseSC}. 
+The frequency at the \gls{PCC} computed by the \gls{PLL} is set to 50 Hz, and is shown in Figure \ref{fig:Freq_3phaseSC}.
 The \gls{OWF} is generating nearly rated active power, i.e. active current of nearly 1 p.u. is provided by the \gls{GSC}, as depicted by the green line in Figure \ref{fig:ID_IQ_Final_3}. There is no reactive current or reactive power injection by the \gls{GSC} during this time, as seen from the purple line in Figure \ref{fig:ID_IQ_Final_3}. 
+
+\begin{figure}[H]
+%\centering
+%\hspace*{-2cm}
+    \includegraphics[height = 6.5cm,width = \textwidth]{Diagrams/Chapter_3/VACP_RSCAD.eps}
+    \caption{Voltage at PCC following a three phase fault in the middle of the cable}
+    \label{fig:Vol_3phaseSC}
+\end{figure}
 
 During the time of the fault, the voltage drops at \gls{PCC} as expected for a three-phase line to ground fault. There is no significant drop in frequency since there are no loads connected to the \gls{OWF}. Hence the frequency control does not get activated since deviation remains within 49.8 Hz and 50.2 Hz.
 \gls{DVC} allows reactive current and hence reactive power to be injected by \gls{GSC} during the time of fault to support the voltage, as shown in Figure \ref{fig:ID_IQ_Final_3}. The corresponding behaviour is a major requirement as per the grid codes during dynamic conditions, as mentioned in \cite{mohseni_review_2012}. At the same time, the active current and thus active power is limited, and hence there is no generation from the \gls{OWF} (Figure \ref{fig:ID_IQ_Final_3}). Simultaneously, the voltage across \gls{DC} link increases in order to maintain the power balance as per the Equation \ref{powbaleq}. The chopper gets activated when \gls{DC} voltage goes beyond a particular limit in order to protect the \gls{DC} link from overvoltage. After the fault is cleared, the \gls{DVC} allows for quick recovery, the voltage and powers return to the pre-fault values. 
@@ -394,17 +402,16 @@ The spike in voltage, frequency and currents after the fault is released at 0.64
 \begin{figure}[H]
 %\centering
 %\hspace*{-2cm}
-    \includegraphics[height = 7cm,width = \textwidth]{Diagrams/Chapter_3/VACP_Freq_Final_3.eps}
-    \caption{a) Voltage at PCC and b) Frequency response synthesised by PLL following a three phase fault in the middle of the cable}
-    \label{fig:Vol_Freq_3phaseSC}
+    \includegraphics[height = 6.5cm,width = \textwidth]{Diagrams/Chapter_3/Hz_RSCAD.eps}
+    \caption{Frequency response synthesised by PLL following a three phase fault in the middle of the cable}
+    \label{fig:Freq_3phaseSC}
 \end{figure}
-
 
 \begin{figure}[H]
 %\centering
 %\hspace*{-0.1cm}
-    \includegraphics[height = 6.5cm,width = \textwidth]{Diagrams/Chapter_3/ID_IQ_Final_4.eps}
-    \caption{Active and reactive currents flowing to the network for a three phase fault in the middle of the cable}
+    \includegraphics[height = 6.5cm,width = \textwidth]{Diagrams/Chapter_3/ID_IQ_Final.eps}
+    \caption{Active and reactive currents flowing to the network following a three phase fault in the middle of the cable}
     \label{fig:ID_IQ_Final_3}
 \end{figure}
 
@@ -413,33 +420,49 @@ The spike in voltage, frequency and currents after the fault is released at 0.64
 The damping during the transient process mentioned in Section \ref{DVC_theory} is ensured by the washout filters in the reactive power and active power control loops as seen in Figure \ref{fig:Reactive_Power_Control_Loop} and Figure \ref{fig:Active_Power_Control_Loop} respectively. Parameter sensitivity analysis needs to be performed for the washout filters to ensure fast damping of transients. The output of the washout filter for various proportional gains for a step response is depicted in Figure \ref{fig:Washout_gain_output}. The proportional gain represents values to which the output of the washout filter changes when there is a change in the input. The time constant represents the rate of this change. It can be seen that the output of the washout filter changes proportionally to the gain value specified and comes back to the initial value after a specific time, depending on the time constant mentioned.
 
 
-Effect of this property of washout filter is observed in the active and reactive currents at the \gls{PCC} for a similar three-phase fault as performed in the previous section. Measurements are recorded between 0.45 s to 0.65 s in Figure \ref{fig:ID_Washout_Comp} and \ref{fig:IQ_Washout_Comp} for active and reactive currents, respectively to analyze the behaviour of transients. The proportional gain is set as 0.01, 0.03 and 0.05 for comparison, keeping the time constant = 0.01 s for all the three cases. It is observed that faster damping can be achieved for higher proportional gains, as shown in Figure \ref{fig:ID_IQ_Washout_Comp}. It makes sense as the system would try to damp the transients to the maximum possible value in order to have minimum fluctuations and also to limit interactions with other controllers during this period. Thereby, it is worthy to conclude that choosing the right parameters for the washout filter is one among the key factors in this control approach.
+Effect of this property of washout filter is observed in the active and reactive currents at the \gls{PCC} for a similar three-phase fault as performed in the previous section. Measurements are recorded between 0.45 s to 0.65 s in Figure \ref{fig:ID_Washout_Comp} and \ref{fig:IQ_Washout_Comp} for active and reactive currents, respectively to analyze the behaviour of transients. The proportional gain is set as 0.01, 0.03 and 0.05 for comparison, keeping the time constant = 0.01 s for all the three cases. It is observed that faster damping can be achieved for higher proportional gains. It makes sense as the system would try to damp the transients to the maximum possible value in order to have minimum fluctuations and also to limit interactions with other controllers during this period. Thereby, it is worthy to conclude that choosing the right parameters for the washout filter is one among the key factors in this control approach.
 
 \begin{figure}[H]
 \centering
 %\hspace*{-1cm}
-    \includegraphics[height = 6cm,width = 14.5cm]{Diagrams/Chapter_3/Washout_gain_output_4.eps}
+    \includegraphics[height = 6cm,width = 14.5cm]{Diagrams/Chapter_3/Washout_gain_output.eps}
     \caption{Output of a washout filter for different proportional gains for a step response}
     \label{fig:Washout_gain_output}
 \end{figure}
 
 \begin{figure}[H]
-%\centering
-\begin{subfigure}{0.5\textwidth}
- % \centering
-  \includegraphics[height = 6.5cm,width = \textwidth]{Diagrams/Chapter_3/ID_Washout_Comp_4.eps}
-  \caption{Current in d axis during three phase fault for gain 0.01, 0.03 and 0.05}
-  \label{fig:ID_Washout_Comp}
-\end{subfigure}%
-\begin{subfigure}{0.5\textwidth}
-  %\centering
-  \includegraphics[height = 6.5cm,width = \textwidth]{Diagrams/Chapter_3/IQ_Washout_Comp_4.eps}
-  \caption{Current in q axis during three phase fault for gain 0.01, 0.03 and 0.05}
-  \label{fig:IQ_Washout_Comp}
-\end{subfigure}
-\caption{Currents in d and q axes during three-phase fault in the middle of the cable for different proportional gains of washout filters}
-\label{fig:ID_IQ_Washout_Comp}
+\centering
+%\hspace*{-1cm}
+    \includegraphics[height = 6cm,width = 14.5cm]{Diagrams/Chapter_3/ID_Washout_Comp.eps}
+    \caption{Current in d axis following a three phase fault for proportional gains 0.01, 0.03 and 0.05}
+    \label{fig:ID_Washout_Comp}
 \end{figure}
+
+\begin{figure}[H]
+\centering
+%\hspace*{-1cm}
+    \includegraphics[height = 6cm,width = 14.5cm]{Diagrams/Chapter_3/IQ_Washout_Comp.eps}
+    \caption{Current in q axis following a three phase fault for proportional gains 0.01, 0.03 and 0.05}
+    \label{fig:IQ_Washout_Comp}
+\end{figure}
+
+% \begin{figure}[H]
+% %\centering
+% \begin{subfigure}{0.5\textwidth}
+%  % \centering
+%   \includegraphics[height = 6.5cm,width = \textwidth]{Diagrams/Chapter_3/ID_Washout_Comp_4.eps}
+%   \caption{Current in d axis during three phase fault for gain 0.01, 0.03 and 0.05}
+%   \label{fig:ID_Washout_Comp}
+% \end{subfigure}%
+% \begin{subfigure}{0.5\textwidth}
+%   %\centering
+%   \includegraphics[height = 6.5cm,width = \textwidth]{Diagrams/Chapter_3/IQ_Washout_Comp_4.eps}
+%   \caption{Current in q axis during three phase fault for gain 0.01, 0.03 and 0.05}
+%   \label{fig:IQ_Washout_Comp}
+% \end{subfigure}
+% \caption{Currents in d and q axes during three-phase fault in the middle of the cable for different proportional gains of washout filters}
+% \label{fig:ID_IQ_Washout_Comp}
+% \end{figure}
 
 \section{DIgSILENT PowerFactory Software}
 PowerFactory is a software tool developed by DIgSILENT (Germany) that is used for RMS and EMT simulations. It has three integration characteristics; functional integration, vertical integration and database integration. Functional integration explains that PowerFactory is a single executable program and vertical integration means that the models in the power system can exchange all of the analysis functions at one place. PowerFactory uses a Data Manager for database integration that allows all models to be stored under one project file. There are two libraries available in PowerFactory; Global and Project libraries. There are two subsections available within the Project library. They are \cite{powerfactory_tech}:
@@ -473,17 +496,17 @@ The 66 kV offshore network is modelled in PowerFactory as shown in Figure \ref{f
     \label{fig:WT1_Model_PFD_comp}
 \end{figure}
 
-\subsection{Simplified FSC based WG System}\label{simplified_FSC_WG}
-The wind turbine and \gls{MSC} are simplified since they do not contribute to the dynamics of the grid. \gls{LSC} is modelled in detail. A constant injection of active current is proposed from the \gls{MSC} to the \gls{DC} side \cite{korai_dynamic_2019}. Hence it is modelled as a \gls{DC} current source. The \gls{WG} unit is represented as a static generator model with 750 MVA nominal apparent power. It is made to operate with constant reactive power (Q) control in order to achieve the active and reactive power set points same as in RSCAD model. The active power flow is set to $\sim{700}$ MW, similar to the RSCAD model.
+\subsection{Simplified Full Scale Converter (FSC) based WG System}\label{simplified_FSC_WG}
+The wind turbine and \gls{MSC} are simplified since they do not contribute to the dynamics of the network. \gls{GSC} is modelled in detail. A constant injection of active current is proposed from the \gls{MSC} to the \gls{DC} side \cite{korai_dynamic_2019}. Hence it is modelled as a \gls{DC} current source. The \gls{WG} unit is represented as a static generator model with 750 MVA nominal apparent power. It is made to operate with constant reactive power (Q) control in order to achieve the active and reactive power set points same as in RSCAD model. The active power flow is set to $\sim{700}$ MW, similar to the RSCAD model.
 
 \subsubsection{DC Circuit}
 The DC circuit is detailed, and the voltage across the capacitor is set to 4 kV, same as the RSCAD model. The chopper activation control is provided when the \gls{DC} voltage crosses a minimum set value. 
 
-\subsubsection{Grid Side Converter (GSC)}
+\subsubsection{GSC}
 Unlike the RSCAD model, a two-level \gls{GSC} is utilized in this model. The \gls{PWM} is not used in this model, and the \gls{GSC} is modelled as a controlled voltage source. This is one among the major difference with the RSCAD model. The \gls{DVC} control for \gls{GSC} developed in \cite{korai_dynamic_2019} is provided in this model as explained in Section \ref{DVC_RSCAD}. The full representation of \gls{DVC} with active and reactive power loops in PowerFactory is depicted in Appendix \ref{pfd_model_appen}. 
 
-\subsection{High Pass Filter (HPF) with Series Reactor}
-The shunt filter available in the PowerFactory drawing toolbar is chosen. The values for R, L and C are chosen the same as mentioned in Section \ref{HPF_design}. A common impedance element available in the drawing tool is chosen for the series reactor and is connected at the output of \gls{LSC}, as shown in Figure \ref{fig:WT1_Model_PFD_comp}. The inductance value chosen is the same as the RSCAD model to have an equal impedance for both the models.  
+\subsection{HPF with Series Reactor}
+The shunt filter available in the PowerFactory drawing toolbar is chosen. The values for R, L and C are chosen the same as mentioned in Section \ref{HPF_design}. A common impedance element available in the drawing tool is chosen for the series reactor and is connected at the output of \gls{GSC}, as shown in Figure \ref{fig:WT1_Model_PFD_comp}. The inductance value chosen is the same as the RSCAD model to have an equal impedance for both the models.  
 
 \subsection{OWF Transformer}
 A two winding transformer available in the equipment library folder of DIgSILENT library is used. The transformer is rated 66/2 kV, 750 MVA with a wye-delta configuration to block zero sequence currents. The leakage inductance and resistance of the transformer are set the same as the RSCAD model.
@@ -493,7 +516,7 @@ The cables are rated at 66 kV same as the RSCAD model. The cable is modelled fro
 Pi model is utilized as it is easier to input the cable parameters in terms of RLC in both RSCAD and PowerFactory.
 
 \subsection{External AC system}
-The external \gls{AC} system in PowerFactory also represents an infinite grid. Similar to the model in RSCAD in Section \ref{ext_AC_source}, the infinite grid is modelled as a \gls{AC} voltage source available in the PowerFactory drawing toolbar. 
+The external \gls{AC} system in PowerFactory also represents an infinite grid. Similar to the model in RSCAD in Section \ref{ext_AC_source}, the infinite grid is modelled as an \gls{AC} voltage source available in the PowerFactory drawing toolbar. 
 
 \section{Control Structures}
 As mentioned in Section \ref{simplified_FSC_WG}, the wind turbine and \gls{MSC} models utilized are simplified and is made to inject constant active current to the \gls{DC} circuit. Hence, the control of \gls{MSC} and wind turbine is not required to be modelled. However, control structures are detailed for the \gls{DC} circuit and the \gls{GSC}. The benchmark model of \gls{DVC} from \cite{erlich_description_2018} is utilized here for the \gls{GSC}. The control structures are depicted in Appendix \ref{pfd_model_appen}.      
@@ -553,7 +576,7 @@ Before the start of the simulation, a specific time step value suitable for both
 \end{figure}
 
 \subsection{Event Comparison in RSCAD and PowerFactory}
-The 66 kV offshore network model in RSCAD and PowerFactory are compared for a three-phase short circuit in the middle of the cable. A fault is applied at 0.5 seconds with a clearing time of 140 ms. The resulting voltage and current waveforms are as shown in Figure \ref{fig:VACP_comp},  \ref{fig:ID_fullACSource} and \ref{fig:IQ_fullACSource} respectively. As can be observed in Figure \ref{fig:VACP_comp}, the voltage measured at \gls{PCC} drops and the generation is stopped during the fault period. The voltage profile is the same in RSCAD and PowerFactory models during the pre-fault, fault and post fault conditions as can be observed. The drop in voltage in both the graphs is the same due to equal impedance in both the models. 
+The 66 kV offshore network model in RSCAD and PowerFactory are compared for a three-phase line to ground fault in the middle of the cable. A fault is applied at 0.5 seconds with a clearing time of 140 ms. The resulting voltage and current waveforms are as shown in Figure \ref{fig:VACP_comp},  \ref{fig:ID_fullACSource} and \ref{fig:IQ_fullACSource} respectively. As can be observed in Figure \ref{fig:VACP_comp}, the voltage measured at \gls{PCC} drops and the generation is stopped during the fault period. The voltage profile is the same in RSCAD and PowerFactory models during the pre-fault, fault and post fault conditions as can be observed. The drop in voltage in both the graphs is the same due to equal impedance in both the models. 
 
 \begin{figure}[H]
 %\centering

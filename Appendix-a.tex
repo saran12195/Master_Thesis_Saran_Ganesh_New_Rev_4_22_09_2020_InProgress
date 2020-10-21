@@ -22,7 +22,7 @@ The major three blocks that represent the control system of Type-4 \gls{WG} are:
     \item Grid Side Converter model
 \end{itemize}
 
-\section{Aerodynamic model}
+\subsection{Aerodynamic model}
 
 \begin{figure}[]
 \centering
@@ -71,7 +71,7 @@ The inputs for the two-mass model are the mechanical torque from the aerodynamic
     \label{fig:Pitch_controller}
 \end{figure}
 
-\section{Machine Side Converter model}\label{MSC_Control}
+\subsection{Machine Side Converter model}\label{MSC_Control}
 
 The overall \gls{MSC} control is depicted, as shown in Figure \ref{fig:MSC_Control}. A three-level \gls{VSC} is used for operation as \gls{MSC} in this model. The conventional vector current control utilized in the \gls{MSC} control. As required for \gls{PI} control operation, the abc signals are transformed to the \gls{dq} frame using the rotor angle measurement for alignment and synchronizing with the \gls{dq} reference frame. The \gls{MSC} control consists of two inner fast control loops using \gls{PI} controllers that regulate the converter currents during all conditions, i.e. steady-state and dynamic scenarios. The reference values for the inner control loop is provided by the outer control loop. By measurement of active power of the \gls{WG}, a \gls{MPPT} control is used to output an optimum speed reference ($WMOPTPU$) as shown in Figure \ref{fig:MPPT_control}. The error difference from the optimum speed reference and the rotor speed is regulated through an outer \gls{PI} control loop. The modulation index for the \gls{MSC} control is same as \gls{GSC} control and is given by Equation \ref{MI_eq}.
 
@@ -155,7 +155,7 @@ There exists a \gls{DC} link in between the \gls{MSC} and the \gls{GSC} consisti
 \label{fig:Chopper_circuit_valve_firing}
 \end{figure}
 
-\section{Grid Side Converter model}
+\subsection{Grid Side Converter model}
 \gls{GSC} also uses a three-level \gls{VSC} similar to the \gls{MSC}. The \gls{GSC} also uses \gls{PWM} technique for gating, and the points and slope for the triangular wave are created by the \gls{PLL} as shown in Figure \ref{fig:PLL_model}. The \gls{PLL} block plays a significant role in the entire network as it computes the phase angle of the space vector that defines the synchronization of the rotating \gls{dq} frame with the abc frame. The input for the \gls{PLL} is the three-phase voltage at the \gls{PCC}, and the angle is defined such that the d-axis aligns with the grid voltage and q-axis voltage is zero. This is done to achieve decoupled control of the two axes. Thereby, d-axis provides control of active power, and q-axis provides control of reactive power. The proportional and integral gains need to be defined in the \gls{PLL} block. The influence of these parameters in a grid dominated with \gls{PE} is an ongoing topic of research.
 
 The slope and points for the triangular wave repeater are also generated in Figure \ref{fig:PLL_model}. The frequency of the carrier wave is chosen to be 19 times the nominal frequency (19*50 Hz). Therefore, the points would be 2*19*50 Hz if x = 0 and -2*19*50 Hz if x = 1. The angle is also multiplied by 19 and is between 0 and 2$\pi$, hence has to be divided by 2$\pi$ to achieve points between 0 and 1. The triangular wave repeater and the firing pulse generator for the \gls{GSC} are similar to that of the \gls{MSC} and are shown in Figure \ref{fig:Firing_blocks_GSC}. The numbers denominated for the three-phases of \gls{GSC} are 1,2 and 3 respectively.
@@ -201,7 +201,7 @@ The \gls{GSC} control block has the abc to \gls{dq} transformation and vice vers
 \centering
 %\hspace*{-1.2cm}
     \includegraphics[height = 22cm,width = \textwidth]{Diagrams/Appendix_A/FSC_PFD.pdf}
-    \caption{FSC representation in PowerFactory \cite{erlich_description_nodate}}
+    \caption{FSC representation in PowerFactory \cite{erlich_description_2018}}
     \label{fig:FSC_PFD}
 \end{figure}
 
@@ -209,7 +209,7 @@ The \gls{GSC} control block has the abc to \gls{dq} transformation and vice vers
 \centering
 %\hspace*{-1.2cm}
     \includegraphics[height = 24cm,width =\textwidth]{Diagrams/Appendix_A/DC_bus_PFD.pdf}
-    \caption{DC bus representation in PowerFactory \cite{erlich_description_nodate}}
+    \caption{DC bus representation in PowerFactory \cite{erlich_description_2018}}
     \label{fig:DC_bus_PFD}
 \end{figure}
 
@@ -217,7 +217,7 @@ The \gls{GSC} control block has the abc to \gls{dq} transformation and vice vers
 \centering
 %\hspace*{-1.2cm}
     \includegraphics[height = 24cm,width =\textwidth]{Diagrams/Appendix_A/Udc_controller_PFD.pdf}
-    \caption{DVC representation in PowerFactory \cite{erlich_description_nodate}}
+    \caption{DVC representation in PowerFactory \cite{erlich_description_2018}}
     \label{fig:Udc_controller_PFD}
 \end{figure}
 
@@ -225,6 +225,6 @@ The \gls{GSC} control block has the abc to \gls{dq} transformation and vice vers
 \centering
 %\hspace*{-1.2cm}
     \includegraphics[height = 17cm,width =15cm]{Diagrams/Appendix_A/Damping_terms_PFD.pdf}
-    \caption{Washout filter representation in PowerFactory \cite{erlich_description_nodate}}
+    \caption{Washout filter representation in PowerFactory \cite{erlich_description_2018}}
     \label{fig:Damping_terms_PFD}
 \end{figure}

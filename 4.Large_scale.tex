@@ -19,7 +19,7 @@ There are two NovaCor processors available at TU Delft, and they are equipped wi
 \section{Defining the Layout for the 2 GW Offshore Network}
 The initial aspect that needs to be considered for an offshore network is the topology of the network. The popularity of \gls{MMC} due to its improved controllability and superior system performances has led the way for the increasing demand of \gls{MMC}-\gls{HVDC} transmission to integrate distant \gls{OWF}s. For the connection of new \gls{OWF}s in the vicinity of the already existing ones, parallel operation of \gls{MMC}-\gls{HVDC} transmission systems can be expected in the near future with multiple connections to the onshore system. Such type of schemes increases the interest in hybrid systems with the hub-and-spoke principle proposed by ABB \cite{abb_hvdc_2018} and represented in Figure \ref{fig:ABB_Hub_Spoke_3}. The layout in Figure \ref{fig:ABB_Hub_Spoke_3}a) depicts the connection of \gls{OWF}s to an offshore converter station which in turn transfers power to the onshore system through multi-terminal \gls{HVDC} connections. However, the scaling of offshore wind power is limited to the installed capacity of \gls{MMC} unit in such a layout. Another layout involves the \gls{OWF}s connected through \gls{AC} links to a back-to-back \gls{HVDC} converter station as shown in Figure \ref{fig:ABB_Hub_Spoke_3}b). Long distance \gls{HVAC} transmission is required in this case, for the transfer of power from \gls{OWF}s to the onshore network and hence contribute to high losses in the network when compared to \gls{HVDC} transmission for larger distances. Figure \ref{fig:ABB_Hub_Spoke_3}c) represents the connection of multiple \gls{OWF}s to the offshore converter station, and power is transferred to the onshore system through multiple \gls{HVDC} links. Such a layout provides contingency in the network by supplying offshore wind power to at least one onshore system if one of the \gls{HVDC} links gets disconnected \cite{lescale2012parallelling}. A stage-wise construction of such a \gls{HVDC} project is easier to be achieved by the developers as well \cite{cigre_B455}.
 
-A specific configuration for a 2 GW offshore network is currently non-existent, and this chapter tries to fill in such a research gap. The idea in this chapter is to expand the single \gls{OWF} model network in Figure \ref{fig:WT1_Model_RSCAD} for a 2 GW offshore wind power network. This could be made possible by connecting four such \gls{OWF} models in parallel with each generating 500 MW of power. The reason for choosing four \gls{OWF}s is to have a symmetrical layout and to test the ability of RSCAD to perform simulations of such a configuration. Correspondingly, a 2 GW offshore converter station capacity is required to transfer this generated amount of power to the onshore system. However, currently deployed (state-of-the-art) \gls{MMC}-\gls{HVDC} transmission, has a maximum rated capacity of 1.2 GW \cite{peralta2012detailed}. Hence, with the available technology, two \gls{MMC} offshore stations of 1 GW each will be required for 2 GW power transmission. Taking the aforementioned factors into account, a modified layout of Figure \ref{fig:ABB_Hub_Spoke_3}c) is developed for this work. 
+A specific configuration for a 2 GW offshore network is currently non-existent, and this chapter tries to fill in such a research gap. The idea in this chapter is to expand the single \gls{OWF} model network in Figure \ref{fig:WT1_Model_RSCAD} for a 2 GW offshore wind power network. This could be made possible by connecting four such \gls{OWF} models in parallel with each generating $\sim{500}$ MW of power. The reason for choosing four \gls{OWF}s is to have a symmetrical layout and to test the ability of RSCAD to perform simulations on such a configuration. Correspondingly, a 2 GW offshore converter station capacity is required to transfer this generated amount of power to the onshore system. However, currently deployed (state-of-the-art) \gls{MMC}-\gls{HVDC} transmission, has a maximum rated capacity of 1.2 GW \cite{peralta2012detailed}. Hence, with the available technology, two \gls{MMC} offshore stations of 1 GW each will be required for 2 GW power transmission. Taking the aforementioned factors into account, a modified layout of Figure \ref{fig:ABB_Hub_Spoke_3}c) is developed for this work. 
 
 \begin{figure}[H]
 \centering
@@ -34,29 +34,37 @@ A specific configuration for a 2 GW offshore network is currently non-existent, 
 The layout of the 2 GW offshore network is built by resorting to scaling of the aggregated \gls{OWF} model in Section \ref{OWF} of Chapter \ref{3}. A modular topology is considered to achieve the capacity of 2 GW. 
 
 \begin{itemize}
-    \item The aggregated \gls{OWF} model in Section \ref{OWF} provides a generation of $\sim{700}$ MW. The first step involves reducing this generation to $\sim{500}$ MW as the layout is planned for four \gls{OWF}s. This is achieved by reducing the number of parallel \gls{WG} units from 116 (116 $\times$ 6 MW = 696 MW) to 83 (83 $\times$ 6 MW = 498 MW) which is done by changing the scaling factor explained in Section \ref{scaling_OWF}. Now the \gls{OWF} generates nearly $\sim{500}$ MW of active power, as shown in Figure \ref{fig:Steps_for_Scaling}a).
-    \item The second step involves the connection of two \gls{OWF}s in parallel to the external \gls{AC} system in a modular approach. This allows for the generation of 1 GW of power, as depicted in Figure \ref{fig:Steps_for_Scaling}b). All the control structures incorporated in \gls{OWF}-1 are replicated for \gls{OWF}-2.
-    \item In the third step, the external \gls{AC} system is replaced by an offshore converter station consisting of the average \gls{EMT} model of \gls{MMC} (\gls{MMC}-1) and the interface transformer (IT-1) available in the CIGRE B4 DC Grid Test System \cite{vrana2013cigre}. The same is depicted in Figure \ref{fig:Steps_for_Scaling}c). As the final layout network would be extensive, it is required to split the network into subsystems, as mentioned in Section  \ref{split_system}. The splitting into two subsystems is performed in this step. The offshore converter station is modelled in subsystem-1, and the \gls{OWF}s are modelled in subsystem-2. \gls{MMC}-1 is designed to operate in V/F control (or grid forming control) which is explained at the end of this chapter.
-    \item The final step involves the parallel connection of two more \gls{OWF} models (\gls{OWF}-3 and \gls{OWF}-4) in a modular approach generating 500 MW each. Additionally, another offshore converter station consisting of a similar average \gls{EMT} model of \gls{MMC} (\gls{MMC}-2) and two interface transformers (IT-2a and IT-2b), is connected in parallel to the previous converter station. The need for two interface transformers in \gls{MMC}-2 bus is explained at the end of this chapter. Therefore, the final layout shown in Figure \ref{fig:WT4_MMC2} represents a total of 2 GW offshore wind power transmission.
-\end{itemize}
+    \item The aggregated \gls{OWF} model in Section \ref{OWF} provides a generation of $\sim{700}$ MW. The first step involves reducing this generation to $\sim{500}$ MW as the layout is planned for four \gls{OWF}s. This is achieved by reducing the number of parallel \gls{WG} units from 116 (116 $\times$ 6 MW = 696 MW) to 83 (83 $\times$ 6 MW = 498 MW) which is done by changing the scaling factor explained in Section \ref{scaling_OWF}. Now the \gls{OWF} generates nearly $\sim{500}$ MW of active power, as shown in Figure \ref{fig:Steps_for_Scaling_1}.
+    
+    \begin{figure}[H]
+%\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 5.5cm,width = \textwidth]{Diagrams/Chapter_4/Steps_for_Scaling_1.pdf}
+    \caption{OWF-1 connected to external AC system}
+    \label{fig:Steps_for_Scaling_1}
+\end{figure}
+    
+    \item The second step involves the connection of two \gls{OWF}s in parallel to the external \gls{AC} system in a modular approach. This allows for the generation of 1 GW of power, as depicted in Figure \ref{fig:Steps_for_Scaling_2}. All the control structures incorporated in \gls{OWF}-1 are replicated for \gls{OWF}-2.
+    
+\begin{figure}[H]
+%\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 8.5cm,width = \textwidth]{Diagrams/Chapter_4/Steps_for_Scaling_2.pdf}
+    \caption{OWF-1 and OWF-2 connected in parallel to external AC system}
+    \label{fig:Steps_for_Scaling_2}
+\end{figure}
 
-
-% Therefore by using the average \gls{EMT} model of an \gls{MMC} described in utilizing the available models for \gls{MMC}s, to enhance and understand the operation of Type-4 \gls{WG}s in parallel operation and their coordination with \gls{MMC}s, an \gls{AC} collector grid topology with parallel connection of two point-to-point \gls{HVDC} transmission system is implemented for this thesis work in RSCAD. 
-
-
-
-%The development of the layout involves major three steps:
-
-%The layout of the model is developed by connecting four \gls{OWF} 
-
+    \item In the third step, the external \gls{AC} system is replaced by an offshore converter station consisting of the average \gls{EMT} model of \gls{MMC} (\gls{MMC}-1) and the interface transformer (IT-1) available in the CIGRE B4 DC Grid Test System \cite{vrana2013cigre}. The same is depicted in Figure \ref{fig:Steps_for_Scaling_3}. As the final layout network would be extensive, it is required to split the network into subsystems, as mentioned in Section  \ref{split_system}. The splitting into two subsystems is performed in this step. The offshore converter station is modelled in subsystem-1, and the \gls{OWF}s are modelled in subsystem-2. \gls{MMC}-1 is designed to operate in V/F control (or grid forming control) which is explained at the end of this chapter.
 
 \begin{figure}[H]
 %\centering
 %\hspace*{-1.2cm}
-    \includegraphics[height = 21cm,width = \textwidth]{Diagrams/Chapter_4/Steps_for_Scaling.pdf}
-    \caption{a) OWF-1 connected to external AC system, b) OWF-1 and OWF-2 connected in parallel to external AC system c) OWF-1 and OWF-2 connected in parallel to MMC-1}
-    \label{fig:Steps_for_Scaling}
+    \includegraphics[height = 7.5cm,width = \textwidth]{Diagrams/Chapter_4/Steps_for_Scaling_3.pdf}
+    \caption{OWF-1 and OWF-2 connected in parallel to MMC-1}
+    \label{fig:Steps_for_Scaling_3}
 \end{figure}
+
+    \item The final step involves the parallel connection of two more \gls{OWF} models (\gls{OWF}-3 and \gls{OWF}-4) in a modular approach generating 500 MW each. Additionally, another offshore converter station consisting of a similar average \gls{EMT} model of \gls{MMC} (\gls{MMC}-2) and two interface transformers (IT-2a and IT-2b), is connected in parallel to the previous converter station. The need for two interface transformers in \gls{MMC}-2 bus is explained at the end of this chapter. Therefore, the final layout shown in Figure \ref{fig:WT4_MMC2} represents a total of 2 GW offshore wind power transmission.
 
 \begin{figure}[H]
 %\centering
@@ -65,6 +73,8 @@ The layout of the 2 GW offshore network is built by resorting to scaling of the 
     \caption{Single line diagram of 2 GW, 66 kV HVAC offshore network connected to 2 x 1 GW HVDC links with offshore converter stations in RSCAD}
     \label{fig:WT4_MMC2}
 \end{figure}
+
+\end{itemize}
 
 \section{Layout of 2 GW, 66 kV HVAC Offshore Network in RSCAD}
 
@@ -89,7 +99,7 @@ The components in the 2 GW, 66 kV \gls{HVAC} network is detailed in this section
 \end{itemize}
 
 \subsection{Aggregated OWF}\label{Aggregated_OWF_large_scale}
-As mentioned in Section \ref{scaling_2GW}, the 2 GW offshore wind power is split into four \gls{OWF}s with 500 MW rated capacity each. Currently, the largest offshore \gls{WG} developed by GE Renewable Energy has a rating of 12 MW \cite{noauthor_worlds_2020}. However, the standard model available for a Type-4 \gls{WG} in RSCAD is rated 6 MW. Hence, to represent a 500 MW \gls{OWF}, 83 \gls{WG}s are required. All the \gls{OWF}s are at a distance of 30 km from the \gls{MMC} bus. 
+As mentioned in Section \ref{scaling_2GW}, the 2 GW offshore wind power is split into four \gls{OWF}s with $\sim{500}$ MW rated capacity each. Currently, the largest offshore \gls{WG} developed by GE Renewable Energy has a rating of 12 MW \cite{noauthor_worlds_2020}. However, the standard model available for a Type-4 \gls{WG} in RSCAD is rated 6 MW. Hence, to represent a $\sim{500}$ MW \gls{OWF}, 83 \gls{WG}s are required. All the \gls{OWF}s are at a distance of 30 km from the \gls{MMC} bus. 
 
 
 The average model of Type-4 \gls{WG} available in RSCAD is used for this work as well. The aggregated \gls{OWF} model represented in a small time step environment described in Section \ref{OWF} is used here for all the four \gls{OWF}s. As the entire network is extensive, it is split into two subsystems in RSCAD, as shown in Figure \ref{fig:WT4_MMC2} by employing the technique explained in Section \ref{split_system}. The four \gls{OWF}s are modelled in subsystem-2, and the rest of the system is modelled in subsystem-1. Each subsystem requires one rack for operation, and hence two NovaCor racks are used for the network simulation. It is also possible to simulate the network with PB5 processor. However, this requires a total of three subsystems since PB5 racks allow only small network solutions to be solved in one rack \cite{noauthor_pb5_nodate_1}. Therefore, two \gls{OWF}s are to be modelled in subsystem-3, other two \gls{OWF}s in subsystem-2 and the rest of the network in subsystem-1. Henceforth, the simulations are considered only in NovaCor processor for this study.  
@@ -117,9 +127,9 @@ OWF-4                          & 1                        \\ \hline
 \end{table}
 
 \subsection{HVAC Cables}\label{Tline_cable_RSCAD}
-The \gls{HVAC} cables transfer power from the \gls{OWF}s to the offshore converter stations. Hence, four sets of \gls{HVAC} cables are required to transfer power from four \gls{OWF}s. The cables are rated at 66 kV and are 30 km of length. In the network layout represented in RSCAD, as shown in Figure \ref{fig:WT4_MMC2}, the \gls{HVAC} cables connect the \gls{OWF}s in subsystem-1 with the \gls{MMC} bus in subsystem-2. To provide such a connection between components placed in different subsystems in RSCAD, a feature called Tline module is available in the RSCAD modules section (denoted by a red box in Figure \ref{fig:TlineModule_mark}). This module is similar to the Cable module explained in Section \ref{HVAC_cable_RSCAD}. However, Cable module only allows connection between components in the same subsystem. The Tline module can be modelled as an overhead transmission line or cable. Since an offshore network model is considered in this work, the Tline model represents a subsea cable model. 
+The \gls{HVAC} cables transfer power from the \gls{OWF}s to the offshore converter stations. Hence, four pairs of \gls{HVAC} cables are required to transfer power from four \gls{OWF}s. The cables are rated at 66 kV and are 30 km of length. In the network layout represented in RSCAD, as shown in Figure \ref{fig:WT4_MMC2}, the \gls{HVAC} cables connect the \gls{OWF}s in subsystem-1 with the \gls{MMC} bus in subsystem-2. To provide such a connection between components placed in different subsystems in RSCAD, a feature called Tline module is available in the RSCAD modules section (denoted by a red box in Figure \ref{fig:TlineModule_mark}). This module is similar to the Cable module explained in Section \ref{HVAC_cable_RSCAD}. However, Cable module only allows connection between components in the same subsystem. The Tline module can be modelled as an overhead transmission line or cable. Since an offshore network model is considered in this work, the Tline model represents a subsea cable model. 
 
-The cables are modelled as Bergeron models with RLC data parameters. Bergeron model is chosen to test the working of the network using travelling wave model. Moreover, as the 2 GW offshore network is developed from the single \gls{OWF} model in Section \ref{OWF}, the same RLC cable parameters used in Section \ref{HVAC_cable_RSCAD} are used in the Tline module for all the four sets of cables. 
+The cables are modelled as Bergeron models with RLC data parameters. Bergeron model is chosen to test the working of the network using travelling wave model. Moreover, as the 2 GW offshore network is developed from the single \gls{OWF} model in Section \ref{OWF}, the same RLC cable parameters used in Section \ref{HVAC_cable_RSCAD} are used in the Tline module for all the four pairs of cables. 
  
  \begin{figure}[H]
 \centering
@@ -159,7 +169,7 @@ As the significant goal is to estimate the dynamic performance of the network un
 
 \subsection{Offshore Converter Stations}\label{offshore_conv_stations}
 The offshore converter stations convert the \gls{HVAC} offshore wind power to \gls{HVDC} to transfer the power to the onshore system through \gls{HVDC} links.  %There are two offshore \gls{MMC} stations utilized in this network. 
-The existing available \gls{HVDC} links in the industry have a rated capacity of 1.4 GW. Examples for such projects are the NordLink cable connecting Norway and Denmark, NSN Link connecting Norway and the United Kingdom \cite{ryndzionek_evolution_2020}. Moreover, the standard \gls{EMT} models for \gls{MMC}s available in CIGRE B4 DC Grid Test System \cite{vrana2013cigre} have a rated capacity of 1.2 GW. Therefore, with the currently available technology, two offshore converter stations are required for the transfer of 2 GW offshore wind power. From the description of \gls{MMC} explained in Section \ref{HVDC_trans_theory}, it can be understood that \gls{MMC}s also involve \gls{PE} components. Hence, similar to the \gls{OWF} model, the average \gls{EMT} models of \gls{MMC}s are represented in the small time step blocks in RSCAD to represent fast switching events accurately. The average \gls{EMT} models available in RSCAD consists of the \gls{MMC} and interface transformer modelled in the small time step environment representing the offshore converter station. For this work, two small time step blocks are required for the representation of two offshore converter stations. Both the blocks are placed in subsystem-1. These two blocks must be initialized with different time step to avoid conflict during initialization and thereby avoiding the time step overflow error during the start of simulation in the Runtime module. To evenly distribute the load on four cores, considering the core allocation for \gls{OWF}s in Table \ref{tab:Core_assignment_sub2}, the cores for \gls{MMC}s are allocated as shown in Table \ref{tab:Core_assignment_sub1}. The offshore converter station-1 consists of the interface transformer (IT-1) and \gls{MMC}-1 whereas offshore converter station-2 consists of the interface transformers (IT-2a, IT-2b) and \gls{MMC}-2. 
+The existing available \gls{HVDC} links in the industry have a rated capacity of 1.4 GW. Examples for such projects are the NordLink cable connecting Norway and Denmark, NSN Link connecting Norway and the United Kingdom \cite{ryndzionek_evolution_2020}. Moreover, the standard \gls{EMT} models for \gls{MMC}s available in CIGRE B4 DC Grid Test System \cite{vrana2013cigre} have a rated capacity of 1.2 GW. Therefore, with the currently available technology, two offshore converter stations are required for the transfer of 2 GW offshore wind power. From the description of \gls{MMC} explained in Section \ref{HVDC_trans_theory}, it can be understood that \gls{MMC}s also involve \gls{PE} components. Hence, similar to the \gls{OWF} model, the average \gls{EMT} model of \gls{MMC} is also represented in a small time step block in RSCAD to represent fast switching events accurately. The average \gls{EMT} model available in RSCAD consists of the \gls{MMC} and interface transformer modelled in the small time step environment representing the offshore converter station. For this work, two small time step blocks are required for the representation of two offshore converter stations. Both the blocks are placed in subsystem-1. These two blocks must also be initialized with different time step to avoid conflict during initialization and thereby avoiding the time step overflow error during the start of simulation in the Runtime module. To evenly distribute the load on four cores, considering the core allocation for \gls{OWF}s in Table \ref{tab:Core_assignment_sub2}, the cores for \gls{MMC}s are allocated as shown in Table \ref{tab:Core_assignment_sub1}. The offshore converter station-1 consists of the interface transformer (IT-1) and \gls{MMC}-1 whereas offshore converter station-2 consists of the interface transformers (IT-2a, IT-2b) and \gls{MMC}-2. 
 %RSCAD also allows modelling in substep environment that can have a time step as small as 500 ns if the circuit is simple.    
 
 \begin{table}[H]
@@ -179,12 +189,12 @@ MMC-2                          & 2                        \\ \hline
 \subsubsection{Interface Transformers}
 Interface transformers (also termed as converter transformers) are connected to the \gls{AC} side of \gls{MMC}s and depicted as IT-1 for offshore converter station-1 and IT-2a and IT-2b for offshore converter station-2 as shown in Figure \ref{fig:WT4_MMC2}. As explained in \cite{cigre2005b4}, these transformers entail the following main implications:
 \begin{itemize}
-    \item Providing a reactance between the offshore grid and the \gls{MMC}.
-    \item Preventing the flow of zero sequence currents between the offshore grid and the \gls{MMC}.
+    \item Providing a reactance between the offshore network and the \gls{MMC}.
+    \item Preventing the flow of zero sequence currents between the offshore network and the \gls{MMC}.
 \end{itemize} 
 
  %The three-phase three identical single-phase transformer \gls{VSC} interface model available in the RSCAD library shown in Figure \ref{fig:InterfaceTrafo} is considered for this research. 
-As mentioned in Section \ref{offshore_conv_stations}, in the available average \gls{EMT} models in RSCAD library, the interface transformer is modelled with the \gls{MMC} in a small time step environment in RSCAD. Considering a delta-star type interface transformer and connecting \gls{MMC} to the delta side of the transformer, allows for isolation of the zero sequence currents during faults. The available \gls{EMT} models for offshore \gls{MMC} stations from \cite{vrana2013cigre} are utilized for this work. These models are designed for 145 kV \gls{HVAC} offshore network. Hence, to utilize the model for this work, the secondary side voltage of the transformer is changed from 145 kV to 66 kV. Additionally, there were modifications required to be made in the control structures of the \gls{MMC} models to utilize it for the 66 kV \gls{HVAC} network. These are explained in further sections of this chapter. There are mainly three interface transformers used in this work. The transformer (IT-1) is rated 66/380 kV, 1000 MVA in the offshore converter station-1. Two interface transformers in the offshore converter station-2 are rated 66/145 kV, 1000 MVA (IT-2a) and 145/380 kV, 1000 MVA (IT-2b) respectively. The need for two interface transformers in offshore converter station-2 is explained in the last section of this chapter.
+As mentioned in Section \ref{offshore_conv_stations}, in the available average \gls{EMT} models in RSCAD library, the interface transformer is modelled with the \gls{MMC} in a small time step environment in RSCAD. Considering a delta-wye type interface transformer and connecting \gls{MMC} to the delta side of the transformer, allows for isolation of the zero sequence currents during faults. The available \gls{EMT} models for offshore \gls{MMC} stations from \cite{vrana2013cigre} are utilized for this work. These models are designed for 145 kV \gls{HVAC} offshore network. Hence, to utilize the model for this work, the secondary side voltage of the transformer is changed from 145 kV to 66 kV. Additionally, there were modifications required to be made in the control structures of the \gls{MMC} models to utilize it for the 66 kV \gls{HVAC} network. These are explained in further sections of this chapter. There are mainly three interface transformers used in this work. The transformer (IT-1) is rated 66/380 kV, 1000 MVA in the offshore converter station-1. Two interface transformers in the offshore converter station-2 are rated 66/145 kV, 1000 MVA (IT-2a) and 145/380 kV, 1000 MVA (IT-2b) respectively. The need for two interface transformers in offshore converter station-2 is explained in the last section of this chapter.
 %Due to limitation of the control structure model in RSCAD, an additional transformer is required to convert from 66 kV to 145 kV in the \gls{MMC}-2 bus. To have a minimum effect on the impedance of the network, the leakage inductance value of this transformer is kept as low as possible. In a practical scenario, this can be avoided by using a 66/380 kV transformer directly. 
 
 
@@ -229,12 +239,12 @@ The connection between the offshore converter station and the onshore converter 
 \centering
 
 \subfloat[Symmetrical monopole configuration \cite{sharifabadi2016design}]{%
-  \includegraphics[clip,width=0.65\columnwidth]{Diagrams/Chapter_4/Monopole_rep.pdf}%
+  \includegraphics[clip,width=0.6\columnwidth]{Diagrams/Chapter_4/Monopole_rep.pdf}%
 \label{Monopole_rep}}
 
 
 \subfloat[Symmetrical monopole configuration by equivalent representation of DC side of onshore MMC station using a constant DC source]{%
-  \includegraphics[clip,width=0.65\columnwidth]{Diagrams/Chapter_4/Monopole_rep_2.pdf}%
+  \includegraphics[clip,width=0.6\columnwidth]{Diagrams/Chapter_4/Monopole_rep_2.pdf}%
 \label{Monopole_rep_2}}
 
 
@@ -245,7 +255,7 @@ The connection between the offshore converter station and the onshore converter 
 
 
 \section{Control Structures}\label{control_structures}
-This section explains the different control structures implemented and modifications required in the control scheme of converters for operation in the 66 kV \gls{HVAC} network. The \gls{DVC} inspired from \cite{erlich_new_2017} and implemented in Section \ref{DVC_RSCAD} for Type-4 \gls{WG}s is extended for the 2 GW network. There are mainly three control strategies used:
+This section explains the different control structures implemented and modifications required in the control scheme of converters for operation in the 66 kV \gls{HVAC} network. The \gls{DVC} inspired from \cite{erlich_new_2017} and implemented in Section \ref{DVC_RSCAD} for Type-4 \gls{WG} is extended for the 2 GW offshore network. There are mainly three control strategies used:
 \begin{itemize}
     \item \gls{DVC} in the \gls{GSC}s of the \gls{WG}s used to represent aggregated \gls{OWF}s 
     \item Island mode control in \gls{MMC}-1
@@ -256,24 +266,25 @@ This section explains the different control structures implemented and modificat
 The control structure explained in Section \ref{DVC_RSCAD} is implemented for all the four \gls{WG}s. Since the same type of model is used for \gls{GSC}s in all four \gls{WG}s, the control loop parameters remain the same. The reactive and active control loop parameters are provided in Appendix \ref{tab:Reactive_pow_para} and \ref{tab:Active_pow_para} respectively.
 
 \subsection{Island Mode Control}
-It is highly necessary to use a control strategy in any of the \gls{MMC}s which could provide the voltage and frequency reference for the \gls{MMC} bus since it is connected to a weak network (\gls{OWF} network). The reference voltage is created by the V/F control mode, which comes under the classification of the islanded mode of control for \gls{VSC} \cite{vrana2013cigre}. For this study, \gls{MMC}-1 is operated in the V/F control. A basic control strategy was developed according to the illustration provided in \cite{wachal2014guide} and is shown in Figure \ref{fig:U_F_control}. Since the voltage angle reference ($\theta$), is generated by an independent Voltage Controlled Oscillator (VCO), this control is termed under island mode operation. Such an approach provides the grid forming behaviour for \gls{MMC}-1 and is responsible for providing and absorbing power from the \gls{OWF} network as and when required. The power flow is kept in balance during the steady-state and transient condition with the help of this control \cite{cigre_B455}.  
+It is highly necessary to use a control strategy in any of the \gls{MMC}s which could provide the voltage and frequency reference for the \gls{MMC} bus since it is connected to a weak network (\gls{OWF} network). The reference voltage is created by the V/F control mode, which comes under the classification of the islanded mode of control for \gls{VSC} \cite{vrana2013cigre}. For this study, \gls{MMC}-1 is operated in the V/F control. A basic control strategy was developed according to the illustration provided in \cite{wachal2014guide} and is shown in Figure \ref{fig:U_F_control}. Since the voltage angle reference ($\theta$), is generated by an independent Voltage Controlled Oscillator (VCO), this control is termed under island mode operation. Such an approach provides the grid forming behaviour for \gls{MMC}-1 and is responsible for providing and absorbing power from the \gls{OWF} network as and when required. The power flow is kept in balance during the steady state and transient condition with the help of this control \cite{cigre_B455}.  
 
-The V/F control consists of a \gls{PI} controller which has an input that takes in the difference between the measured voltage ($V_{PCC}$) and the reference \gls{PCC} voltage ($V_{PCC\_ref}$) in p.u. and provides the reference d-axis converter voltage ($V_{PCC\_d}$) that is translated to abc frame ($V_{abc\_ref}$) as shown in Figure \ref{fig:U_F_control}. This makes $V_{PCC\_d}$ to be aligned with the grid voltage and the q-axis voltage ($V_{PCC\_q}$) set to zero. The parameters for the \gls{PI} gains used for this control are referred from \cite{vrana2013cigre} and is specified in Appendix \ref{tab:U_F_para}. 
+The V/F control consists of a \gls{PI} controller which has an input that takes in the difference between the measured voltage ($V_{PCC}$) and the reference \gls{PCC} voltage ($V_{PCC\_ref}$) in p.u. and provides the reference d-axis converter voltage ($V_{PCC\_d}$) that is translated to abc frame ($V_{abc\_ref}$) as shown in Figure \ref{fig:U_F_control}. This makes $V_{PCC\_d}$ to be aligned with the grid voltage and the q-axis voltage ($V_{PCC\_q}$) is set to zero. The parameters for the \gls{PI} gains used for this control are referred from \cite{vrana2013cigre} and is specified in Appendix \ref{tab:U_F_para}. 
 
 \begin{figure}[H]
 \centering
 %\hspace*{-1.2cm}
-    \includegraphics[height = 5cm,width = 12.5cm]{Diagrams/Chapter_4/U_F_control.pdf}
+    \includegraphics[height = 4.5cm,width = 12.5cm]{Diagrams/Chapter_4/U_F_control.pdf}
     \caption{V/F control in MMC-1 \cite{vrana2013cigre}}
     \label{fig:U_F_control}
 \end{figure}
 
 
 \subsection{Non- island Mode Control}
-This mode of operation is based on the conventional current control (grid following) approach, which consists of the outer control loop and the inner control loop. The outer loop consists of the d and q axes loops. The d-axis loop can provide control of \gls{DC} voltage or active power and the q-axis loop can provide control of \gls{AC} voltage or reactive power as depicted in Figure \ref{Control_loop_MMC_Id} and Figure \ref{Control_loop_MMC_Iq} respectively. The outer control loop provides the respective current reference values as inputs for the inner current loops. \gls{MMC}-2 is configured with this control in this work. 
+This mode of operation is based on the conventional current control (grid following) approach, which consists of the outer control loop and the inner control loop. The outer loop consists of the d and q axes loops. The d-axis loop can provide control of \gls{DC} voltage or active power and the q-axis loop can provide control of \gls{AC} voltage or reactive power as depicted in Figure \ref{Control_loop_MMC_Id} and Figure \ref{Control_loop_MMC_Iq} respectively. The outer control loop provides the respective current reference values as inputs for the inner current loops. \gls{MMC}-2 is configured with this control for this work. 
 
 The parameters defined in this section are mathematically derived as given in \cite{saad2015modelisation}. The rotating \gls{dq} frame provides a simplified control of the three-phase systems. As described in Section \ref{ref_frame_trafo} and mentioned in Figure \ref{fig:DQTransformation}, the currents and voltages in the abc frame are transformed into \gls{dq} frame using Clarke-Park transformation.
-As conventionally followed, the d-axis voltage is aligned with the grid voltage at the \gls{HV} bus of IT-2a interface transformer ($V_{PCC\_d\_2}$), and the q-axis is set to zero. This provides constant values for d and q components during steady state.
+As conventionally followed, the d-axis voltage is aligned with the grid voltage ($V_{PCC\_d\_2}$) at the \gls{HV} bus of IT-2a interface transformer, and the q-axis is set to zero. This provides constant values for d and q components during steady state.
+
 
 If active power is the priority in d-axis, active power control of \gls{MMC}-2 is given by Equations \ref{activ_pow_MMC2_eq_1} and \ref{activ_pow_MMC2_eq_2}.
 
@@ -323,20 +334,18 @@ The control of \gls{AC} voltage is obtained with the following equation:
     i_{q\_ref\_2} =  \left(\frac{k_{i_V}}{s}\right)\left(V_{PCC\_{ref}\_2}-V_{PCC\_2}\right)
 \end{equation}
 
-The inner loop consists of \gls{PI} controllers for d and q axis separately and provides a decoupled control action. The output from the inner loop control is then translated back to the abc frame using \gls{dq} to abc frame transformation. 
-
 \begin{figure}[H]
 \centering
 
 %\hspace{4cm}
 \subfloat[Outer control loop representation for d-axis ($i_{d\_ref\_2}$)]{%
-  \includegraphics[clip,width=0.65\columnwidth]{Diagrams/Chapter_4/Control_loop_MMC_Id.pdf}%
+  \includegraphics[height = 7cm,width = 10cm]{Diagrams/Chapter_4/Control_loop_MMC_Id.pdf}%
 \label{Control_loop_MMC_Id}}
 
-\vspace{10mm}
+\vspace{5mm}
 %\hspace{4cm}
 \subfloat[Outer control loop representation for q-axis ($i_{q\_ref\_2}$)]{%
-  \includegraphics[clip,width=0.65\columnwidth]{Diagrams/Chapter_4/Control_loop_MMC_Iq.pdf}%
+  \includegraphics[height = 7cm,width = 10cm]{Diagrams/Chapter_4/Control_loop_MMC_Iq.pdf}%
 \label{Control_loop_MMC_Iq}}
 
 
@@ -344,10 +353,16 @@ The inner loop consists of \gls{PI} controllers for d and q axis separately and 
 
 \end{figure}
 
-As the \gls{DC} voltage in the \gls{HVDC} link is maintained and controlled by the onshore equivalent \gls{MMC} station represented by a constant \gls{DC} source, the active power control is chosen as priority for d-axis for \gls{MMC}-2 control. Similarly, as the \gls{AC} voltage is controlled by the V/F control in \gls{MMC}-1, reactive power control is chosen as priority chosen for q-axis for \gls{MMC}-2. When active power is the chosen priority, $P_{AC\_2}$ represents the required amount of active power that flows through offshore converter station-2 and must be defined externally by the user. However, the outer loop control available for the non-islanded mode in \cite{vrana2013cigre} is not suitable for parallel operation with V/F control. Hence, the outer loop is simplified, and the reference points ($i_{d\_ref\_2}$ and $i_{q\_ref\_2}$) for the inner loop are controlled directly by the user. This modification in outer loop and the power flow control in \gls{MMC}-2 in RSCAD is detailed in Appendix \ref{modific_outer_loop}.  
+
+The inner loop consists of \gls{PI} controllers for d and q axis separately and provides a decoupled control action. The output from the inner loop control is then translated back to the abc frame using \gls{dq} to abc frame transformation. 
+
+As the \gls{DC} voltage in the \gls{HVDC} link is maintained and controlled by the onshore equivalent \gls{MMC} station represented by a constant \gls{DC} source, the active power control is chosen as priority for d-axis for \gls{MMC}-2 control. Similarly, as the \gls{AC} voltage is controlled by the V/F control in \gls{MMC}-1, reactive power control is chosen as priority chosen for q-axis for \gls{MMC}-2. When active power is the chosen priority, $P_{AC\_ref\_2}$ represents the required amount of active power that must flow through offshore converter station-2 and must be defined externally by the user. However, the outer loop control available for the non-islanded mode in \cite{vrana2013cigre} is not suitable for parallel operation with V/F control. Hence, the outer loop is simplified, and the reference points ($i_{d\_ref\_2}$ and $i_{q\_ref\_2}$) for the inner loop are controlled directly by the user. This modification in outer loop and the power flow control in \gls{MMC}-2 in RSCAD is detailed in Appendix \ref{modific_outer_loop}.  
 
 
-The inner control loop consists of \gls{PI} controllers that play the major role in ensuring minimum steady state error. The inner control also contain the feed-forward term to compensate the cross coupling terms. The mathematical equations for the parameters of inner control loop are derived as provided in \cite{saad2015modelisation}. Applying Kirchoff's Voltage Law in Figure \ref{fig:MMC_pow_system_1} and with the \gls{MMC} representation in Figure \ref{fig:MMC_pow_system_2}, the equations are derived for offshore converter station-2 connected to the \gls{AC} network. The assumptions involve, the direction of current is from the \gls{AC} network to the \gls{MMC} (similar to the condition when offshore wind power is transferred from the offshore network to onshore system) and avoiding the star-point reactor:
+
+
+
+The inner control loop consists of \gls{PI} controllers that play the major role in ensuring minimum steady state error. The inner control also contain the feed-forward term to compensate the cross coupling terms. The mathematical equations for the parameters of inner control loop are derived as provided in \cite{saad2015modelisation}. Applying Kirchoff's Voltage Law in Figure \ref{fig:MMC_pow_system_1} and with the \gls{MMC} representation in Figure \ref{fig:MMC_pow_system_2}, the equations are derived for offshore converter station-2 connected to the \gls{AC} network. The assumptions involve, the direction of current is from the \gls{AC} network to the \gls{MMC} (the condition when offshore wind power is transferred from the offshore network to onshore system) and avoiding the star-point reactor:
 
 \begin{equation}
     \frac{V_{DC\_2}}{2} = v_{uj} + L_{arm\_2}\frac{di_{uj}}{dt} + R_{arm\_2}i_{uj} - L_{trafo\_2}\frac{di_{j}}{dt} - R_{trafo\_2}i_j + v_{PCC_j}
@@ -357,23 +372,16 @@ The inner control loop consists of \gls{PI} controllers that play the major role
     \frac{V_{DC\_2}}{2} = v_{lj} + L_{arm\_2}\frac{di_{lj}}{dt} + R_{arm\_2}i_{lj} + L_{trafo\_2}\frac{di_{j}}{dt} + R_{trafo\_2}i_j - v_{PCC_j}
 \end{equation}
 
-where $R_{trafo\_2}$ is the interface transformer (IT-2b) resistance, $R_{arm\_2}$ is the arm resistance in \gls{MMC}-2, $j$ represents phases $a$, $b$ and $c$. $u$ and $l$ denotes the upper arm and lower arm of \gls{MMC}-2 respectively.
+where $R_{trafo\_2}$ is the interface transformer (IT-2b) resistance, $R_{arm\_2}$ is the arm resistance in \gls{MMC}-2, $v_{PCC_j}$ is the voltage at \gls{HV} bus of IT-2a, $j$ represents phases $a$, $b$ and $c$. Upper arm and lower arm of \gls{MMC}-2 are denoted by $u$ and $l$ respectively.
 
 \begin{figure}[H]
 \centering
 %\hspace*{-1.2cm}
-    \includegraphics[height = 5cm,width = 9cm]{Diagrams/Chapter_4/MMC_pow_system_1_new.pdf}
-    \caption{Representation of offshore MMC-2 station connection to the AC network \cite{saad2015modelisation}}
+    \includegraphics[height = 4.5cm,width = 9cm]{Diagrams/Chapter_4/MMC_pow_system_1_new.pdf}
+    \caption{Representation of offshore converter station-2 connection to the AC offshore network \cite{saad2015modelisation}}
     \label{fig:MMC_pow_system_1}
 \end{figure}
 
-\begin{figure}[H]
-\centering
-%\hspace*{-1.2cm}
-    \includegraphics[height = 9cm,width = 13.5cm]{Diagrams/Chapter_4/MMC_pow_system_2.pdf}
-    \caption{MMC-2 representation \cite{saad2015modelisation}}
-    \label{fig:MMC_pow_system_2}
-\end{figure}
 
 The equations in \gls{dq} frame can be represented as following:
 
@@ -397,12 +405,20 @@ The control loop is defined as follows:
 
 where $C_{i_{ac}}\left(s\right)$ is the transfer function of the \gls{PI} controller.
 
+\begin{figure}[H]
+\centering
+%\hspace*{-1.2cm}
+    \includegraphics[height = 9cm,width = 13.5cm]{Diagrams/Chapter_4/MMC_pow_system_2.pdf}
+    \caption{MMC-2 representation \cite{saad2015modelisation}}
+    \label{fig:MMC_pow_system_2}
+\end{figure}
+
 The inner control loop provides the control of reference voltages, as depicted in Figure \ref{fig:Inner_control_loop_MMC}, which are then used as inputs for the lower level control.
 
 \begin{figure}[H]
 \centering
 %\hspace*{-1.2cm}
-    \includegraphics[height = 12cm,width = 10.5cm]{Diagrams/Chapter_4/Inner_control_loop_MMC.pdf}
+    \includegraphics[height = 11cm,width = 10.5cm]{Diagrams/Chapter_4/Inner_control_loop_MMC.pdf}
     \caption{Inner loop control for MMC-2 \cite{saad2015modelisation}}
     \label{fig:Inner_control_loop_MMC}
 \end{figure}
